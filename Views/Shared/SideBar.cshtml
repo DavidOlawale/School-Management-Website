@@ -1,0 +1,16 @@
+﻿
+    <div class="bg-dark border-right sidebar" id="sidebar-wrapper">
+        <div class="sidebar-heading">@User.Identity.Name </div>
+        <div class="list-group list-group-flush">
+            <a asp-area="Identity" asp-page="/Account/Manage/Index" class="list-group-item list-group-item-action bg-light">My Profile</a>
+
+            <a href="#" class="list-group-item list-group-item-action bg-light">Messages</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-controller="Students" asp-action="Index" class="list-group-item list-group-item-action bg-light">Students</a>
+                <a asp-controller="Teachers" asp-action="Index" class="list-group-item list-group-item-action bg-light">Teachers</a>
+                <a asp-controller="Classes" asp-action="Index" class="list-group-item list-group-item-action bg-light">Classes</a>
+            }
+        </div></div>

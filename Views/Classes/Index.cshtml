@@ -1,0 +1,17 @@
+﻿@model IEnumerable<School.Models.Class>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <p><h1>Classes</h1></p>
+<div class="row justify-content-between">
+    @foreach (var Class in Model)
+    {
+        <div class="col col-5 col-sm-3 col-md-5" style="background-color: aqua">
+
+        </div>
+    }
+</div>
+
