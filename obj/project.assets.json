@@ -12958,11 +12958,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\olaniran olawale\\Downloads\\backup\\School\\School.csproj",
+      "projectUniqueName": "C:\\Users\\olaniran olawale\\Documents\\Visual Studio 2019\\Projects\\School\\School-Management-Website\\School.csproj",
       "projectName": "School",
-      "projectPath": "C:\\Users\\olaniran olawale\\Downloads\\backup\\School\\School.csproj",
+      "projectPath": "C:\\Users\\olaniran olawale\\Documents\\Visual Studio 2019\\Projects\\School\\School-Management-Website\\School.csproj",
       "packagesPath": "C:\\Users\\olaniran olawale\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\olaniran olawale\\Downloads\\backup\\School\\obj\\",
+      "outputPath": "C:\\Users\\olaniran olawale\\Documents\\Visual Studio 2019\\Projects\\School\\School-Management-Website\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

@@ -28,7 +28,7 @@ namespace School.Controllers
         }
         public ActionResult Index()
         {
-            var teachers = _context.Teachers.Include(t => t.Class);
+            var teachers = _context.Teachers;
             ViewData["isToast"] = false;
             return View(teachers);
         }

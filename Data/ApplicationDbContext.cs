@@ -20,5 +20,10 @@ namespace School.Data
         public DbSet<Student> Students { get; set; }
         public DbSet<Class> Classes { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+        }
     }
 }
