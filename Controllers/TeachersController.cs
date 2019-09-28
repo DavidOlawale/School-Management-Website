@@ -19,8 +19,8 @@ namespace School.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _context;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        public TeachersController(UserManager<ApplicationUser> manager, ApplicationDbContext context, RoleManager<IdentityRole> rolemanager)
+        private readonly RoleManager<ApplicationRole> _roleManager;
+        public TeachersController(UserManager<ApplicationUser> manager, ApplicationDbContext context, RoleManager<ApplicationRole> rolemanager)
         {
             _userManager = manager;
             _context = context;
@@ -68,7 +68,7 @@ namespace School.Controllers
             //create teacher role if it doesn't exist
             if (_context.Roles.SingleOrDefault(role => role.Name == RoleNames.Teacher) == null)
             {
-                await _roleManager.CreateAsync(new IdentityRole(RoleNames.Teacher));
+                await _roleManager.CreateAsync(new ApplicationRole(RoleNames.Teacher));
             }
             var addtoroleresult = await _userManager.AddToRoleAsync(model.Teacher, RoleNames.Teacher);
             if (!addtoroleresult.Succeeded)

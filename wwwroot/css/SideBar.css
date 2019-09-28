@@ -1,0 +1,41 @@
+﻿
+.sidebar {
+    position: fixed;
+    height: 100%;
+    width: 0;
+    left: 0;
+    top: 0;
+    background-color: #1f1f23;
+    overflow-x: hidden;
+    transition-duration: 0.5s;
+    z-index: 1;
+}
+
+    .sidebar a {
+        color: #93939d;
+        border: 0px;
+        display: block;
+        padding: 20px 50px;
+        transition-duration: 0.6s;
+    }
+
+.sidebar a:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+#close-btn {
+    font-size: 2em;
+    color: #bebecc;
+    background-color: inherit;
+    border: 0px;
+    float: right;
+    margin: 10px;
+}
+
+.close-btn:hover {
+    color: #fff
+}
+.sidebar-colapse{
+    width: 200px !important;
+}

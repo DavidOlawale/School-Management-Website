@@ -19,9 +19,9 @@ namespace School.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<IdentityRole> _RoleManager;
+        private readonly RoleManager<ApplicationRole> _RoleManager;
 
-        public StudentsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public StudentsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {
             _context = context;
             _userManager = userManager;
@@ -45,9 +45,10 @@ namespace School.Controllers
             return View(students);
         }
 
-        public async Task<ActionResult> Details(String id)
+        public async Task<ActionResult> Details(Guid id)
         {
             var student = await _context.Students.FindAsync(id);
+            student.Class = _context.Classes.Find(student.ClassId);
             return View(student);
         }
 
@@ -80,7 +81,7 @@ namespace School.Controllers
             //create student role if it doesn't exist
             if (_context.Roles.SingleOrDefault(role => role.Name == RoleNames.Student) == null)
             {
-                await _RoleManager.CreateAsync(new IdentityRole(RoleNames.Student));
+                await _RoleManager.CreateAsync(new ApplicationRole(RoleNames.Student));
             }
             var addtoroleresult = await _userManager.AddToRoleAsync(model.Student, RoleNames.Student);
             if (!addtoroleresult.Succeeded)
@@ -97,7 +98,7 @@ namespace School.Controllers
             return RedirectToActionPermanent("Index", notification);
         }
 
-        public async Task<ActionResult> Edit(String id)
+        public async Task<ActionResult> Edit(Guid id)
         {
             var student = await _context.Students.FindAsync(id);
             if (student == null)
@@ -128,7 +129,7 @@ namespace School.Controllers
         }
 
         // GET: Students/Delete/5
-        public async Task<ActionResult> DeleteConfirmed(string id)
+        public async Task<ActionResult> DeleteConfirmed(Guid id)
         {
             var student = await _context.Students.FindAsync(id);
             _context.Students.Remove(student);

@@ -38,8 +38,8 @@
     </tbody>
 </table>
 @section Styles{
-    <link rel="stylesheet" href="~/lib/Datatables/dataTables.bootstrap4.min.css" />
-    <link rel="stylesheet" href="~/lib/Datatables/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="~/lib/Datatables/media/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="~/lib/Datatables/media/css/dataTables.bootstrap4.css" />
     @if ((bool)ViewData["Istoast"])
     {
         <link rel="stylesheet" href="~/lib/VanillaToasts/vanillatoasts.css" />
@@ -47,8 +47,8 @@
 }
 
 @section Scripts{
-    <script src="~/lib/Datatables/dataTables.bootstrap4.min.js"></script>
-    <script src="~/lib/Datatables/jquery.dataTables.min.js"></script>
+    <script src="~/lib/Datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/Datatables/media/js/dataTables.bootstrap4.js"></script>
     <script>
         $(document).ready(function () {
             $('#table').DataTable();

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace School.Models
 {
 
-    public class ApplicationUser : IdentityUser
+    public class ApplicationUser : IdentityUser<Guid>
     {
         [Required]
         [Display(Name ="First Name")]
@@ -33,6 +33,20 @@ namespace School.Models
         [Display(Name ="Profile Photo")]
         public byte[] ProfileImage { get; set; }
     }
+    public class ApplicationRole : IdentityRole<Guid>
+    {
+        public ApplicationRole() : base()
+        {
+
+        }
+        public ApplicationRole(string roleName) : base(roleName)
+        {
+
+        }
+
+    }
+
+
     public class Student : ApplicationUser
     {
         [Required]
@@ -75,7 +89,7 @@ namespace School.Models
         [Required]
         public string Name { get; set; }
 
-        public int TeacherId { get; set; }
+        public Guid? TeacherId { get; set; }
         public Teacher Teacher { get; set; }
     }
     public class Parent : ApplicationUser
@@ -97,4 +111,5 @@ namespace School.Models
         public string Text { get; set; }
         public string Type { get; set; }
     }
+
 }

@@ -1,16 +1,27 @@
 ﻿
-    <div class="bg-dark border-right sidebar" id="sidebar-wrapper">
-        <div class="sidebar-heading">@User.Identity.Name </div>
-        <div class="list-group list-group-flush">
-            <a asp-area="Identity" asp-page="/Account/Manage/Index" class="list-group-item list-group-item-action bg-light">My Profile</a>
+<div class="sidebar" id="menu">
+    <button id="close-btn">&times;</button>
+    <a asp-area="Identity" asp-page="/Account/Manage/Index" >My Profile</a>
+    <a asp-controller="Messases">Messages</a>
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-controller="Students" asp-action="Index" >Students</a>
+        <a asp-controller="Teachers"id="aa" asp-action="Index" >Teachers</a>
+        <a asp-controller="Classes" asp-action="Index" >Classes</a>
+        <a>School Info</a>
+    }
 
-            <a href="#" class="list-group-item list-group-item-action bg-light">Messages</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
-            @if (User.IsInRole("Admin"))
-            {
-                <a asp-controller="Students" asp-action="Index" class="list-group-item list-group-item-action bg-light">Students</a>
-                <a asp-controller="Teachers" asp-action="Index" class="list-group-item list-group-item-action bg-light">Teachers</a>
-                <a asp-controller="Classes" asp-action="Index" class="list-group-item list-group-item-action bg-light">Classes</a>
-            }
-        </div></div>
+</div>
+
+<script>
+    function showMenu() {
+        document.getElementById('menu').classList.add('sidebar-colapse')
+    }
+
+    document.getElementById('close-btn').onclick = () => {
+        document.getElementById('menu').classList.remove('sidebar-colapse')
+    }
+</script>
+@section styles{ 
+<link rel="stylesheet" href="~/css/SideBar.css" />
+}

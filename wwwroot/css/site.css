@@ -57,12 +57,7 @@ body {
 .carousel-item img{
     filter: brightness(70%);
 }
-.sidebar{
-    background-color:blue;
-    height: 80%;
-    position:sticky;
-    border-radius: 0px 5px 0px 0px;
-}
+
 .bg-fixed{
     background: center fixed url(/Images/bg.jpg);
     height: 300px;
@@ -77,4 +72,15 @@ body {
     border-radius: 4px; 
     background: #fff;
     padding: 10px 15px;
+}
+.z-index-0{
+    z-index: 0;
+}
+.class-item{
+    width: 18em;
+}
+.student-side{
+    min-height: 300px;
+    background-color: #9f9fe9;
+    border-radius: 4px;
 }

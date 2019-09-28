@@ -7,10 +7,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - School</title>
-    <link rel="stylesheet" href="~/css/simple-sidebar.css" />
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-lumen.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -21,49 +20,37 @@
     </environment>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     @RenderSection("Styles", false)
+    @if (User.Identity.IsAuthenticated)
+    {
+        <link rel="stylesheet" href="~/css/SideBar.css" />
+    }
 </head>
 
 <body>
     <header>
         <partial name="_NavBar" />
     </header>
-    @if (SignInManager.IsSignedIn(User))
+    @if (User.Identity.IsAuthenticated)
     {
-        <div class="d-flex" id="wrapper">
-            <!-- Sidebar -->
-            <partial name="SideBar" />
-            <div id="page-content-wrapper">
-                <div class="container-fluid">
-                    <partial name="_CookieConsentPartial" />
-                    <main role="main" class="pb-3">
-                        <button class="btn btn-primary m-1" id="menu-toggle">Toggle Menu</button>
-                        @RenderBody()
-                    </main>
-                </div>
-
-                <footer class="border-top footer text-muted">
-                    <div class="container">
-                        &copy; Olawale @DateTime.Now.Year - School - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </div>
-                </footer>
-            </div>
-        </div>
+        <partial name="SideBar" />
     }
-    else
-    {
-        <div class="container-fluid">
-            <partial name="_CookieConsentPartial" />
-            <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
-        </div>
 
-        <footer class="border-top footer text-muted">
-            <div class="container">
-                &copy; Olawale @DateTime.Now.Year - School - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            </div>
-        </footer>
-    }
+    <div class="container-fluid">
+        <partial name="_CookieConsentPartial" />
+        <main role="main" class="pb-3">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <button onclick="showMenu()" class="btn btn-primary m-1" style="font-size: 1em">&#9776; Menu</button>
+            }
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; Olawale @DateTime.Now.Year - School - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -84,16 +71,6 @@
         </script>
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <!-- Menu Toggle Script -->
-        <script>
-            $("#menu-toggle").click(function (e) {
-                e.preventDefault();
-                $("#wrapper").toggleClass("toggled");
-            });
-        </script>
-    }
 
     @RenderSection("Scripts", required: false)
 </body>

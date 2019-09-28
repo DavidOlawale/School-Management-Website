@@ -8,29 +8,19 @@ using System.Threading.Tasks;
 
 namespace School.Data
 {
+    /// <summary>
+    /// This class is for seeding data required for the app
+    /// </summary>
     public static class DbInitializer
     {
 
-        public static async Task InitializeAsync(ApplicationDbContext _db, UserManager<ApplicationUser> _userManager, RoleManager<IdentityRole> _roleManager)
+        public static async Task InitializeAsync(ApplicationDbContext _db, UserManager<ApplicationUser> _userManager, RoleManager<ApplicationRole> _roleManager)
         {
             if (!_db.Roles.Any())
             {
-                var result1 = await _roleManager.CreateAsync(new IdentityRole(RoleNames.Admin));
-                var result2 = await _roleManager.CreateAsync(new IdentityRole(RoleNames.Teacher));
-                var result3 = await _roleManager.CreateAsync(new IdentityRole(RoleNames.Student));
-
-                if (!result1.Succeeded)
-                {
-                    throw new Exception();
-                }
-                if (!result2.Succeeded)
-                {
-                    throw new Exception();
-                }
-                if (!result3.Succeeded)
-                {
-                    throw new Exception();
-                }
+                await _roleManager.CreateAsync(new ApplicationRole(RoleNames.Admin));
+                await _roleManager.CreateAsync(new ApplicationRole(RoleNames.Teacher));
+                await _roleManager.CreateAsync(new ApplicationRole(RoleNames.Student));
             }
 
             if (!_db.Classes.Any())
@@ -51,8 +41,6 @@ namespace School.Data
                 await _db.SaveChangesAsync();
             }
 
-            var a = _db.Users.Any();
-
             if (!_db.Users.Any())
             {
 
@@ -68,7 +56,6 @@ namespace School.Data
                     UserName = "emmanuel",
                     PhoneNumber = "08012345678",
                     ClassId = _db.Classes.Single(c => c.Name == "SSS 2").Id
-                    
                 };
                 var admin = new Admin()
                 {
@@ -79,7 +66,6 @@ namespace School.Data
                     Email = "olawale@gmail.com",
                     UserName = "olawale",
                     PhoneNumber = "08012345678"
-                    
                 };
                 var teacher = new Teacher()
                 {
@@ -97,10 +83,9 @@ namespace School.Data
                 await _userManager.CreateAsync(teacher, "123abc");
                 await _userManager.CreateAsync(student, "123abc");
 
-
-                var result1 = await _userManager.AddToRoleAsync(admin, RoleNames.Admin);
-                var result2 = await _userManager.AddToRoleAsync(teacher, RoleNames.Teacher);
-                var result3 = await _userManager.AddToRoleAsync(student, RoleNames.Student);
+                await _userManager.AddToRoleAsync(admin, RoleNames.Admin);
+                await _userManager.AddToRoleAsync(teacher, RoleNames.Teacher);
+                await _userManager.AddToRoleAsync(student, RoleNames.Student);
 
             }
 
