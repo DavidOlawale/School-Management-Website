@@ -1,20 +1,34 @@
-﻿@model School.Models.Class
-
+﻿@model School.Models.ViewModels.ClassDetailsViewModel
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1>@Model.Name</h1>
+<h1 class="">@Model.Class.Name</h1>
 <div class="row">
-    <div class="col-sm-8">
-        <h2>Teacher</h2>
-
+    <div class="row justify-content-around col-md-8">
+        <div class="col-sm-4">
+            <div class="m-1 jumbotron2 bg-white class-details-item">
+                <h3 class="text-center font-weight-bold">Teacher</h3>
+                <p>@Model.Class.Teacher.FullName</p>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="m-1 jumbotron2 bg-white class-details-item">
+                <h3 class="text-center ">Numer of students</h3>
+                <p class="text-center">@Model.NumberOfStudents</p>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="m-1 jumbotron2 bg-white class-details-item ">
+                <h3>Average Student Age</h3>
+                <p class="text-center font-weight-bold ">@Model.AverageAge</p>
+            </div>
+        </div>
     </div>
-    <div class="col-sm-4 student-side">
+    <div class="col-12 col-md-4 student-side">
         <h3>Students</h3>
         <ul class="list-group">
-            @foreach (var student in (IQueryable<Student>)ViewData["students"])
+            @foreach (var student in Model.Students)
             {
                 <li class="list-group-item"><a asp-controller="students" asp-action="Details" asp-route-id="@student.Id">@student.FullName</a></li>
             }

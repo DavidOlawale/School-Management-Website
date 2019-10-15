@@ -10,7 +10,8 @@ a.navbar-brand {
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 12px;
+    font-family: fa5-proxima-nova, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 @media (min-width: 768px) {
   html {
@@ -42,8 +43,10 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    color: #070731;
+    background-color: rgb(232, 241, 247);
 }
 .footer {
   position: absolute;
@@ -58,14 +61,19 @@ body {
     filter: brightness(70%);
 }
 
-.bg-fixed{
-    background: center fixed url(/Images/bg.jpg);
+.bg-fixed {
+    background: center fixed url(/Images/kids-dark.jpg);
     height: 300px;
+    font-size: x-large;
+    font-weight: bold;
+    color: white;
+}
+.bg-fixed p{
+    padding: 100px 30px;
 }
 .login-bg{
     height: 100vh;
-    background-color: blue ;
-
+    background:url(/Images/kids-dark.jpg) center ;
 }
 
 .login-content{
@@ -76,11 +84,40 @@ body {
 .z-index-0{
     z-index: 0;
 }
+.z-index-1{
+    z-index: 1;
+}
 .class-item{
     width: 18em;
+    background-color: #dedef2;
 }
 .student-side{
-    min-height: 300px;
+    min-height: 200px;
+    max-height: 350px;
     background-color: #9f9fe9;
     border-radius: 4px;
+    overflow: scroll;
+}
+.bg-blue {
+    background-color: #8888ed;
+}
+.contact-div span{
+    width: 20%;
+    display: inline;
+}
+.contact-div div {
+    width: 80%;
+    display: inline;
+    margin-left: 10px;
+}
+
+.class-details-item p{
+    font-size: 1.5em;
+    
+}
+.jumbotron2 {
+    padding: 1rem 0.5rem;
+    margin-bottom: 2rem;
+    background-color: #e9ecef;
+    border-radius: 0.3rem;
 }

@@ -93,7 +93,7 @@ namespace School.Controllers
                 return RedirectToAction("Index", students);
             }
             notification.Title = "Registration succesful";
-            notification.Text = model.Student.FirstName + " " + model.Student.MiddleName + " successfully registred";
+            notification.Text = model.Student.FirstName + " " + model.Student.MiddleName + " successfully registered";
             notification.Type = "success";
             return RedirectToActionPermanent("Index", notification);
         }
@@ -122,7 +122,7 @@ namespace School.Controllers
             };
             return RedirectToAction("Index", notification);
         }
-        public ActionResult Delete(string id)
+        public ActionResult Delete(Guid id)
         {
             var student = _context.Students.Find(id);
             return View("delete", student);

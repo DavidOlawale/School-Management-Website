@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using School.Data;
 using School.Models;
+using School.Models.ViewModels;
 
 namespace School.Controllers
 {
@@ -27,13 +28,15 @@ namespace School.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var classes = await _context.Classes.FindAsync(id);
-            if (classes == null)
+            var Class = await _context.Classes.FindAsync(id);
+            Class.Teacher = await _context.Teachers.FindAsync(Class.TeacherId);
+            if (Class == null)
             {
                 return NotFound();
             }
-            ViewData["students"] = _context.Students.Where(s => s.ClassId == id);
-            return View(classes);
+            var model = new ClassDetailsViewModel(Class);
+            model.Students = _context.Students.Where(s => s.ClassId == id);
+            return View(model);
         }
 
         public async Task<IActionResult> Edit(int? id)

@@ -235,3 +235,4 @@ C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Ma
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\School.pdb
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\School.csproj.CopyComplete
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Views\Teachers\Details.g.cshtml.cs
+C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Views\Home\Contact.g.cshtml.cs
