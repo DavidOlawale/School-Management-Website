@@ -23,6 +23,10 @@ namespace School.Models.ViewModels
                     int Age = DateTime.Now.Year - student.DOB.Year;
                     TotalAge+= Age;
                 }
+                if (NumberOfStudents == 0)
+                {
+                    return 0;
+                }
                 return TotalAge/NumberOfStudents;
             }
         }

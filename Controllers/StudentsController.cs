@@ -98,6 +98,7 @@ namespace School.Controllers
             return RedirectToActionPermanent("Index", notification);
         }
 
+        [HttpGet]
         public async Task<ActionResult> Edit(Guid id)
         {
             var student = await _context.Students.FindAsync(id);
@@ -109,7 +110,7 @@ namespace School.Controllers
             return View(student);
         }
 
-        [HttpPut]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(Student student)
         {

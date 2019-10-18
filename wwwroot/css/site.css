@@ -9,15 +9,6 @@ a.navbar-brand {
 
 /* Sticky footer styles
 -------------------------------------------------- */
-html {
-    font-size: 12px;
-    font-family: fa5-proxima-nova, "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
 
 .border-top {
   border-top: 1px solid #e5e5e5;
@@ -46,7 +37,7 @@ body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
     color: #070731;
-    background-color: rgb(232, 241, 247);
+    background-color: rgb(237, 244, 248);
 }
 .footer {
   position: absolute;
@@ -94,9 +85,13 @@ body {
 .student-side{
     min-height: 200px;
     max-height: 350px;
-    background-color: #9f9fe9;
+    background-color: #fff;
     border-radius: 4px;
-    overflow: scroll;
+    overflow-y: scroll;
+    text-align: center;
+}
+.student-side a{
+    text-decoration: none;
 }
 .bg-blue {
     background-color: #8888ed;
@@ -110,10 +105,10 @@ body {
     display: inline;
     margin-left: 10px;
 }
-
-.class-details-item p{
-    font-size: 1.5em;
-    
+.class-details-item {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
 }
 .jumbotron2 {
     padding: 1rem 0.5rem;

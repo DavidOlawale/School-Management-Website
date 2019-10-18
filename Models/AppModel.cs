@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using School.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,12 +21,11 @@ namespace School.Models
         [Display(Name = "Middle Name")]
         public string MiddleName { get; set; }
 
-        [Required]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
         [Display(Name ="Full Name")]
-        public string FullName { get => FirstName + " " + MiddleName + " " + LastName;}
+        public string FullName { get => FirstName + " " + MiddleName + " " + LastName ?? "";}
 
         [Required]
         public string Address { get; set; }
@@ -46,7 +46,6 @@ namespace School.Models
 
     }
 
-
     public class Student : ApplicationUser
     {
         [Required]
@@ -62,6 +61,8 @@ namespace School.Models
         [Display(Name = "Class")]
         public int ClassId { get; set; }
         public Class Class { get; set; }
+
+        public IEnumerable<Attendance> Atendances { get; set; }
 
     }
     public class Teacher : ApplicationUser
@@ -104,12 +105,35 @@ namespace School.Models
         public static string Teacher => "Teacher";
 
     }
-
     public class Notification
     {
         public string Title { get; set; }
         public string Text { get; set; }
         public string Type { get; set; }
     }
+    public class Attendance
+    {
+        public Attendance(ApplicationDbContext db)
+        {
+            _context = db;
+        }
+        private readonly ApplicationDbContext _context;
+        public int AttendanceId { get; set; }
 
+        public Guid StudentId { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        public DateTime Date { get; set; } = DateTime.Now.Date;
+
+        [Required]
+        public bool Present { get; set; }
+
+        public string FullName { get
+            {
+                var StudentFullName = _context.Students.Find(StudentId).FullName;
+                return StudentFullName;
+            }
+        }
+    }
 }

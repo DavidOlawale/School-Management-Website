@@ -5,34 +5,59 @@
 }
 <h1 class="">@Model.Class.Name</h1>
 <div class="row">
-    <div class="row justify-content-around col-md-8">
-        <div class="col-sm-4">
+    <div class="row justify-content-around col-md-8 mb-2">
+        <div class="col-4">
             <div class="m-1 jumbotron2 bg-white class-details-item">
-                <h3 class="text-center font-weight-bold">Teacher</h3>
                 <p>@Model.Class.Teacher.FullName</p>
+                <p>Teacher</p>
             </div>
         </div>
-        <div class="col-sm-4">
+        <div class="col-4">
             <div class="m-1 jumbotron2 bg-white class-details-item">
-                <h3 class="text-center ">Numer of students</h3>
-                <p class="text-center">@Model.NumberOfStudents</p>
+                <h1>@Model.NumberOfStudents</h1>
+                <p>Numer of students</p>
             </div>
         </div>
-        <div class="col-sm-4">
+        <div class="col-4">
             <div class="m-1 jumbotron2 bg-white class-details-item ">
-                <h3>Average Student Age</h3>
-                <p class="text-center font-weight-bold ">@Model.AverageAge</p>
+                <h1 class="font-weight-bold ">@Model.AverageAge</h1>
+                <p>Average Age</p>
             </div>
         </div>
     </div>
     <div class="col-12 col-md-4 student-side">
-        <h3>Students</h3>
-        <ul class="list-group">
+        <h2>Students</h2>
+        <table class="table table-stripped table-hover table-bordered">
+            <tr>
+                <th>Student Name</th>
+                <th>Attendance</th>
+            </tr>
             @foreach (var student in Model.Students)
             {
-                <li class="list-group-item"><a asp-controller="students" asp-action="Details" asp-route-id="@student.Id">@student.FullName</a></li>
+                string Presence = "No attendance taken";
+                Attendance attendance = student.Atendances.SingleOrDefault(a => a.Date.Date == DateTime.Now.Date);
+                if (student.Atendances != null)
+                {
+
+                    if (attendance == null)
+                    {
+                        
+                    }
+                    else if (attendance.Present)
+                    {
+                        Presence = "Present";
+                    }
+                    else
+                    {
+                        Presence = "Absent";
+                    }
+                }
+                <tr>
+                    <td><a asp-controller="Students" asp-action="Details" asp-route-id="@student.Id">@student.FullName</a></td>
+                    <td>@Presence</td>
+                </tr>
             }
-        </ul>
+
+        </table>
     </div>
 </div>
-
