@@ -11,8 +11,8 @@ using School.Models;
 
 namespace School.Controllers.Api
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     [Authorize(Roles ="Admin,Teacher")]
     public class AttendancesController : ControllerBase
     {
@@ -23,45 +23,27 @@ namespace School.Controllers.Api
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet("Getstudentattendances/{studentId}")]
         public async Task<ActionResult<IEnumerable<Attendance>>> GetStudentAttendances(Guid studentId)
         {
             var student = _context.Students.Find(studentId);
-            if (student == null)
-            {
-                return NotFound();
-            }
+            if (student == null) return NotFound("Student not found");
             return await _context.Attendances.Where(a => a.StudentId == studentId).ToListAsync();
         }
 
-
-        // GET: api/Attendances/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<Attendance>>> GetClassAttendances(int classid)
+        [HttpPost]
+        public async Task<ActionResult<Attendance>> PostAttendance([FromBody]Attendance attendance)
         {
-            var students = _context.Students.Where(s => s.ClassId == classid);
-            List<Attendance> attendances = new List<Attendance>();
-
-            //add the attendace of each student in the class to the collection
-            foreach (var student in students)
-            {
-                var Attendance = student.Atendances.SingleOrDefault(a => a.Date.Date == DateTime.Now.Date);
-                if (Attendance != null)
-                {
-                    attendances.Add(Attendance);
-                }
-            }
-            return attendances;
+            if (!_context.Students.Any(s => s.Id == attendance.StudentId)) return BadRequest("Student doesn't exist");
+            _context.Attendances.Add(attendance);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction("GetStudentAttendances", new { id = attendance.Id }, attendance);
         }
 
-        // PUT: api/Attendances/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAttendance(int id, Attendance attendance)
+        public async Task<IActionResult> PutAttendance(int id, [FromBody]Attendance attendance)
         {
-            if (id != attendance.AttendanceId)
-            {
-                return BadRequest();
-            }
+            if (id != attendance.Id) return BadRequest();
 
             _context.Entry(attendance).State = EntityState.Modified;
 
@@ -71,48 +53,15 @@ namespace School.Controllers.Api
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AttendanceExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                if (!AttendanceExists(id)) return NotFound();
+                else throw;
             }
-
             return NoContent();
-        }
-
-        // POST: api/Attendances
-        [HttpPost]
-        public async Task<ActionResult<Attendance>> PostAttendance(Attendance attendance)
-        {
-            _context.Attendances.Add(attendance);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetAttendance", new { id = attendance.AttendanceId }, attendance);
-        }
-
-        // DELETE: api/Attendances/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Attendance>> DeleteAttendance(int id)
-        {
-            var attendance = await _context.Attendances.FindAsync(id);
-            if (attendance == null)
-            {
-                return NotFound();
-            }
-
-            _context.Attendances.Remove(attendance);
-            await _context.SaveChangesAsync();
-
-            return attendance;
         }
 
         private bool AttendanceExists(int id)
         {
-            return _context.Attendances.Any(e => e.AttendanceId == id);
+            return _context.Attendances.Any(e => e.Id == id);
         }
     }
 }

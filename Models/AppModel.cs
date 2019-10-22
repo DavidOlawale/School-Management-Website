@@ -113,12 +113,8 @@ namespace School.Models
     }
     public class Attendance
     {
-        public Attendance(ApplicationDbContext db)
-        {
-            _context = db;
-        }
         private readonly ApplicationDbContext _context;
-        public int AttendanceId { get; set; }
+        public int Id { get; set; }
 
         public Guid StudentId { get; set; }
 
@@ -129,11 +125,5 @@ namespace School.Models
         [Required]
         public bool Present { get; set; }
 
-        public string FullName { get
-            {
-                var StudentFullName = _context.Students.Find(StudentId).FullName;
-                return StudentFullName;
-            }
-        }
     }
 }

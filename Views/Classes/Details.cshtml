@@ -3,7 +3,7 @@
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1 class="">@Model.Class.Name</h1>
+<h1 class="text-center">@Model.Class.Name</h1>
 <div class="row">
     <div class="row justify-content-around col-md-8 mb-2">
         <div class="col-4">
@@ -27,8 +27,8 @@
     </div>
     <div class="col-12 col-md-4 student-side">
         <h2>Students</h2>
-        <table class="table table-stripped table-hover table-bordered">
-            <tr>
+        <table class="table table-stripped table-hover table-bordered" id="students">
+            <tr id="head">
                 <th>Student Name</th>
                 <th>Attendance</th>
             </tr>
@@ -41,7 +41,7 @@
 
                     if (attendance == null)
                     {
-                        
+
                     }
                     else if (attendance.Present)
                     {
@@ -52,7 +52,7 @@
                         Presence = "Absent";
                     }
                 }
-                <tr>
+                <tr studentid="@student.Id">
                     <td><a asp-controller="Students" asp-action="Details" asp-route-id="@student.Id">@student.FullName</a></td>
                     <td>@Presence</td>
                 </tr>
