@@ -11,11 +11,12 @@ namespace School.Models.ViewModels
         public ClassDetailsViewModel(Class Class)
         {
             this.Class = Class;
-
         }
         public Class Class { get; set; }
         public int NumberOfStudents { get { return Students.Count(); } }
         public IEnumerable<Student> Students { get; set; }
+
+        public IEnumerable<Student> StudentsWithoutAttendance { get; set; }
         public double AverageAge { get {
                 int TotalAge = 0;
                 foreach (var student in Students)

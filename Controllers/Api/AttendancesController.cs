@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +14,7 @@ namespace School.Controllers.Api
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(Roles ="Admin,Teacher")]
+    [Authorize(Roles ="Teacher")]
     public class AttendancesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -23,21 +24,34 @@ namespace School.Controllers.Api
             _context = context;
         }
 
-        [HttpGet("Getstudentattendances/{studentId}")]
-        public async Task<ActionResult<IEnumerable<Attendance>>> GetStudentAttendances(Guid studentId)
+        [Authorize(Roles = "Admin,Teacher")]
+        [HttpGet("GetAttendances/{studentId}")]
+        public async Task<ActionResult<IEnumerable<Attendance>>> GetAttendances(Guid studentId)
         {
             var student = _context.Students.Find(studentId);
-            if (student == null) return NotFound("Student not found");
+            if (student == null) return BadRequest("Student not found");
             return await _context.Attendances.Where(a => a.StudentId == studentId).ToListAsync();
         }
 
-        [HttpPost]
+        [Authorize(Roles = "Admin,Teacher")]
+        [HttpGet("GetAttendanceToday/{studentId}")]
+        public async Task<ActionResult<Attendance>> GetAttendanceToday(Guid studentId)
+        {
+            var student = _context.Students.Find(studentId);
+            if (student == null) return BadRequest("Student not found");
+            var attendance = _context.Attendances.SingleOrDefault(a => a.StudentId == studentId && a.Date.Date == DateTime.Now.Date);
+            return attendance;
+        }
+
+        [HttpPost("postattendance")]
         public async Task<ActionResult<Attendance>> PostAttendance([FromBody]Attendance attendance)
         {
             if (!_context.Students.Any(s => s.Id == attendance.StudentId)) return BadRequest("Student doesn't exist");
+            if (_context.Attendances.SingleOrDefault(a => a.Date.Date == DateTime.Now.Date && a.StudentId == attendance.StudentId) != null)
+                return BadRequest("Attendance already taken");
             _context.Attendances.Add(attendance);
             await _context.SaveChangesAsync();
-            return CreatedAtAction("GetStudentAttendances", new { id = attendance.Id }, attendance);
+            return CreatedAtAction("GetAttendances", new { studentId = attendance.Id }, attendance);
         }
 
         [HttpPut("{id}")]
@@ -53,15 +67,10 @@ namespace School.Controllers.Api
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AttendanceExists(id)) return NotFound();
+                if (!_context.Attendances.Any(e => e.Id == id)) return NotFound();
                 else throw;
             }
             return NoContent();
-        }
-
-        private bool AttendanceExists(int id)
-        {
-            return _context.Attendances.Any(e => e.Id == id);
         }
     }
 }

@@ -35,7 +35,10 @@ namespace School.Controllers
                 return NotFound();
             }
             var model = new ClassDetailsViewModel(Class);
-            model.Students = _context.Students.Where(s => s.ClassId == id).Include(s => s.Atendances);
+            model.Students = _context.Students.Where(s => s.ClassId == id);
+            var TodayAttendance = _context.Attendances.Where(a => a.Date.Date == DateTime.Now.Date);
+            //finds students who have an attendance for today
+            model.StudentsWithoutAttendance = model.Students.Where(s => !TodayAttendance.Any(a => a.StudentId == s.Id ));
             return View(model);
         }
 
