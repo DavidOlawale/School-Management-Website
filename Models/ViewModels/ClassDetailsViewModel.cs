@@ -8,15 +8,17 @@ namespace School.Models.ViewModels
 {
     public class ClassDetailsViewModel
     {
-        public ClassDetailsViewModel(Class Class)
+        public ClassDetailsViewModel(Class Class, Teacher teacher)
         {
             this.Class = Class;
+            this.Teacher = teacher;
         }
-        public Class Class { get; set; }
+        public Teacher Teacher { get; set; }
+        public Class Class;
         public int NumberOfStudents { get { return Students.Count(); } }
-        public IEnumerable<Student> Students { get; set; }
+        public IEnumerable<Student> Students;
 
-        public IEnumerable<Student> StudentsWithoutAttendance { get; set; }
+        public IEnumerable<Student> StudentsWithoutAttendance;
         public double AverageAge { get {
                 int TotalAge = 0;
                 foreach (var student in Students)

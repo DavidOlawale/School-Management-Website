@@ -207,7 +207,6 @@ C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Ma
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ViewImports.g.cshtml.cs
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ViewStart.g.cshtml.cs
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Views\Classes\Delete.g.cshtml.cs
-C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Views\Classes\Details.g.cshtml.cs
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Views\Classes\Edit.g.cshtml.cs
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Views\Classes\Index.g.cshtml.cs
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Views\Home\Index.g.cshtml.cs
@@ -236,3 +235,5 @@ C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Ma
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\School.csproj.CopyComplete
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Views\Teachers\Details.g.cshtml.cs
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Views\Home\Contact.g.cshtml.cs
+C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Views\Classes\Details.g.cshtml.cs
+C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Views\TeacherClass\Details.g.cshtml.cs

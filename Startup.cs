@@ -59,7 +59,6 @@ namespace School
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultUI(UIFramework.Bootstrap4)
             .AddDefaultTokenProviders();
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

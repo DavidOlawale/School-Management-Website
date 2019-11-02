@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,33 +13,41 @@ using School.Models.ViewModels;
 
 namespace School.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class ClassesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ClassesController(ApplicationDbContext context)
+        public ClassesController(ApplicationDbContext context, UserManager<ApplicationUser> manager)
         {
             _context = context;
+            _userManager = manager;
+
         }
 
         public async Task<IActionResult> Index()
         {
-            var Classes = await _context.Classes.Include(c => c.Teacher).ToListAsync();
-            return View(Classes);
+            var Classes = _context.Classes;
+            var Model = new List<ClassDetailsViewModel>();
+            foreach (var Class in Classes)
+            {
+                var teacher = _context.Teachers.FirstOrDefault(t => t.ClassId == Class.Id);
+                Model.Add(new ClassDetailsViewModel(Class, teacher));
+            }
+            return View(Model);
         }
 
         public async Task<IActionResult> Details(int id)
         {
             var Class = await _context.Classes.FindAsync(id);
-            Class.Teacher = await _context.Teachers.FindAsync(Class.TeacherId);
             if (Class == null)
-            {
                 return NotFound();
-            }
-            var model = new ClassDetailsViewModel(Class);
+            var Teacher = _context.Teachers.FirstOrDefault(t => t.ClassId == id);
+            var model = new ClassDetailsViewModel(Class, Teacher);
             model.Students = _context.Students.Where(s => s.ClassId == id);
             var TodayAttendance = _context.Attendances.Where(a => a.Date.Date == DateTime.Now.Date);
-            //finds students who have an attendance for today
+            //finds students who don't have an attendance for today
             model.StudentsWithoutAttendance = model.Students.Where(s => !TodayAttendance.Any(a => a.StudentId == s.Id ));
             return View(model);
         }
@@ -45,15 +55,11 @@ namespace School.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var Class = await _context.Classes.FindAsync(id);
             if (Class == null)
-            {
                 return NotFound();
-            }
             return View(Class);
         }
 
@@ -62,9 +68,7 @@ namespace School.Controllers
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Class Class)
         {
             if (id != Class.Id)
-            {
                 return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
@@ -76,13 +80,9 @@ namespace School.Controllers
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!_context.Classes.Any(c => c.Id == id))
-                    {
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
             }

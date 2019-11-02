@@ -43,7 +43,6 @@ namespace School.Data
 
             if (!_db.Users.Any())
             {
-
                 var student = new Student()
                 {
                     FirstName = "zannu",
@@ -87,6 +86,9 @@ namespace School.Data
                 await _userManager.AddToRoleAsync(teacher, RoleNames.Teacher);
                 await _userManager.AddToRoleAsync(student, RoleNames.Student);
 
+                //Add Class teacher
+                teacher.ClassId = 5;
+                _db.Update(teacher);
             }
 
         }

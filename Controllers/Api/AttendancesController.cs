@@ -14,7 +14,6 @@ namespace School.Controllers.Api
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(Roles ="Teacher")]
     public class AttendancesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -43,6 +42,7 @@ namespace School.Controllers.Api
             return attendance;
         }
 
+        [Authorize(Roles ="Teacher")]
         [HttpPost("postattendance")]
         public async Task<ActionResult<Attendance>> PostAttendance([FromBody]Attendance attendance)
         {

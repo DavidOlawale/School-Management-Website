@@ -75,6 +75,9 @@ namespace School.Models
         [DataType(DataType.Date)]
         public DateTime DOB { get; set; }
 
+        public int ClassId { get; set; }
+        public Class Class { get; set; }
+
     }
     public class Admin : ApplicationUser
     {
@@ -89,9 +92,6 @@ namespace School.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-
-        public Guid? TeacherId { get; set; }
-        public Teacher Teacher { get; set; }
     }
     public class Parent : ApplicationUser
     {

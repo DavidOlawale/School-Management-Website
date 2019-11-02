@@ -3,23 +3,30 @@
     <button id="close-btn">&times;</button>
     <a asp-area="Identity" asp-page="/Account/Manage/Index" >My Profile</a>
     <a asp-controller="Messases">Messages</a>
-    @if (User.IsInRole("Admin"))
+    @if (User.IsInRole(RoleNames.Admin))
     {
         <a asp-controller="Students" asp-action="Index" >Students</a>
         <a asp-controller="Teachers" asp-action="Index" >Teachers</a>
         <a asp-controller="Classes" asp-action="Index" >Classes</a>
         <a href="#">School Info</a>
     }
+    @if (User.IsInRole(RoleNames.Teacher))
+    {
+        <a asp-controller="teacherclass" asp-action="details" >Class</a>
+    }
+
 
 </div>
 
 <script>
+    let sideBar = document.getElementById('menu');
     function showMenu() {
-        document.getElementById('menu').classList.add('sidebar-colapse')
+        sideBar.classList.add('sidebar-colapse')
     }
+    sideBar.addEventListener('blur', () => this.classList.remove('sidebar-colapse'))
 
     document.getElementById('close-btn').onclick = () => {
-        document.getElementById('menu').classList.remove('sidebar-colapse')
+        sideBar.classList.remove('sidebar-colapse')
     }
 </script>
 @section styles{ 
