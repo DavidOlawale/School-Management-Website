@@ -23,6 +23,22 @@
     <Compile Remove="Migrations\20190924185400_check.Designer.cs" />
     <Compile Remove="Migrations\20191018091737_AddAttendance.cs" />
     <Compile Remove="Migrations\20191018091737_AddAttendance.Designer.cs" />
+    <Compile Remove="Migrations\20191111214017_Initial.cs" />
+    <Compile Remove="Migrations\20191111214017_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20191111215045_Initial.cs" />
+    <Compile Remove="Migrations\20191111215045_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20191111222645_Initial.cs" />
+    <Compile Remove="Migrations\20191111222645_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20191111231151_Initial.cs" />
+    <Compile Remove="Migrations\20191111231151_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20191111231342_Initial.cs" />
+    <Compile Remove="Migrations\20191111231342_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20191111231538_Initial.cs" />
+    <Compile Remove="Migrations\20191111231538_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20191112143708_Initial.cs" />
+    <Compile Remove="Migrations\20191112143708_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20191112145021_Initial.cs" />
+    <Compile Remove="Migrations\20191112145021_Initial.Designer.cs" />
   </ItemGroup>
 
 

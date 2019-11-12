@@ -10,8 +10,8 @@ using School.Data;
 namespace School.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190923214507_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20191112151939_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -152,8 +152,7 @@ namespace School.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired();
 
-                    b.Property<string>("LastName")
-                        .IsRequired();
+                    b.Property<string>("LastName");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -198,6 +197,25 @@ namespace School.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
                 });
 
+            modelBuilder.Entity("School.Models.Attendance", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<bool>("Present");
+
+                    b.Property<Guid>("StudentId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Attendances");
+                });
+
             modelBuilder.Entity("School.Models.Class", b =>
                 {
                     b.Property<int>("Id")
@@ -207,13 +225,45 @@ namespace School.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
+                    b.HasKey("Id");
+
+                    b.ToTable("Classes");
+                });
+
+            modelBuilder.Entity("School.Models.Department", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<Guid?>("DepartmentHeadId");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentHeadId")
+                        .IsUnique()
+                        .HasFilter("[DepartmentHeadId] IS NOT NULL");
+
+                    b.ToTable("Departments");
+                });
+
+            modelBuilder.Entity("School.Models.Subject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
                     b.Property<Guid>("TeacherId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("Classes");
+                    b.ToTable("Subjects");
                 });
 
             modelBuilder.Entity("School.Models.Admin", b =>
@@ -240,9 +290,13 @@ namespace School.Migrations
 
                     b.Property<DateTime>("DOB");
 
+                    b.Property<int>("DepartmentId");
+
                     b.Property<Guid?>("ParentId");
 
                     b.HasIndex("ClassId");
+
+                    b.HasIndex("DepartmentId");
 
                     b.HasIndex("ParentId");
 
@@ -253,10 +307,15 @@ namespace School.Migrations
                 {
                     b.HasBaseType("School.Models.ApplicationUser");
 
+                    b.Property<int>("ClassId")
+                        .HasColumnName("Teacher_ClassId");
+
                     b.Property<DateTime>("DOB")
                         .HasColumnName("Teacher_DOB");
 
                     b.Property<DateTime>("EmploymentDate");
+
+                    b.HasIndex("ClassId");
 
                     b.HasDiscriminator().HasValue("Teacher");
                 });
@@ -306,7 +365,22 @@ namespace School.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("School.Models.Class", b =>
+            modelBuilder.Entity("School.Models.Attendance", b =>
+                {
+                    b.HasOne("School.Models.Student")
+                        .WithMany("Atendances")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("School.Models.Department", b =>
+                {
+                    b.HasOne("School.Models.Teacher", "DepartmentHead")
+                        .WithOne("DepartmentHeading")
+                        .HasForeignKey("School.Models.Department", "DepartmentHeadId");
+                });
+
+            modelBuilder.Entity("School.Models.Subject", b =>
                 {
                     b.HasOne("School.Models.Teacher", "Teacher")
                         .WithMany()
@@ -317,13 +391,26 @@ namespace School.Migrations
             modelBuilder.Entity("School.Models.Student", b =>
                 {
                     b.HasOne("School.Models.Class", "Class")
-                        .WithMany()
+                        .WithMany("Students")
                         .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("School.Models.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("School.Models.Parent")
                         .WithMany("Children")
                         .HasForeignKey("ParentId");
+                });
+
+            modelBuilder.Entity("School.Models.Teacher", b =>
+                {
+                    b.HasOne("School.Models.Class", "Class")
+                        .WithMany()
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

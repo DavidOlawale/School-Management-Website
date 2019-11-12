@@ -63,6 +63,8 @@ namespace School.Models
         public Class Class { get; set; }
 
         public IEnumerable<Attendance> Atendances { get; set; }
+        public int DepartmentId { get; set; }
+        public Department Department { get; set; }
 
     }
     public class Teacher : ApplicationUser
@@ -78,6 +80,8 @@ namespace School.Models
         public int ClassId { get; set; }
         public Class Class { get; set; }
 
+        public Department DepartmentHeading { get; set; }
+
     }
     public class Admin : ApplicationUser
     {
@@ -92,6 +96,7 @@ namespace School.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+        public IEnumerable<Student> Students { get; set; }
     }
     public class Parent : ApplicationUser
     {
@@ -124,6 +129,27 @@ namespace School.Models
 
         [Required]
         public bool Present { get; set; }
+
+    }
+    public class Department
+    {
+        public Department(string name)
+        {
+            Name = name;
+        }
+
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public Guid? DepartmentHeadId { get; set; }
+        public Teacher DepartmentHead { get; set; }
+
+    }
+    public class Subject
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public Guid TeacherId { get; set; }
+        public Teacher Teacher { get; set; }
 
     }
 }

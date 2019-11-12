@@ -228,6 +228,42 @@ namespace School.Migrations
                     b.ToTable("Classes");
                 });
 
+            modelBuilder.Entity("School.Models.Department", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<Guid?>("DepartmentHeadId");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentHeadId")
+                        .IsUnique()
+                        .HasFilter("[DepartmentHeadId] IS NOT NULL");
+
+                    b.ToTable("Departments");
+                });
+
+            modelBuilder.Entity("School.Models.Subject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.Property<Guid>("TeacherId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("Subjects");
+                });
+
             modelBuilder.Entity("School.Models.Admin", b =>
                 {
                     b.HasBaseType("School.Models.ApplicationUser");
@@ -252,9 +288,13 @@ namespace School.Migrations
 
                     b.Property<DateTime>("DOB");
 
+                    b.Property<int>("DepartmentId");
+
                     b.Property<Guid?>("ParentId");
 
                     b.HasIndex("ClassId");
+
+                    b.HasIndex("DepartmentId");
 
                     b.HasIndex("ParentId");
 
@@ -331,12 +371,32 @@ namespace School.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("School.Models.Department", b =>
+                {
+                    b.HasOne("School.Models.Teacher", "DepartmentHead")
+                        .WithOne("DepartmentHeading")
+                        .HasForeignKey("School.Models.Department", "DepartmentHeadId");
+                });
+
+            modelBuilder.Entity("School.Models.Subject", b =>
+                {
+                    b.HasOne("School.Models.Teacher", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("School.Models.Student", b =>
                 {
                     b.HasOne("School.Models.Class", "Class")
-                        .WithMany()
+                        .WithMany("Students")
                         .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("School.Models.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("School.Models.Parent")
                         .WithMany("Children")
@@ -348,7 +408,7 @@ namespace School.Migrations
                     b.HasOne("School.Models.Class", "Class")
                         .WithMany()
                         .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using School.Models;
 using System;
@@ -16,6 +17,21 @@ namespace School.Data
 
         public static async Task InitializeAsync(ApplicationDbContext _db, UserManager<ApplicationUser> _userManager, RoleManager<ApplicationRole> _roleManager)
         {
+
+            _db.Database.Migrate();
+
+            //seed departments
+            if (!_db.Departments.Any())
+            {
+                var science = new Department("Science");
+                var commercial = new Department("Commercial");
+                var Art = new Department("Art");
+                _db.Departments.Add(science);
+                _db.Departments.Add(commercial);
+                _db.Departments.Add(Art);
+                _db.SaveChanges();
+            }
+            //seed roles
             if (!_db.Roles.Any())
             {
                 await _roleManager.CreateAsync(new ApplicationRole(RoleNames.Admin));
@@ -23,6 +39,7 @@ namespace School.Data
                 await _roleManager.CreateAsync(new ApplicationRole(RoleNames.Student));
             }
 
+            //seed classes
             if (!_db.Classes.Any())
             {
                 var classes = new Class[6]
@@ -41,6 +58,7 @@ namespace School.Data
                 await _db.SaveChangesAsync();
             }
 
+            //seed users
             if (!_db.Users.Any())
             {
                 var student = new Student()
@@ -54,7 +72,8 @@ namespace School.Data
                     DOB = new DateTime(1999, 9, 12),
                     UserName = "emmanuel",
                     PhoneNumber = "08012345678",
-                    ClassId = _db.Classes.Single(c => c.Name == "SSS 2").Id
+                    ClassId = _db.Classes.Single(c => c.Name == "SSS 2").Id,
+                    DepartmentId = _db.Departments.Single(d => d.Name == "Science").Id
                 };
                 var admin = new Admin()
                 {
@@ -76,7 +95,8 @@ namespace School.Data
                     UserName = "babatunde",
                     PhoneNumber = "08012233456",
                     DOB = new DateTime(1990, 8, 10),
-                    EmploymentDate = DateTime.Now
+                    EmploymentDate = DateTime.Now,
+                    ClassId = _db.Classes.Single(c => c.Name == "SSS 2").Id
                 };
                 await _userManager.CreateAsync(admin, "123abc");
                 await _userManager.CreateAsync(teacher, "123abc");

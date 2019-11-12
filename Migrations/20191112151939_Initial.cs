@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace School.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,6 +20,19 @@ namespace School.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Classes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Classes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -105,17 +118,32 @@ namespace School.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Classes",
+                name: "Attendances",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: false),
-                    TeacherId = table.Column<Guid>(nullable: false)
+                    StudentId = table.Column<Guid>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
+                    Present = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Classes", x => x.Id);
+                    table.PrimaryKey("PK_Attendances", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Departments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    DepartmentHeadId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Departments", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -139,16 +167,18 @@ namespace School.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(nullable: false),
                     MiddleName = table.Column<string>(nullable: false),
-                    LastName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: false),
                     ProfileImage = table.Column<byte[]>(nullable: true),
                     Discriminator = table.Column<string>(nullable: false),
                     AdmissionDate = table.Column<DateTime>(nullable: true),
                     DOB = table.Column<DateTime>(nullable: true),
                     ClassId = table.Column<int>(nullable: true),
+                    DepartmentId = table.Column<int>(nullable: true),
                     ParentId = table.Column<Guid>(nullable: true),
                     EmploymentDate = table.Column<DateTime>(nullable: true),
-                    Teacher_DOB = table.Column<DateTime>(nullable: true)
+                    Teacher_DOB = table.Column<DateTime>(nullable: true),
+                    Teacher_ClassId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -158,13 +188,45 @@ namespace School.Migrations
                         column: x => x.ClassId,
                         principalTable: "Classes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Departments_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Departments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_AspNetUsers_AspNetUsers_ParentId",
                         column: x => x.ParentId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Classes_Teacher_ClassId",
+                        column: x => x.Teacher_ClassId,
+                        principalTable: "Classes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Subjects",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    TeacherId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subjects", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Subjects_AspNetUsers_TeacherId",
+                        column: x => x.TeacherId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -212,13 +274,35 @@ namespace School.Migrations
                 column: "ClassId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_DepartmentId",
+                table: "AspNetUsers",
+                column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_ParentId",
                 table: "AspNetUsers",
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Classes_TeacherId",
-                table: "Classes",
+                name: "IX_AspNetUsers_Teacher_ClassId",
+                table: "AspNetUsers",
+                column: "Teacher_ClassId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attendances_StudentId",
+                table: "Attendances",
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Departments_DepartmentHeadId",
+                table: "Departments",
+                column: "DepartmentHeadId",
+                unique: true,
+                filter: "[DepartmentHeadId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Subjects_TeacherId",
+                table: "Subjects",
                 column: "TeacherId");
 
             migrationBuilder.AddForeignKey(
@@ -254,19 +338,27 @@ namespace School.Migrations
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Classes_AspNetUsers_TeacherId",
-                table: "Classes",
-                column: "TeacherId",
+                name: "FK_Attendances_AspNetUsers_StudentId",
+                table: "Attendances",
+                column: "StudentId",
                 principalTable: "AspNetUsers",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.NoAction);
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Departments_AspNetUsers_DepartmentHeadId",
+                table: "Departments",
+                column: "DepartmentHeadId",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Classes_AspNetUsers_TeacherId",
-                table: "Classes");
+                name: "FK_Departments_AspNetUsers_DepartmentHeadId",
+                table: "Departments");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -284,6 +376,12 @@ namespace School.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Attendances");
+
+            migrationBuilder.DropTable(
+                name: "Subjects");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -291,6 +389,9 @@ namespace School.Migrations
 
             migrationBuilder.DropTable(
                 name: "Classes");
+
+            migrationBuilder.DropTable(
+                name: "Departments");
         }
     }
 }
