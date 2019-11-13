@@ -114,7 +114,18 @@ namespace School.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(Student student)
         {
-            await _userManager.UpdateAsync(student);
+            var StudentInDb = _context.Students.Find(student.Id);
+            StudentInDb.FirstName = student.FirstName;
+            StudentInDb.MiddleName = student.MiddleName;
+            StudentInDb.LastName = student.LastName;
+            StudentInDb.Email = student.Email;
+            StudentInDb.DOB = student.DOB;
+            StudentInDb.Address = student.Address;
+            StudentInDb.ClassId = student.ClassId;
+            StudentInDb.PhoneNumber = student.PhoneNumber;
+            StudentInDb.AdmissionDate = student.AdmissionDate;
+
+            await _userManager.UpdateAsync(StudentInDb);
             var notification = new Notification()
             {
                 Title = "Update successfull",

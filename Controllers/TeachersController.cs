@@ -92,21 +92,29 @@ namespace School.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(string id, IFormCollection collection)
+        public async Task<ActionResult> Edit(Teacher teacher)
         {
-            try
-            {
-                // TODO: Add update logic here
+            var teacherInDb = _context.Teachers.Find(teacher.Id);
+            teacherInDb.FirstName = teacher.FirstName;
+            teacherInDb.MiddleName = teacher.MiddleName;
+            teacherInDb.LastName = teacher.LastName;
+            teacherInDb.Email = teacher.Email;
+            teacherInDb.DOB = teacher.DOB;
+            teacherInDb.Address = teacher.Address;
+            teacherInDb.ClassId = teacher.ClassId;
+            teacherInDb.PhoneNumber = teacher.PhoneNumber;
+            teacherInDb.EmploymentDate = teacher.EmploymentDate;
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+            await _userManager.UpdateAsync(teacherInDb);
+            var notification = new Notification()
             {
-                return View();
-            }
+                Title = "Update successfull",
+                Text = teacher.FirstName + " " + teacher.MiddleName + " updated successfully",
+                Type = "success"
+            };
+            return RedirectToAction("Index", notification);
         }
 
-        // GET: Teachers/Delete/5
         public ActionResult Delete(string id)
         {
             return View();

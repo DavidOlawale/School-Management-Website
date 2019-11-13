@@ -234,15 +234,13 @@ namespace School.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<Guid?>("DepartmentHeadId");
+                    b.Property<Guid>("DepartmentHeadId");
 
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DepartmentHeadId")
-                        .IsUnique()
-                        .HasFilter("[DepartmentHeadId] IS NOT NULL");
+                    b.HasIndex("DepartmentHeadId");
 
                     b.ToTable("Departments");
                 });
@@ -373,9 +371,10 @@ namespace School.Migrations
 
             modelBuilder.Entity("School.Models.Department", b =>
                 {
-                    b.HasOne("School.Models.Teacher", "DepartmentHead")
-                        .WithOne("DepartmentHeading")
-                        .HasForeignKey("School.Models.Department", "DepartmentHeadId");
+                    b.HasOne("School.Models.ApplicationUser", "DepartmentHead")
+                        .WithMany()
+                        .HasForeignKey("DepartmentHeadId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("School.Models.Subject", b =>
@@ -396,7 +395,7 @@ namespace School.Migrations
                     b.HasOne("School.Models.Department", "Department")
                         .WithMany()
                         .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("School.Models.Parent")
                         .WithMany("Children")
