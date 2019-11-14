@@ -39,6 +39,8 @@
     <Compile Remove="Migrations\20191112143708_Initial.Designer.cs" />
     <Compile Remove="Migrations\20191112145021_Initial.cs" />
     <Compile Remove="Migrations\20191112145021_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20191113111212_AddedDepartmentSubject.cs" />
+    <Compile Remove="Migrations\20191113111212_AddedDepartmentSubject.Designer.cs" />
   </ItemGroup>
 
 

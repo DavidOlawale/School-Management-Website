@@ -51,6 +51,17 @@ namespace School.Data
                 .HasForeignKey(t => t.ClassId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<DepartmentSubject>()
+                .HasKey(nameof(DepartmentSubject.DepartmentId), nameof(DepartmentSubject.SubjectId));
+
+            builder.Entity<Exam>()
+                .HasKey(nameof(Exam.DepartmentSubjectDepartmentId), nameof(Exam.DepartmentSubjectSubjecttId), nameof(Exam.StudentId), nameof(Exam.AcademicSectionId));
+
+            builder.Entity<Exam>()
+                .HasOne(e => e.DepartmentSubject)
+                .WithMany()
+                .HasForeignKey(nameof(Exam.DepartmentSubjectDepartmentId), nameof(Exam.DepartmentSubjectSubjecttId));
+
         }
     }
 }

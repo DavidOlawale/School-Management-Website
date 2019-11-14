@@ -10,6 +10,13 @@ using System.Threading.Tasks;
 
 namespace School.Models
 {
+    public static class RoleNames
+    {
+        public static string Admin => "Admin";
+        public static string Student => "Student";
+        public static string Teacher => "Teacher";
+
+    }
 
     public class ApplicationUser : IdentityUser<Guid>
     {
@@ -103,13 +110,6 @@ namespace School.Models
         public IEnumerable<Student> Children { get; set; }
 
     }
-    public static class RoleNames
-    {
-        public static string Admin => "Admin";
-        public static string Student => "Student";
-        public static string Teacher => "Teacher";
-
-    }
     public class Notification
     {
         public string Title { get; set; }
@@ -146,10 +146,52 @@ namespace School.Models
     }
     public class Subject
     {
+        public Subject(string name)
+        {
+            Name = name;
+        }
         public int Id { get; set; }
         public string Name { get; set; }
-        public Guid TeacherId { get; set; }
-        public Teacher Teacher { get; set; }
-
     }
+    public class DepartmentSubject
+    {
+        public int DepartmentId { get; set; }
+        public Department Department { get; set; }
+        public int SubjectId { get; set; }
+        public Subject Subject { get; set; }
+    }
+    public class Exam
+    {
+        public Guid StudentId { get; set; }
+        public int DepartmentSubjectDepartmentId { get; set; }
+        public int DepartmentSubjectSubjecttId { get; set; }
+        public DepartmentSubject DepartmentSubject{ get; set; }
+        public int AcademicSectionId { get; set; }
+        public AcademicSecion AcademicSection { get; set; }
+
+        [Range(0, 60), Required]
+        public int Score { get; set; }
+    }
+
+    public class Test
+    {
+        public int Id { get; set; }
+        public Guid StudentId { get; set; }
+        public int DepartmentSubjectId { get; set; }
+        public DepartmentSubject DepartmentSubject { get; set; }
+        public int AcademicSection { get; set; }
+        public AcademicSecion AcademicSecion { get; set; }
+
+        [Range(0, 40), Required]
+        public int Score { get; set; }
+    }
+    public class AcademicSecion
+    {
+        public int Id { get; set; }
+        [Required]
+        public DateTime BeginDate { get; set; }
+        [Required]
+        public DateTime EndDate { get; set; }
+    }
+
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using School.Data;
 
 namespace School.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191113150812_AddedDepartmentSubject")]
+    partial class AddedDepartmentSubject
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,21 +102,6 @@ namespace School.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("School.Models.AcademicSecion", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("BeginDate");
-
-                    b.Property<DateTime>("EndDate");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AcademicSecion");
                 });
 
             modelBuilder.Entity("School.Models.ApplicationRole", b =>
@@ -268,30 +255,13 @@ namespace School.Migrations
 
                     b.Property<int>("SubjectId");
 
+                    b.Property<int>("Id");
+
                     b.HasKey("DepartmentId", "SubjectId");
 
                     b.HasIndex("SubjectId");
 
                     b.ToTable("DepartmentSubject");
-                });
-
-            modelBuilder.Entity("School.Models.Exam", b =>
-                {
-                    b.Property<int>("DepartmentSubjectDepartmentId");
-
-                    b.Property<int>("DepartmentSubjectSubjecttId");
-
-                    b.Property<Guid>("StudentId");
-
-                    b.Property<int>("AcademicSectionId");
-
-                    b.Property<int>("Score");
-
-                    b.HasKey("DepartmentSubjectDepartmentId", "DepartmentSubjectSubjecttId", "StudentId", "AcademicSectionId");
-
-                    b.HasIndex("AcademicSectionId");
-
-                    b.ToTable("Exam");
                 });
 
             modelBuilder.Entity("School.Models.Subject", b =>
@@ -431,19 +401,6 @@ namespace School.Migrations
                     b.HasOne("School.Models.Subject", "Subject")
                         .WithMany()
                         .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("School.Models.Exam", b =>
-                {
-                    b.HasOne("School.Models.AcademicSecion", "AcademicSection")
-                        .WithMany()
-                        .HasForeignKey("AcademicSectionId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("School.Models.DepartmentSubject", "DepartmentSubject")
-                        .WithMany()
-                        .HasForeignKey("DepartmentSubjectDepartmentId", "DepartmentSubjectSubjecttId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
