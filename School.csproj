@@ -41,6 +41,12 @@
     <Compile Remove="Migrations\20191112145021_Initial.Designer.cs" />
     <Compile Remove="Migrations\20191113111212_AddedDepartmentSubject.cs" />
     <Compile Remove="Migrations\20191113111212_AddedDepartmentSubject.Designer.cs" />
+    <Compile Remove="Migrations\20191117233919_check.cs" />
+    <Compile Remove="Migrations\20191117233919_check.Designer.cs" />
+    <Compile Remove="Migrations\20191118182249_Fix-AcademicSestion-typo.cs" />
+    <Compile Remove="Migrations\20191118182249_Fix-AcademicSestion-typo.Designer.cs" />
+    <Compile Remove="Migrations\20191118190752_Remove-TestId.cs" />
+    <Compile Remove="Migrations\20191118190752_Remove-TestId.Designer.cs" />
   </ItemGroup>
 
 

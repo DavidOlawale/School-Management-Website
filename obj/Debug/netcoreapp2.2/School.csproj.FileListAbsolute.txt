@@ -237,3 +237,4 @@ C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Ma
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Views\Home\Contact.g.cshtml.cs
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Views\Classes\Details.g.cshtml.cs
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Views\TeacherClass\Details.g.cshtml.cs
+C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Views\AcademicSections\AddAcademicSection.g.cshtml.cs

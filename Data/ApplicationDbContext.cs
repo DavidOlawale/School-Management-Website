@@ -23,6 +23,10 @@ namespace School.Data
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Subject> Subjects { get; set; }
+        public DbSet<Exam> Exams { get; set; }
+        public DbSet<Test> Tests { get; set; }
+        public DbSet<Term> Terms { get; set; }
+        public DbSet<AcademicSection> AcademicSections { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -55,13 +59,20 @@ namespace School.Data
                 .HasKey(nameof(DepartmentSubject.DepartmentId), nameof(DepartmentSubject.SubjectId));
 
             builder.Entity<Exam>()
-                .HasKey(nameof(Exam.DepartmentSubjectDepartmentId), nameof(Exam.DepartmentSubjectSubjecttId), nameof(Exam.StudentId), nameof(Exam.AcademicSectionId));
+                .HasKey(nameof(Exam.DepartmentSubjectDepartmentId), nameof(Exam.DepartmentSubjectSubjecttId), nameof(Exam.StudentId), nameof(Exam.TermId));
 
             builder.Entity<Exam>()
                 .HasOne(e => e.DepartmentSubject)
                 .WithMany()
                 .HasForeignKey(nameof(Exam.DepartmentSubjectDepartmentId), nameof(Exam.DepartmentSubjectSubjecttId));
 
+            builder.Entity<Test>()
+                .HasOne(e => e.DepartmentSubject)
+                .WithMany()
+                .HasForeignKey(nameof(Exam.DepartmentSubjectDepartmentId), nameof(Exam.DepartmentSubjectSubjecttId));
+
+            builder.Entity<Test>()
+                   .HasKey(nameof(Exam.DepartmentSubjectDepartmentId), nameof(Exam.DepartmentSubjectSubjecttId), nameof(Exam.StudentId), nameof(Exam.TermId));
         }
     }
 }

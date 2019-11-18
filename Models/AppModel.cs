@@ -166,32 +166,50 @@ namespace School.Models
         public int DepartmentSubjectDepartmentId { get; set; }
         public int DepartmentSubjectSubjecttId { get; set; }
         public DepartmentSubject DepartmentSubject{ get; set; }
-        public int AcademicSectionId { get; set; }
-        public AcademicSecion AcademicSection { get; set; }
+        public int TermId { get; set; }
+        public Term Term { get; set; }
 
         [Range(0, 60), Required]
         public int Score { get; set; }
     }
-
     public class Test
     {
-        public int Id { get; set; }
         public Guid StudentId { get; set; }
-        public int DepartmentSubjectId { get; set; }
+        public int DepartmentSubjectDepartmentId { get; set; }
+        public int DepartmentSubjectSubjectId { get; set; }
         public DepartmentSubject DepartmentSubject { get; set; }
-        public int AcademicSection { get; set; }
-        public AcademicSecion AcademicSecion { get; set; }
+        public int TermId { get; set; }
+        public Term Term { get; set; }
 
         [Range(0, 40), Required]
         public int Score { get; set; }
     }
-    public class AcademicSecion
+    public class Term
+    {
+        public int Id { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime StartDate { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime EndDate { get; set; }
+    }
+    public class AcademicSection
     {
         public int Id { get; set; }
         [Required]
         public DateTime BeginDate { get; set; }
         [Required]
         public DateTime EndDate { get; set; }
+
+        public int? FirstTermId { get; set; }
+        public Term FirstTerm { get; set; }
+
+        public int? SecondTermId { get; set; }
+        public Term SecondTerm { get; set; }
+
+        public int? ThirdTermId { get; set; }
+        public Term ThirdTerm { get; set; }
     }
 
 }

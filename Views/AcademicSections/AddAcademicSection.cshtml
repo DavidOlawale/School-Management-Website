@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewData["Title"] = "AddAcademicSection";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-12 col-sm-8 offset-sm-2 d-flex flex-column">
+        <h1 class="text-center dark-blue">Add Academic Section</h1>
+        <form class="academic-section-form p-3 align-self-center col-12 col-md-8" id="form">
+            <h2>Section</h2>
+            <div class="form-group form-inline" style="padding-bottom: 1em;">
+                <label class="mr-2">start Date</label>
+                <input class="form-control" type="date" name="startDate">
+            </div>
+            <div class="form-group form-inline" style="padding-bottom: 1em;">
+                <label class="mr-2">End Date</label>
+                <input class="form-control" type="date" name="endDate">
+            </div>
+
+            <h2>First Term</h2>
+            <div class="form-group form-inline" style="padding-bottom: 1em;">
+                <label class="mr-2">start Date</label>
+                <input class="form-control" type="date" name="firstTermStartDate">
+            </div>
+            <div class="form-group form-inline" style="padding-bottom: 1em;">
+                <label class="mr-2">End Date</label>
+                <input class="form-control" type="date" name="firstTermEndDate">
+            </div>
+
+            <h2>Second Term</h2>
+            <div class="form-group form-inline" style="padding-bottom: 1em;">
+                <label class="mr-2">start Date</label>
+                <input class="form-control" type="date" name="secondTermStartDate">
+            </div>
+            <div class="form-group form-inline" style="padding-bottom: 1em;">
+                <label class="mr-2">End Date</label>
+                <input class="form-control" type="date" name="secondTermEndDate">
+            </div>
+
+            <h2>Third Term</h2>
+            <div class="form-group form-inline" style="padding-bottom: 1em;">
+                <label class="mr-2">start Date</label>
+                <input class="form-control" type="date" name="thirdTermStartDate">
+            </div>
+            <div class="form-group form-inline" style="padding-bottom: 1em;">
+                <label class="mr-2">End Date</label>
+                <input class="form-control" type="date" name="thirdTermEndDate">
+            </div>
+            <button id="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+@section styles{
+    <link rel="stylesheet" href="~/lib/VanillaToasts/vanillatoasts.css" />
+}
+@section scripts{
+    <script src="~/lib/VanillaToasts/vanillatoasts.js"></script>
+    <script>
+        $(function () {
+            $('#submit').click(() => {
+                let form = document.getElementById('formm');
+                let startDate = form.startDate.value;
+                let endDate = form.endDate.value;
+                if (startDate == "" || endDate == "") {
+                    let toast = VanillaToasts.create({
+                                title: 'Fill dated',
+                                text: 'Enter both start and end date',
+                                type: 'warning',
+                                timeout: 5000
+                    });
+                    return false;
+                }
+                let data = {
+                    startDate,
+                    endDate,
+                    firstTerm: {
+                        startDate: form.firstTermStartDate.value,
+                        endDate: form.firstTermEndDate.value,
+
+                    },
+                    secondTerm: {
+                        startDate: form.secondTermStartDate.value,
+                        endDate: form.secondTermEndDate.value,
+                    },
+                    thirdTerm: {
+                        startDate: form.thirdTermStartDate.value,
+                        endDate: form.thirdTermEndDate.value,
+                    }
+
+                }
+                $.post({
+                    contentType: 'application/json',
+                    url: `${location.origin}/api/academicsections`,
+                    data: JSON.stringify( data),
+                    statusCode: {
+                        "400": (data, textStatus, jqXHR) => {
+                            let toast = VanillaToasts.create({
+                                title: 'Error',
+                                text: data.responseText,
+                                type: 'error',
+                                timeout: 6000
+                            });
+                        },
+                        "201": () => {
+                            let toast = VanillaToasts.create({
+                                title: 'Successful',
+                                text: 'Academic section created succesfully',
+                                type: 'success',
+                                timeout: 5000
+                            });
+                        }
+                    }
+                })
+                return false;
+            })
+        })
+    </script>
+}

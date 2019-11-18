@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using School.Data;
 
 namespace School.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191118175336_AddTerm")]
+    partial class AddTerm
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,19 +114,25 @@ namespace School.Migrations
 
                     b.Property<DateTime>("EndDate");
 
-                    b.Property<int?>("FirstTermId");
+                    b.Property<int?>("Term1Id");
 
-                    b.Property<int?>("SecondTermId");
+                    b.Property<int?>("Term2Id");
 
-                    b.Property<int?>("ThirdTermId");
+                    b.Property<int?>("Term3Id");
+
+                    b.Property<int>("TermId1");
+
+                    b.Property<int>("TermId2");
+
+                    b.Property<int>("TermId3");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FirstTermId");
+                    b.HasIndex("Term1Id");
 
-                    b.HasIndex("SecondTermId");
+                    b.HasIndex("Term2Id");
 
-                    b.HasIndex("ThirdTermId");
+                    b.HasIndex("Term3Id");
 
                     b.ToTable("AcademicSections");
                 });
@@ -325,32 +333,34 @@ namespace School.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("EndDate");
-
-                    b.Property<DateTime>("StartDate");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Terms");
+                    b.ToTable("Term");
                 });
 
             modelBuilder.Entity("School.Models.Test", b =>
                 {
-                    b.Property<int>("DepartmentSubjectDepartmentId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("DepartmentSubjectSubjecttId");
+                    b.Property<int?>("DepartmentSubjectDepartmentId");
+
+                    b.Property<int>("DepartmentSubjectId");
+
+                    b.Property<int?>("DepartmentSubjectSubjectId");
+
+                    b.Property<int>("Score");
 
                     b.Property<Guid>("StudentId");
 
                     b.Property<int>("TermId");
 
-                    b.Property<int>("DepartmentSubjectSubjectId");
-
-                    b.Property<int>("Score");
-
-                    b.HasKey("DepartmentSubjectDepartmentId", "DepartmentSubjectSubjecttId", "StudentId", "TermId");
+                    b.HasKey("Id");
 
                     b.HasIndex("TermId");
+
+                    b.HasIndex("DepartmentSubjectDepartmentId", "DepartmentSubjectSubjectId");
 
                     b.ToTable("Tests");
                 });
@@ -456,17 +466,17 @@ namespace School.Migrations
 
             modelBuilder.Entity("School.Models.AcademicSection", b =>
                 {
-                    b.HasOne("School.Models.Term", "FirstTerm")
+                    b.HasOne("School.Models.Term", "Term1")
                         .WithMany()
-                        .HasForeignKey("FirstTermId");
+                        .HasForeignKey("Term1Id");
 
-                    b.HasOne("School.Models.Term", "SecondTerm")
+                    b.HasOne("School.Models.Term", "Term2")
                         .WithMany()
-                        .HasForeignKey("SecondTermId");
+                        .HasForeignKey("Term2Id");
 
-                    b.HasOne("School.Models.Term", "ThirdTerm")
+                    b.HasOne("School.Models.Term", "Term3")
                         .WithMany()
-                        .HasForeignKey("ThirdTermId");
+                        .HasForeignKey("Term3Id");
                 });
 
             modelBuilder.Entity("School.Models.Attendance", b =>
@@ -519,8 +529,7 @@ namespace School.Migrations
 
                     b.HasOne("School.Models.DepartmentSubject", "DepartmentSubject")
                         .WithMany()
-                        .HasForeignKey("DepartmentSubjectDepartmentId", "DepartmentSubjectSubjecttId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("DepartmentSubjectDepartmentId", "DepartmentSubjectSubjectId");
                 });
 
             modelBuilder.Entity("School.Models.Student", b =>

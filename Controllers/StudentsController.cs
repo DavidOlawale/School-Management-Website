@@ -55,6 +55,7 @@ namespace School.Controllers
         public ActionResult Create()
         {
             ViewBag.ClassId = new SelectList(_context.Classes, "Id", "Name");
+            ViewBag.DepartmentId = new SelectList(_context.Departments, "Id", "Name");
             var model = new CreateUserViewModel();
             return View(model);
         }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using School.Data;
 
 namespace School.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191117234130_Fixed-typo-Academicsection-Inseadof-AcademicSection")]
+    partial class FixedtypoAcademicsectionInseadofAcademicSection
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,19 +114,7 @@ namespace School.Migrations
 
                     b.Property<DateTime>("EndDate");
 
-                    b.Property<int?>("FirstTermId");
-
-                    b.Property<int?>("SecondTermId");
-
-                    b.Property<int?>("ThirdTermId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("FirstTermId");
-
-                    b.HasIndex("SecondTermId");
-
-                    b.HasIndex("ThirdTermId");
 
                     b.ToTable("AcademicSections");
                 });
@@ -295,13 +285,13 @@ namespace School.Migrations
 
                     b.Property<Guid>("StudentId");
 
-                    b.Property<int>("TermId");
+                    b.Property<int>("AcademicSectionId");
 
                     b.Property<int>("Score");
 
-                    b.HasKey("DepartmentSubjectDepartmentId", "DepartmentSubjectSubjecttId", "StudentId", "TermId");
+                    b.HasKey("DepartmentSubjectDepartmentId", "DepartmentSubjectSubjecttId", "StudentId", "AcademicSectionId");
 
-                    b.HasIndex("TermId");
+                    b.HasIndex("AcademicSectionId");
 
                     b.ToTable("Exams");
                 });
@@ -319,38 +309,31 @@ namespace School.Migrations
                     b.ToTable("Subjects");
                 });
 
-            modelBuilder.Entity("School.Models.Term", b =>
+            modelBuilder.Entity("School.Models.Test", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("EndDate");
+                    b.Property<int?>("AcademicSecionId");
 
-                    b.Property<DateTime>("StartDate");
+                    b.Property<int>("AcademicSection");
 
-                    b.HasKey("Id");
+                    b.Property<int?>("DepartmentSubjectDepartmentId");
 
-                    b.ToTable("Terms");
-                });
+                    b.Property<int>("DepartmentSubjectId");
 
-            modelBuilder.Entity("School.Models.Test", b =>
-                {
-                    b.Property<int>("DepartmentSubjectDepartmentId");
-
-                    b.Property<int>("DepartmentSubjectSubjecttId");
-
-                    b.Property<Guid>("StudentId");
-
-                    b.Property<int>("TermId");
-
-                    b.Property<int>("DepartmentSubjectSubjectId");
+                    b.Property<int?>("DepartmentSubjectSubjectId");
 
                     b.Property<int>("Score");
 
-                    b.HasKey("DepartmentSubjectDepartmentId", "DepartmentSubjectSubjecttId", "StudentId", "TermId");
+                    b.Property<Guid>("StudentId");
 
-                    b.HasIndex("TermId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("AcademicSecionId");
+
+                    b.HasIndex("DepartmentSubjectDepartmentId", "DepartmentSubjectSubjectId");
 
                     b.ToTable("Tests");
                 });
@@ -454,21 +437,6 @@ namespace School.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("School.Models.AcademicSection", b =>
-                {
-                    b.HasOne("School.Models.Term", "FirstTerm")
-                        .WithMany()
-                        .HasForeignKey("FirstTermId");
-
-                    b.HasOne("School.Models.Term", "SecondTerm")
-                        .WithMany()
-                        .HasForeignKey("SecondTermId");
-
-                    b.HasOne("School.Models.Term", "ThirdTerm")
-                        .WithMany()
-                        .HasForeignKey("ThirdTermId");
-                });
-
             modelBuilder.Entity("School.Models.Attendance", b =>
                 {
                     b.HasOne("School.Models.Student")
@@ -499,9 +467,9 @@ namespace School.Migrations
 
             modelBuilder.Entity("School.Models.Exam", b =>
                 {
-                    b.HasOne("School.Models.Term", "Term")
+                    b.HasOne("School.Models.AcademicSection", "AcademicSection")
                         .WithMany()
-                        .HasForeignKey("TermId")
+                        .HasForeignKey("AcademicSectionId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("School.Models.DepartmentSubject", "DepartmentSubject")
@@ -512,15 +480,13 @@ namespace School.Migrations
 
             modelBuilder.Entity("School.Models.Test", b =>
                 {
-                    b.HasOne("School.Models.Term", "Term")
+                    b.HasOne("School.Models.AcademicSection", "AcademicSecion")
                         .WithMany()
-                        .HasForeignKey("TermId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("AcademicSecionId");
 
                     b.HasOne("School.Models.DepartmentSubject", "DepartmentSubject")
                         .WithMany()
-                        .HasForeignKey("DepartmentSubjectDepartmentId", "DepartmentSubjectSubjecttId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("DepartmentSubjectDepartmentId", "DepartmentSubjectSubjectId");
                 });
 
             modelBuilder.Entity("School.Models.Student", b =>
