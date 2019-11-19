@@ -27,21 +27,21 @@
     }
 </head>
 
-<body>
-    <header>
+<body class="container-fluid">
+    @*<header class="position-sticky">
+    </header>*@
         <partial name="_NavBar" />
-    </header>
     @if (User.Identity.IsAuthenticated)
     {
         <partial name="SideBar" />
     }
 
-    <div class="container-fluid">
+    <div class="">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
             @if (User.Identity.IsAuthenticated)
             {
-                <button onclick="showMenu()" class="btn btn-primary m-1" style="font-size: 1em">&#9776; Menu</button>
+                <button onclick="showMenu()" class="btn btn-primary m-1 position-sticky" style="font-size: 1em">&#9776; Menu</button>
             }
             @RenderBody()
         </main>
