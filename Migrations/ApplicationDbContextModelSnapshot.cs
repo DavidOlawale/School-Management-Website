@@ -284,7 +284,7 @@ namespace School.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.ToTable("DepartmentSubject");
+                    b.ToTable("departmentSubjects");
                 });
 
             modelBuilder.Entity("School.Models.Exam", b =>

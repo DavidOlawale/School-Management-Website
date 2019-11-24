@@ -28,6 +28,8 @@ namespace School.Data
         public DbSet<Term> Terms { get; set; }
         public DbSet<AcademicSection> AcademicSections { get; set; }
 
+        public DbSet<DepartmentSubject> departmentSubjects { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -54,6 +56,16 @@ namespace School.Data
                 .WithMany()
                 .HasForeignKey(t => t.ClassId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<DepartmentSubject>()
+                .HasOne(ds => ds.Department)
+                .WithMany()
+                .HasForeignKey(ds => ds.DepartmentId);
+
+            builder.Entity<DepartmentSubject>()
+                .HasOne(ds => ds.Subject)
+                .WithMany()
+                .HasForeignKey(ds => ds.SubjectId);
 
             builder.Entity<DepartmentSubject>()
                 .HasKey(nameof(DepartmentSubject.DepartmentId), nameof(DepartmentSubject.SubjectId));

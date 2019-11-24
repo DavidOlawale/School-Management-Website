@@ -118,3 +118,6 @@ body {
 .line-height-2{
     line-height: 2rem;
 }
+.overflow-scroll{
+    overflow-x: scroll;
+}

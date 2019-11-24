@@ -17,7 +17,6 @@ namespace School.Data
 
         public static async Task InitializeAsync(ApplicationDbContext _db, UserManager<ApplicationUser> _userManager, RoleManager<ApplicationRole> _roleManager)
         {
-
             _db.Database.Migrate();
 
             //seed departments
@@ -31,6 +30,8 @@ namespace School.Data
                 _db.Departments.Add(Art);
                 _db.SaveChanges();
             }
+
+
             //seed roles
             if (!_db.Roles.Any())
             {
@@ -55,7 +56,7 @@ namespace School.Data
                 {
                     _db.Classes.Add(Class);
                 }
-                await _db.SaveChangesAsync();
+                _db.SaveChanges();
             }
 
             //seed users
@@ -110,6 +111,74 @@ namespace School.Data
                 teacher.ClassId = 5;
                 _db.Update(teacher);
             }
+
+            //seed subjects
+            if (!_db.Subjects.Any())
+            {
+                var Mathematics = new Subject("Mathematics"); //0
+                var English = new Subject("English");
+                var Chemistry = new Subject("Chemistry");
+                var FutherMaths = new Subject("Futher maths");  //3
+                var Physics = new Subject("Physics");
+                var Biology = new Subject("Biology");
+                var Economics = new Subject("Economics"); //6
+                var Account = new Subject("Account");  //7
+                var Commerce = new Subject("Commerce");  //8
+                var Literature = new Subject("Literature");  //9
+                var Computer = new Subject("Computer");
+                var Geography = new Subject("Geography");
+                var BookKeeping = new Subject("Book keeping"); //12
+                var Government = new Subject("Government"); //13
+                Subject[] subjects = new Subject[]
+                {
+                Mathematics, English, Chemistry, FutherMaths, Physics, Biology, Economics, Account, Commerce, Literature, Computer, Geography, BookKeeping, Government
+                };
+
+                foreach (var subject in subjects)
+                {
+                    _db.Subjects.Add(subject);
+                }
+                _db.SaveChanges();
+
+                int ScienceId = _db.Departments.Single(d => d.Name == "Science").Id;
+                int CommercialId = _db.Departments.Single(d => d.Name == "Commercial").Id;
+                int ArtId = _db.Departments.Single(d => d.Name == "Art").Id;
+
+                //seed Subject for each department
+                DepartmentSubject[] departmentSubjects = new DepartmentSubject[]
+                {
+                new DepartmentSubject(ScienceId, Mathematics.Id),
+                new DepartmentSubject(CommercialId, Mathematics.Id),
+                new DepartmentSubject(ArtId, Mathematics.Id),
+                new DepartmentSubject(ScienceId, English.Id),
+                new DepartmentSubject(CommercialId, English.Id),
+                new DepartmentSubject(ArtId, English.Id),
+                new DepartmentSubject(ScienceId, Chemistry.Id),
+                new DepartmentSubject(ScienceId, FutherMaths.Id),
+                new DepartmentSubject(ScienceId, Physics.Id),
+                new DepartmentSubject(ScienceId, Biology.Id),
+                new DepartmentSubject(CommercialId, Biology.Id),
+                new DepartmentSubject(ArtId, Biology.Id),
+                new DepartmentSubject(ScienceId, Economics.Id),
+                new DepartmentSubject(CommercialId, Economics.Id),
+                new DepartmentSubject(ArtId, Economics.Id),
+                new DepartmentSubject(CommercialId, Account.Id),
+                new DepartmentSubject(ArtId, Literature.Id),
+                new DepartmentSubject(ScienceId, Computer.Id),
+                new DepartmentSubject(CommercialId, Computer.Id),
+                new DepartmentSubject(ArtId, Computer.Id),
+                new DepartmentSubject(ScienceId, Geography.Id),
+                new DepartmentSubject(CommercialId, BookKeeping.Id),
+                new DepartmentSubject(CommercialId, Government.Id),
+                new DepartmentSubject(ArtId, Government.Id)
+                };
+                foreach (var deptSubj in departmentSubjects)
+                {
+                    _db.departmentSubjects.Add(deptSubj);
+                }
+                _db.SaveChanges();
+            }
+            
 
         }
     }

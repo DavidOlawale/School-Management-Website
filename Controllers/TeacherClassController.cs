@@ -34,6 +34,24 @@ namespace School.Controllers
             model.StudentsWithoutAttendance = model.Students.Where(s => !TodayAttendance.Any(a => a.StudentId == s.Id));
             return View(model);
         }
+        public async Task<IActionResult> Exam()
+        {
+            var CurrentUser = (Teacher)await _userManager.GetUserAsync(User);
+            var Class = _context.Classes.SingleOrDefault(c => c.Id == CurrentUser.ClassId);
+            Class.Students = _context.Students.Where(s => s.ClassId == Class.Id).ToList();
+            var model = new ScoreRecordViewModel(_context);
+            model.Class = Class;
+            return View(model);
+        }
+        public async Task<IActionResult> Test()
+        {
+            var CurrentUser = (Teacher)await _userManager.GetUserAsync(User);
+            var Class = _context.Classes.SingleOrDefault(c => c.Id == CurrentUser.ClassId);
+            Class.Students = _context.Students.Where(s => s.ClassId == Class.Id).ToList();
+            var model = new ScoreRecordViewModel(_context);
+            model.Class = Class;
+            return View(model);
+        }
 
     }
 }

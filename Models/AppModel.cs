@@ -155,6 +155,11 @@ namespace School.Models
     }
     public class DepartmentSubject
     {
+        public DepartmentSubject(int departmentId, int subjectId)
+        {
+            DepartmentId = departmentId;
+            SubjectId = subjectId;
+        }
         public int DepartmentId { get; set; }
         public Department Department { get; set; }
         public int SubjectId { get; set; }
@@ -194,6 +199,7 @@ namespace School.Models
         [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
     }
+
     public class AcademicSection
     {
         public int Id { get; set; }

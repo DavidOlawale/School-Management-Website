@@ -1,0 +1,106 @@
+﻿@model School.Models.ViewModels.ScoreRecordViewModel
+@{
+    ViewData["Title"] = "Exam";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Exam Score</h1>
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#science">Science</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#commercial">Commercial</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#art">Art</a>
+    </li>
+</ul>
+
+<div class="tab-content">
+    <div id="science" class="tab-pane active">
+        <h3>Science</h3>
+        <table class="table thead-dark table-responsive">
+            <thead>
+                <tr>
+                    <td>Names</td>
+                    @foreach (var subject in Model.ScienceSubjects)
+                    {
+                        <td>@subject.Name</td>
+                    }
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var student in Model.ScienceStudents)
+                {
+                    <tr>
+                        <td>@student.FullName</td>
+                        @foreach (var subject in Model.ScienceSubjects)
+                        {
+                            <td><input type="number" size="3" max="60" min="0" /></td>
+                        }
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+    <div id="commercial" class="tab-pane fade">
+        <h3>Commercial</h3>
+        <table class="table table-responsive thead-dark">
+            <thead>
+                <tr>
+                    <td>Names</td>
+                    @foreach (var subject in Model.CommercialSubjects)
+                    {
+                        <td>@subject.Name</td>
+                    }
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var student in Model.CommercialStudents)
+                {
+                    <tr>
+                        <td>@student.FullName</td>
+                        @foreach (var subject in Model.CommercialSubjects)
+                        {
+                            <td><input type="number" size="3" max="60" min="0" /></td>
+                        }
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+    <div id="art" class="tab-pane fade">
+        <h3>Art</h3>
+        <table class="table table-responsive thead-dark">
+            <thead>
+                <tr>
+                    <td>Names</td>
+                    @foreach (var subject in Model.ArtSubjects)
+                    {
+                        <td>@subject.Name</td>
+                    }
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var student in Model.ArtStudents)
+                {
+                    <tr>
+                        <td>@student.FullName</td>
+                        @foreach (var subject in Model.ArtSubjects)
+                        {
+                            <td><input type="number" size="3" max="60" min="0" /></td>
+                        }
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>

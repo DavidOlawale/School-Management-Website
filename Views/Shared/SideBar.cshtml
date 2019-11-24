@@ -1,22 +1,24 @@
 ﻿
-<div class="sidebar" id="menu">
-    <button id="close-btn">&times;</button>
-    <a asp-area="Identity" asp-page="/Account/Manage/Index" >My Profile</a>
-    <a asp-controller="Messases">Messages</a>
-    @if (User.IsInRole(RoleNames.Admin))
-    {
-        <a asp-controller="Students" asp-action="Index" >Students</a>
-        <a asp-controller="Teachers" asp-action="Index" >Teachers</a>
-        <a asp-controller="Classes" asp-action="Index" >Classes</a>
-        <a href="#">School Info</a>
-    }
-    @if (User.IsInRole(RoleNames.Teacher))
-    {
-        <a asp-controller="teacherclass" asp-action="details" >Class</a>
-    }
+    <div class="sidebar" id="menu">
+        <button id="close-btn">&times;</button>
+        <a asp-area="Identity" asp-page="/Account/Manage/Index">My Profile</a>
+        <a asp-controller="Messases">Messages</a>
+        @if (User.IsInRole(RoleNames.Admin))
+        {
+            <a asp-controller="Students" asp-action="Index">Students</a>
+            <a asp-controller="Teachers" asp-action="Index">Teachers</a>
+            <a asp-controller="Classes" asp-action="Index">Classes</a>
+            <a href="#">School Info</a>
+        }
+        @if (User.IsInRole(RoleNames.Teacher))
+        {
+            <a asp-controller="teacherclass" asp-action="details">Class</a>
+            <a asp-controller="teacherclass" asp-action="exam">Exam</a>
+            <a asp-controller="teacherclass" asp-action="test">Test</a>
+        }
 
 
-</div>
+    </div>
 
 <script>
     let sideBar = document.getElementById('menu');
