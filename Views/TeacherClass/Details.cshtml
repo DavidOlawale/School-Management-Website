@@ -100,13 +100,10 @@
                     "201": function () {
                         let tr = current.parentNode;
                         tr.parentNode.removeChild(tr);
+                        loadAttendance();
                     }
                 }
-
             });
-
-
-            loadAttendance();
         })
     </script>
 } 
