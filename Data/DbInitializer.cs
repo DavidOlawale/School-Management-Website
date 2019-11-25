@@ -22,11 +22,11 @@ namespace School.Data
             //seed departments
             if (!_db.Departments.Any())
             {
-                var science = new Department("Science");
-                var commercial = new Department("Commercial");
+                var Science = new Department("Science");
+                var Commercial = new Department("Commercial");
                 var Art = new Department("Art");
-                _db.Departments.Add(science);
-                _db.Departments.Add(commercial);
+                _db.Departments.Add(Science);
+                _db.Departments.Add(Commercial);
                 _db.Departments.Add(Art);
                 _db.SaveChanges();
             }

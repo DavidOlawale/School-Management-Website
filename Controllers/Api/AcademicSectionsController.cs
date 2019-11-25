@@ -43,34 +43,6 @@ namespace School.Controllers.Api
         }
 
         // PUT: api/AcademicSections/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAcademicSection(int id, AcademicSection academicSection)
-        {
-            if (id != academicSection.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(academicSection).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AcademicSectionExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
 
         // POST: api/AcademicSections
         [HttpPost]
@@ -85,11 +57,15 @@ namespace School.Controllers.Api
                     return BadRequest("Start date must be greater than the end date of the last Academic section");
                 }
             }
-            var LastTerm = _context.Terms.Last();
-            if (academicSection.FirstTerm.StartDate <= LastTerm.EndDate)
+            if (_context.Terms.Any())
             {
-                return BadRequest("First term's start date must be after the ending date of the previous term");
+                var LastTerm = _context.Terms.Last();
+                if (academicSection.FirstTerm.StartDate <= LastTerm.EndDate)
+                {
+                    return BadRequest("First term's start date must be after the ending date of the previous term");
+                }
             }
+            
             if (academicSection.SecondTerm.StartDate <= academicSection.FirstTerm.EndDate)
             {
                 return BadRequest("Second term's starting date must be after the first term's ending date");
@@ -102,32 +78,10 @@ namespace School.Controllers.Api
             _context.Terms.Add(academicSection.SecondTerm);
             _context.Terms.Add(academicSection.ThirdTerm);
 
-
             _context.AcademicSections.Add(academicSection);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetAcademicSection", new { id = academicSection.Id }, academicSection);
-        }
-
-        // DELETE: api/AcademicSections/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<AcademicSection>> DeleteAcademicSection(int id)
-        {
-            var academicSection = await _context.AcademicSections.FindAsync(id);
-            if (academicSection == null)
-            {
-                return NotFound();
-            }
-
-            _context.AcademicSections.Remove(academicSection);
-            await _context.SaveChangesAsync();
-
-            return academicSection;
-        }
-
-        private bool AcademicSectionExists(int id)
-        {
-            return _context.AcademicSections.Any(e => e.Id == id);
         }
     }
 }

@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using School.Data;
 using School.Models;
+using School.Models.Dtos;
 
 namespace School.Controllers.Api
 {
     [Route("api/[controller]")]
+    [Authorize(Roles = "Teacher")]
     [ApiController]
     public class ExamsController : ControllerBase
     {
@@ -73,27 +76,24 @@ namespace School.Controllers.Api
         }
 
         // POST: api/Exams
-        [HttpPost]
-        public async Task<ActionResult<Exam>> PostExam(Exam exam)
+        [HttpPost("postexam")]
+        public async Task<ActionResult<Exam>> PostExam([FromBody] ScoreRecordModel model)
         {
-            _context.Exams.Add(exam);
-            try
+            int DepartmentId = _context.Departments.Single(d => d.Name == model.DepartmentName).Id;
+            int termId = _context.Terms.Single(t => t.StartDate < DateTime.Now && t.EndDate > DateTime.Now).Id;
+            foreach (var examdto in model.Exams)
             {
-                await _context.SaveChangesAsync();
+                var exam = new Exam();
+                exam.DepartmentSubjectDepartmentId = DepartmentId;
+                exam.DepartmentSubjectSubjecttId = examdto.DepartmentSubjectSubjecttId;
+                exam.StudentId = examdto.StudentId;
+                exam.Score = examdto.Score;
+                exam.TermId = termId;
+                _context.Exams.Add(exam);
             }
-            catch (DbUpdateException)
-            {
-                if (ExamExists(exam.DepartmentSubjectDepartmentId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetExam", new { id = exam.DepartmentSubjectDepartmentId }, exam);
+            return CreatedAtAction("GetExams", new { });
         }
 
         // DELETE: api/Exams/5
