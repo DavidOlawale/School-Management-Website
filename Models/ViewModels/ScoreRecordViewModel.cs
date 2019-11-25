@@ -46,6 +46,31 @@ namespace School.Models.ViewModels
                 return subjects;
             } }
 
+        public bool ScienceSubjectsScoreIsUploaded { get
+            {
+                var currentTerm = _context.Terms.Single(t => t.StartDate < DateTime.Now && t.EndDate > DateTime.Now);
+                int scienceId = _context.Departments.Single(d => d.Name == "Science").Id;
+                return _context.Exams.Where(e => e.DepartmentSubjectDepartmentId == scienceId && e.TermId == currentTerm.Id).Any();
+            } }
+        public bool CommercialSubjectsScoreIsUploaded
+        {
+            get
+            {
+                var currentTerm = _context.Terms.Single(t => t.StartDate < DateTime.Now && t.EndDate > DateTime.Now);
+                int commercialId = _context.Departments.Single(d => d.Name == "Commercial").Id;
+                return _context.Exams.Where(e => e.DepartmentSubjectDepartmentId == commercialId && e.TermId == currentTerm.Id).Any();
+            }
+        }
+        public bool ArtSubjectsScoreIsUploaded
+        {
+            get
+            {
+                var currentTerm = _context.Terms.Single(t => t.StartDate < DateTime.Now && t.EndDate > DateTime.Now);
+                int artId = _context.Departments.Single(d => d.Name == "Art").Id;
+                return _context.Exams.Where(e => e.DepartmentSubjectDepartmentId == artId && e.TermId == currentTerm.Id).Any();
+            }
+        }
+
 
         public IEnumerable<Student> ScienceStudents { get => Class.Students.Where(s => s.DepartmentId == _context.Departments.Single(d => d.Name == "Science").Id); }
         public IEnumerable<Student> CommercialStudents { get => Class.Students.Where(s => s.DepartmentId == _context.Departments.Single(d => d.Name == "Commercial").Id); }

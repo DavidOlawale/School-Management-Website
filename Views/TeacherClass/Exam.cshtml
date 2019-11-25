@@ -20,90 +20,114 @@
 <div class="tab-content">
     <div id="science" class="tab-pane active">
         <h3>Science</h3>
-        <table class="table thead-dark table-responsive" id="Science">
-            <thead>
-                <tr>
-                    <td>Names</td>
-                    @foreach (var subject in Model.ScienceSubjects)
-                    {
-                        <td>@subject.Name</td>
-                    }
-
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var student in Model.ScienceStudents)
-                {
-                    <tr id="@student.Id">
-                        <td>@student.FullName</td>
+        @if (Model.ScienceSubjectsScoreIsUploaded)
+        {
+            <h2>Score uploaded</h2>
+        }
+        else
+        {
+            <table class="table thead-dark table-responsive" id="Science">
+                <thead>
+                    <tr>
+                        <td>Names</td>
                         @foreach (var subject in Model.ScienceSubjects)
                         {
-                            <td subjectId="@subject.Id"><input type="number" size="3" max="60" min="0" /></td>
+                            <td>@subject.Name</td>
                         }
-                    </tr>
 
-                }
-            </tbody>
-        </table>
-        <button class="btn btn-primary" onclick="record('Science')">Submit</button>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var student in Model.ScienceStudents)
+                    {
+                        <tr id="@student.Id">
+                            <td>@student.FullName</td>
+                            @foreach (var subject in Model.ScienceSubjects)
+                            {
+                                <td subjectId="@subject.Id"><input type="number" size="3" max="60" min="0" /></td>
+                            }
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+            <button class="btn btn-primary" onclick="record('Science')">Submit</button>
+        }
+
     </div>
     <div id="commercial" class="tab-pane fade">
         <h3>Commercial</h3>
-        <table class="table table-responsive thead-dark" id="Commercial">
-            <thead>
-                <tr>
-                    <td>Names</td>
-                    @foreach (var subject in Model.CommercialSubjects)
-                    {
-                        <td>@subject.Name</td>
-                    }
-
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var student in Model.CommercialStudents)
-                {
-                    <tr id="@student.Id">
-                        <td>@student.FullName</td>
+        @if (Model.CommercialSubjectsScoreIsUploaded)
+        {
+            <h2>Score uploaded</h2>
+        }
+        else
+        {
+            <table class="table table-responsive thead-dark" id="Commercial">
+                <thead>
+                    <tr>
+                        <td>Names</td>
                         @foreach (var subject in Model.CommercialSubjects)
                         {
-                            <td subjectId="@subject.Id"><input type="number" size="3" max="60" min="0" /></td>
+                            <td>@subject.Name</td>
                         }
-                    </tr>
 
-                }
-            </tbody>
-        </table>
-        <button class="btn btn-primary" onclick="record('Commercial')">Submit</button>
-        </div>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var student in Model.CommercialStudents)
+                    {
+                        <tr id="@student.Id">
+                            <td>@student.FullName</td>
+                            @foreach (var subject in Model.CommercialSubjects)
+                            {
+                                <td subjectId="@subject.Id"><input type="number" size="3" max="60" min="0" /></td>
+                            }
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+            <button class="btn btn-primary" onclick="record('Commercial')">Submit</button>
+        }
+
+    </div>
     <div id="art" class="tab-pane fade">
         <h3>Art</h3>
-        <table class="table table-responsive thead-dark" id="Art">
-            <thead>
-                <tr>
-                    <td>Names</td>
-                    @foreach (var subject in Model.ArtSubjects)
-                    {
-                        <td>@subject.Name</td>
-                    }
-
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var student in Model.ArtStudents)
-                {
-                    <tr id="@student.Id">
-                        <td>@student.FullName</td>
+        @if (Model.ArtSubjectsScoreIsUploaded)
+        {
+            <h2>Score uploaded</h2>
+        }
+        else
+        {
+            <table class="table table-responsive thead-dark" id="Art">
+                <thead>
+                    <tr>
+                        <td>Names</td>
                         @foreach (var subject in Model.ArtSubjects)
                         {
-                            <td subjectId="@subject.Id"><input type="number" size="3" max="60" min="0" /></td>
+                            <td>@subject.Name</td>
                         }
-                    </tr>
 
-                }
-            </tbody>
-        </table>
-        <button class="btn btn-primary" onclick="record('Art')">Submit</button>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var student in Model.ArtStudents)
+                    {
+                        <tr id="@student.Id">
+                            <td>@student.FullName</td>
+                            @foreach (var subject in Model.ArtSubjects)
+                            {
+                                <td subjectId="@subject.Id"><input type="number" size="3" max="60" min="0" /></td>
+                            }
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+            <button class="btn btn-primary" onclick="record('Art')">Submit</button>
+        }
+
     </div>
 
 </div>
@@ -145,7 +169,8 @@
                             text: `Scores for @Model.Class.Name ${deptName} saved`,
                         type: 'success',
                         timeout: '5000',
-                    });
+                        });
+                        setTimeout(location.reload(), 3000)
                     }
                 }
             })
