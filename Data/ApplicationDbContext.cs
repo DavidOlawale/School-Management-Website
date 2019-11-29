@@ -81,10 +81,10 @@ namespace School.Data
             builder.Entity<Test>()
                 .HasOne(e => e.DepartmentSubject)
                 .WithMany()
-                .HasForeignKey(nameof(Exam.DepartmentSubjectDepartmentId), nameof(Exam.DepartmentSubjectSubjecttId));
+                .HasForeignKey(nameof(Test.DepartmentSubjectDepartmentId), nameof(Test.DepartmentSubjectSubjectId));
 
             builder.Entity<Test>()
-                   .HasKey(nameof(Exam.DepartmentSubjectDepartmentId), nameof(Exam.DepartmentSubjectSubjecttId), nameof(Exam.StudentId), nameof(Exam.TermId));
+                .HasKey(nameof(Test.DepartmentSubjectDepartmentId), nameof(Test.DepartmentSubjectSubjectId), nameof(Test.StudentId), nameof(Test.TermId));
         }
     }
 }

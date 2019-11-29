@@ -22,17 +22,17 @@
         <h3>Science</h3>
         @if (Model.ScienceSubjectsScoreIsUploaded)
         {
-            <h2>Score uploaded</h2>
+            <h2 class="text-center opacity-50 p-t-3em">Score uploaded</h2>
         }
         else
         {
-            <table class="table thead-dark table-responsive" id="Science">
+            <table class="table table-responsive" id="Science">
                 <thead>
                     <tr>
-                        <td>Names</td>
+                        <th>Names</th>
                         @foreach (var subject in Model.ScienceSubjects)
                         {
-                            <td>@subject.Name</td>
+                            <th>@subject.Name</th>
                         }
 
                     </tr>
@@ -51,7 +51,9 @@
                     }
                 </tbody>
             </table>
-            <button class="btn btn-primary" onclick="record('Science')">Submit</button>
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-primary" onclick="record('Science')">Submit</button>
+            </div>
         }
 
     </div>
@@ -59,17 +61,17 @@
         <h3>Commercial</h3>
         @if (Model.CommercialSubjectsScoreIsUploaded)
         {
-            <h2>Score uploaded</h2>
+            <h2 class="text-center opacity-50 p-t-3em">Score uploaded</h2>
         }
         else
         {
-            <table class="table table-responsive thead-dark" id="Commercial">
+            <table class="table table-responsive" id="Commercial">
                 <thead>
                     <tr>
-                        <td>Names</td>
+                        <th>Names</th>
                         @foreach (var subject in Model.CommercialSubjects)
                         {
-                            <td>@subject.Name</td>
+                            <th>@subject.Name</th>
                         }
 
                     </tr>
@@ -88,7 +90,9 @@
                     }
                 </tbody>
             </table>
-            <button class="btn btn-primary" onclick="record('Commercial')">Submit</button>
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-primary" onclick="record('Commercial')">Submit</button>
+            </div>
         }
 
     </div>
@@ -96,11 +100,11 @@
         <h3>Art</h3>
         @if (Model.ArtSubjectsScoreIsUploaded)
         {
-            <h2>Score uploaded</h2>
+            <h2 class="text-center opacity-50 p-t-3em">Score uploaded</h2>
         }
         else
         {
-            <table class="table table-responsive thead-dark" id="Art">
+            <table class="table table-responsive" id="Art">
                 <thead>
                     <tr>
                         <td>Names</td>
@@ -125,11 +129,12 @@
                     }
                 </tbody>
             </table>
-            <button class="btn btn-primary" onclick="record('Art')">Submit</button>
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-primary" onclick="record('Art')">Submit</button>
+            </div>
         }
 
     </div>
-
 </div>
 @section styles{ 
     <link rel="stylesheet" href="~/lib/VanillaToasts/vanillatoasts.css" />
@@ -153,7 +158,6 @@
                     exams.push(exam)
                 })
             })
-            console.table(exams)
             let data = {
                 exams,
                 departmentName: deptName
@@ -166,7 +170,7 @@
                     '201': function (data, textStatus, XHR) {
                         VanillaToasts.create({
                             title: 'Scores Saved',
-                            text: `Scores for @Model.Class.Name ${deptName} saved`,
+                            text: `Scores for @Model.Class.Name ${deptName} uploaded`,
                         type: 'success',
                         timeout: '5000',
                         });

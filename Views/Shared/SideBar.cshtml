@@ -13,8 +13,10 @@
         @if (User.IsInRole(RoleNames.Teacher))
         {
             <a asp-controller="teacherclass" asp-action="details">Class</a>
-            <a asp-controller="teacherclass" asp-action="exam">Exam</a>
-            <a asp-controller="teacherclass" asp-action="test">Test</a>
+            <a asp-controller="teacherclass" asp-action="examuploadscore">Exam Upload</a>
+            <a asp-controller="teacherclass" asp-action="testuploadscore">Test Upload</a>
+            <a asp-controller="teacherclass" asp-action="examscore">Exam Score</a>
+            <a asp-controller="teacherclass" asp-action="testscore">Test Score</a>
         }
 
 

@@ -18,7 +18,7 @@ namespace School
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+            WebHost.CreateDefaultBuilder(args).UseShutdownTimeout(new TimeSpan(0, 1, 0))
                 .UseStartup<Startup>();
     }
 }

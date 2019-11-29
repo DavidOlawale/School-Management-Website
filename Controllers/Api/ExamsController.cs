@@ -75,9 +75,8 @@ namespace School.Controllers.Api
             return NoContent();
         }
 
-        // POST: api/Exams
         [HttpPost("postexam")]
-        public async Task<ActionResult<Exam>> PostExam([FromBody] ScoreRecordModel model)
+        public async Task<ActionResult<Exam>> PostExam([FromBody] ExamRecordModel model)
         {
             int DepartmentId = _context.Departments.Single(d => d.Name == model.DepartmentName).Id;
             int termId = _context.Terms.Single(t => t.StartDate < DateTime.Now && t.EndDate > DateTime.Now).Id;

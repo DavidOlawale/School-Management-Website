@@ -121,3 +121,15 @@ body {
 .overflow-scroll{
     overflow-x: scroll;
 }
+.opacity-80{
+    opacity: 0.8
+}
+.opacity-60{
+    opacity: 0.6
+}
+.opacity-50{
+    opacity: 0.5
+}
+.p-t-3em{
+    padding-top: 3em;
+}

@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace School.Models.Dtos
 {
-    public class ScoreRecordModel
+    public class TestRecordModel
     {
-        public IEnumerable<ExamDto> Exams;
+        public IEnumerable<TestDto> Tests;
         public string DepartmentName;
     }
 }

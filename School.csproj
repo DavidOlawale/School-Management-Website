@@ -47,6 +47,8 @@
     <Compile Remove="Migrations\20191118182249_Fix-AcademicSestion-typo.Designer.cs" />
     <Compile Remove="Migrations\20191118190752_Remove-TestId.cs" />
     <Compile Remove="Migrations\20191118190752_Remove-TestId.Designer.cs" />
+    <Compile Remove="Migrations\20191128213646_typo.cs" />
+    <Compile Remove="Migrations\20191128213646_typo.Designer.cs" />
   </ItemGroup>
 
 
