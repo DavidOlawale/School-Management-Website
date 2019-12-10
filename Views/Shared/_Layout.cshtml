@@ -26,22 +26,21 @@
         <link rel="stylesheet" href="~/css/SideBar.css" />
     }
 </head>
-
-<body class="container-fluid">
-    @*<header class="position-sticky">
-    </header>*@
-        <partial name="_NavBar" />
+<body>
     @if (User.Identity.IsAuthenticated)
     {
         <partial name="SideBar" />
     }
-
-    <div class="">
+    else
+    {
+        <partial name="_NavBar" />
+    }
+    <div class="container-fluid">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
             @if (User.Identity.IsAuthenticated)
             {
-                <button onclick="showMenu()" class="btn btn-primary m-1 position-sticky" style="font-size: 1em">&#9776; Menu</button>
+                <button onclick="showMenu()" class="btn btn-primary m-1 z-index-1 menu-btn" style="font-size: 1em">&#9776; Menu</button>
             }
             @RenderBody()
         </main>

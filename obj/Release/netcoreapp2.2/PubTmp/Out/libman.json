@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "font-awesome@5.11.2",
+        "destination": "wwwroot/lib/fontawesome"
+    },
+    {
+      "library": "lightbox2@2.11.1",
+      "destination": "wwwroot/lib/lightbox"
+    }
+  ]
+}

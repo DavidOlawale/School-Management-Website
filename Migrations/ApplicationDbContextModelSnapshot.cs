@@ -306,6 +306,25 @@ namespace School.Migrations
                     b.ToTable("Exams");
                 });
 
+            modelBuilder.Entity("School.Models.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content");
+
+                    b.Property<bool>("Received");
+
+                    b.Property<Guid>("RecieverId");
+
+                    b.Property<Guid>("SenderId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("School.Models.Subject", b =>
                 {
                     b.Property<int>("Id")

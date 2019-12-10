@@ -217,5 +217,13 @@ namespace School.Models
         public int? ThirdTermId { get; set; }
         public Term ThirdTerm { get; set; }
     }
+    public class Message
+    {
+        public int Id { get; set; }
+        public Guid SenderId { get; set; }
+        public Guid RecieverId { get; set; }
+        public string Content { get; set; }
+        public bool Received { get; set; }
+    }
 
 }

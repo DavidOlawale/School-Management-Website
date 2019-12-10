@@ -26,6 +26,7 @@ namespace School.Data
         public DbSet<Exam> Exams { get; set; }
         public DbSet<Test> Tests { get; set; }
         public DbSet<Term> Terms { get; set; }
+        public DbSet<Message> Messages { get; set; }
         public DbSet<AcademicSection> AcademicSections { get; set; }
 
         public DbSet<DepartmentSubject> departmentSubjects { get; set; }

@@ -247,3 +247,9 @@ C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Ma
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Views\Tests\Details.g.cshtml.cs
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Views\Tests\Edit.g.cshtml.cs
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Views\Tests\Index.g.cshtml.cs
+C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Views\Messages\Create.g.cshtml.cs
+C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Views\Messages\Delete.g.cshtml.cs
+C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Views\Messages\Details.g.cshtml.cs
+C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Views\Messages\Edit.g.cshtml.cs
+C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Views\Messages\Index.g.cshtml.cs
+C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Debug\netcoreapp2.2\Razor\Views\Messages\New.g.cshtml.cs
