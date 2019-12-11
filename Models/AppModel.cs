@@ -38,7 +38,7 @@ namespace School.Models
         public string Address { get; set; }
 
         [Display(Name ="Profile Photo")]
-        public byte[] ProfileImage { get; set; }
+        public string ProfilePhotoExtension { get; set; }
     }
     public class ApplicationRole : IdentityRole<Guid>
     {

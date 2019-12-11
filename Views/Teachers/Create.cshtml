@@ -80,13 +80,8 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Teacher.ProfileImage"></label>
-                <input asp-for="Teacher.ProfileImage" class="form-control" />
-                <span asp-validation-for="Teacher.ProfileImage" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <img class="rounded-circle pb-3 w-75" id="img" />
+                <input type="file" name="Avatar" accept="image/*" class="btn btn-primary" onchange="loadImg(this)" />
             </div>
         </form>
     </div>
@@ -94,4 +89,15 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        function loadImg(input) {
+            let img = document.getElementById('img');
+            let reader = new FileReader()
+            reader.onload = function (e) {
+                img.src = this.result;
+                console.log(img)
+            }
+            reader.readAsDataURL(input.files[0])
+        }
+    </script>
 }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,13 +21,15 @@ namespace School.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<ApplicationRole> _RoleManager;
+        private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly IHostingEnvironment _env;
 
-        public StudentsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        public StudentsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, IHostingEnvironment env)
         {
             _context = context;
             _userManager = userManager;
-            _RoleManager = roleManager;
+            _roleManager = roleManager;
+            _env = env;
         }
 
         public async Task<ActionResult> Index(Notification notification = null)
@@ -62,16 +66,16 @@ namespace School.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(CreateUserViewModel model)
+        public async Task<ActionResult> Create(CreateUserViewModel model, IFormFile Avatar)
         {
-            var students = _context.Students;
-            var notification = new Notification();
-
             if (!ModelState.IsValid)
             {
                 return View("Create", model);
             }
+            ViewData["isToast"] = true;
             var createresult = await _userManager.CreateAsync(model.Student, model.Password);
+            var students = _context.Students;
+            var notification = new Notification();
             if (!createresult.Succeeded)
             {
                 notification.Text = "Error";
@@ -82,8 +86,10 @@ namespace School.Controllers
             //create student role if it doesn't exist
             if (_context.Roles.SingleOrDefault(role => role.Name == RoleNames.Student) == null)
             {
-                await _RoleManager.CreateAsync(new ApplicationRole(RoleNames.Student));
+                await _roleManager.CreateAsync(new ApplicationRole(RoleNames.Student));
             }
+            string ImageExtension = Avatar.FileName.Split('.').Last();
+            model.Student.ProfilePhotoExtension = ImageExtension;
             var addtoroleresult = await _userManager.AddToRoleAsync(model.Student, RoleNames.Student);
             if (!addtoroleresult.Succeeded)
             {
@@ -93,6 +99,11 @@ namespace School.Controllers
                 await _userManager.DeleteAsync(model.Student);
                 return RedirectToAction("Index", students);
             }
+            string AvatarPath = Path.Combine(_env.WebRootPath, "Images", "Avatars");
+            Directory.CreateDirectory(AvatarPath);
+            var stream = new FileStream(Path.Combine(AvatarPath, model.Student.Id.ToString() + '.' + ImageExtension), FileMode.CreateNew, FileAccess.ReadWrite);
+            await Avatar.CopyToAsync(stream);
+            stream.Close();
             notification.Title = "Registration succesful";
             notification.Text = model.Student.FirstName + " " + model.Student.MiddleName + " successfully registered";
             notification.Type = "success";

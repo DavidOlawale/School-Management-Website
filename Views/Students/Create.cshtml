@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="offset-lg-2 offset-1 col-md-4 col-6">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="All" class="text-danger"></div>
 
             <div class="form-group">
@@ -89,6 +89,10 @@
             </div>
 
             <div class="form-group">
+                <img class="rounded-circle pb-3 w-75" id="img" />
+                <input type="file" name="Avatar" accept="image/*" class="btn btn-primary" onchange="loadImg(this)" />
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -97,4 +101,15 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        function loadImg(input) {
+            let img = document.getElementById('img');
+            let reader = new FileReader()
+            reader.onload = function (e) {
+                img.src = this.result;
+                console.log(img)
+            }
+            reader.readAsDataURL(input.files[0])
+        }
+    </script>
 }

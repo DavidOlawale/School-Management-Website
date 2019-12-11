@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,11 +22,14 @@ namespace School.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _context;
         private readonly RoleManager<ApplicationRole> _roleManager;
-        public TeachersController(UserManager<ApplicationUser> manager, ApplicationDbContext context, RoleManager<ApplicationRole> rolemanager)
+        private readonly IHostingEnvironment _env;
+
+        public TeachersController(UserManager<ApplicationUser> manager, ApplicationDbContext context, RoleManager<ApplicationRole> rolemanager, IHostingEnvironment env)
         {
             _userManager = manager;
             _context = context;
             _roleManager = rolemanager;
+            _env = env;
         }
         public ActionResult Index()
         {
@@ -48,41 +53,48 @@ namespace School.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(CreateUserViewModel model)
+        public async Task<ActionResult> Create(CreateUserViewModel model, IFormFile Avatar)
         {
-            ViewData["isToast"] = true;
-            var teachers = _context.Teachers;
-
             if (!ModelState.IsValid)
             {
                 return View("Create", model);
             }
+            ViewData["isToast"] = true;
             var createresult = await _userManager.CreateAsync(model.Teacher, model.Password);
+            var teachers = _context.Teachers;
+            var notification = new Notification();
             if (!createresult.Succeeded)
             {
-                ViewData["toastTitle"] = "Error";
-                ViewData["toastText"] = "Error ecountered while registering Teacher";
-                ViewData["toastType"] = "error";
-                return View("Index", teachers);
+                notification.Text = "Error";
+                notification.Text = "Error ecountered while registering student";
+                notification.Type = "error";
+                return RedirectToAction("Index", teachers);
             }
-            //create teacher role if it doesn't exist
-            if (_context.Roles.SingleOrDefault(role => role.Name == RoleNames.Teacher) == null)
+            //create student role if it doesn't exist
+            if (_context.Roles.SingleOrDefault(role => role.Name == RoleNames.Student) == null)
             {
-                await _roleManager.CreateAsync(new ApplicationRole(RoleNames.Teacher));
+                await _roleManager.CreateAsync(new ApplicationRole(RoleNames.Student));
             }
-            var addtoroleresult = await _userManager.AddToRoleAsync(model.Teacher, RoleNames.Teacher);
+            string ImageExtension = Avatar.FileName.Split('.').Last();
+            model.Student.ProfilePhotoExtension = ImageExtension;
+            var addtoroleresult = await _userManager.AddToRoleAsync(model.Student, RoleNames.Student);
             if (!addtoroleresult.Succeeded)
             {
-                ViewData["toastTitle"] = "Error";
-                ViewData["toastText"] = "Error ecountered while registering Teacher";
-                ViewData["toastType"] = "error";
-                await _userManager.DeleteAsync(model.Teacher);
-                return View("Index", teachers);
+                notification.Title = "Error";
+                notification.Text = "Error ecountered while registering student";
+                notification.Type = "error";
+                await _userManager.DeleteAsync(model.Student);
+                return RedirectToAction("Index", teachers);
             }
-            ViewData["toastTitle"] = "Registration succesful";
-            ViewData["toastText"] = model.Teacher.FirstName + " " + model.Teacher.MiddleName + " successfully registred";
-            ViewData["toastType"] = "success";
-            return View("Index", teachers);
+            string AvatarPath = Path.Combine(_env.WebRootPath, "Images", "Avatars");
+            Directory.CreateDirectory(AvatarPath);
+            var stream = new FileStream(Path.Combine(AvatarPath, model.Student.Id.ToString() + '.' + ImageExtension), FileMode.CreateNew, FileAccess.ReadWrite);
+            await Avatar.CopyToAsync(stream);
+            stream.Close();
+            notification.Title = "Registration succesful";
+            notification.Text = model.Student.FirstName + " " + model.Student.MiddleName + " successfully registered";
+            notification.Type = "success";
+            return RedirectToActionPermanent("Index", notification);
         }
 
         public ActionResult Edit(string id)
