@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using School.Data;
@@ -12,27 +13,31 @@ namespace School.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MessagesController : ControllerBase
+    public class TeacherMessagesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _manager;
 
-        public MessagesController(ApplicationDbContext context)
+        public TeacherMessagesController(ApplicationDbContext context, UserManager<ApplicationUser> manager)
         {
             _context = context;
+            _manager = manager;
         }
 
-        [HttpGet("GetRecievedMessages/{userId}")]
-        public IEnumerable<Message> GetRecievedMessages(Guid userId)
+        [HttpGet]
+        public async Task<IEnumerable<Message>> GetRecievedMessagesAsync()
         {
-            return _context.Messages.Where(m => m.RecieverId == userId);
-        }
-        [HttpGet("GetSentMessages/{userId}")]
-        public IEnumerable<Message> GetSentMessages(Guid userId)
-        {
-            return _context.Messages.Where(m => m.SenderId == userId);
+            Guid UserId = (await _manager.GetUserAsync(User)).Id;
+            return _context.Messages.Where(m => m.ReceiverId == UserId);
         }
 
-        // POST: api/Messages
+        [HttpGet]
+        public async Task<IEnumerable<Message>> GetSentMessagesAsync()
+        {
+            Guid UserId = (await _manager.GetUserAsync(User)).Id;
+            return _context.Messages.Where(m => m.SenderId == UserId);
+        }
+
         [HttpPost]
         public async Task<ActionResult<Message>> PostMessage(Message message)
         {
@@ -42,21 +47,11 @@ namespace School.Controllers.Api
             return CreatedAtAction("GetMessage", new { id = message.Id }, message);
         }
 
-        // DELETE: api/Messages/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Message>> DeleteMessage(int id)
+        public async Task<ActionResult<Message>> PostParentMessageAsync(Message message)
         {
-            var message = await _context.Messages.FindAsync(id);
-            if (message == null)
-            {
-                return NotFound();
-            }
-
-            _context.Messages.Remove(message);
+            _context.Messages.Add(message);
             await _context.SaveChangesAsync();
-
-            return message;
+            return CreatedAtAction(nameof(GetSentMessagesAsync), new { }, message);
         }
-
     }
 }

@@ -1,8 +1,42 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "New";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> manager
 <h1>New</h1>
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+        <div id="editor" style="height: auto">
 
+        </div>
+    </div>
+</div>
+<div class="d-flex p-5">
+    <button class="m-auto btn btn-primary" onclick="submit()">Submit</button>
+</div>
+@section styles{ 
+    <link rel="stylesheet" href="~/lib/Quill/quill.snow.min.css" />
+}
+@section scripts{ 
+    <script src="~/lib/Quill/quill.min.js"></script>
+    <script>
+        let options = {
+            placeholder: 'Your message here',
+            theme: 'snow'
+        }
+        const editor = new Quill('#editor', options)
+
+        function submit() {
+            let messageData = JSON.stringify(editor.getContents())
+            let message = {
+                content: messageData,
+                received: false
+            }
+            $.post({
+                data: JSON.stringify(message),
+                url: 'api/messages',
+                contentType: 'application/json'
+            })
+        }
+    </script>
+}

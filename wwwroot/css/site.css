@@ -144,3 +144,6 @@ body {
 .vanillatoasts-toast{
     margin-top: 80px !important;
 }
+.outline-none{
+    outline: none;
+}

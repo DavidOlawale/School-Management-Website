@@ -49,6 +49,10 @@
     <Compile Remove="Migrations\20191118190752_Remove-TestId.Designer.cs" />
     <Compile Remove="Migrations\20191128213646_typo.cs" />
     <Compile Remove="Migrations\20191128213646_typo.Designer.cs" />
+    <Compile Remove="Migrations\20191215213825_Message-RecieverId-to-ReceiverId.cs" />
+    <Compile Remove="Migrations\20191215213825_Message-RecieverId-to-ReceiverId.Designer.cs" />
+    <Compile Remove="Migrations\20191215214417_Message-RecieverId-to-ReceiverId.cs" />
+    <Compile Remove="Migrations\20191215214417_Message-RecieverId-to-ReceiverId.Designer.cs" />
   </ItemGroup>
 
 

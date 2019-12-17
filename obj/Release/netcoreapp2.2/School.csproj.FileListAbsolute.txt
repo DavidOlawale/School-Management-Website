@@ -57,7 +57,6 @@ C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Ma
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Release\netcoreapp2.2\Razor\Views\Home\Index.g.cshtml.cs
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Release\netcoreapp2.2\Razor\Views\Home\Privacy.g.cshtml.cs
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Release\netcoreapp2.2\Razor\Views\Shared\Error.g.cshtml.cs
-C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Release\netcoreapp2.2\Razor\Views\Shared\SideBar.g.cshtml.cs
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Release\netcoreapp2.2\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Release\netcoreapp2.2\Razor\Views\Shared\_Layout.g.cshtml.cs
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Release\netcoreapp2.2\Razor\Views\Shared\_LoginPartial.g.cshtml.cs
@@ -89,9 +88,11 @@ C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Ma
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Release\netcoreapp2.2\School.dll
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Release\netcoreapp2.2\School.pdb
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Release\netcoreapp2.2\School.csproj.CopyComplete
-C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Release\netcoreapp2.2\Razor\Views\Messages\Create.g.cshtml.cs
-C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Release\netcoreapp2.2\Razor\Views\Messages\Delete.g.cshtml.cs
-C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Release\netcoreapp2.2\Razor\Views\Messages\Details.g.cshtml.cs
-C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Release\netcoreapp2.2\Razor\Views\Messages\Edit.g.cshtml.cs
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Release\netcoreapp2.2\Razor\Views\Messages\Index.g.cshtml.cs
 C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Release\netcoreapp2.2\Razor\Views\Messages\New.g.cshtml.cs
+C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Release\netcoreapp2.2\Razor\Views\Parents\Create.g.cshtml.cs
+C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Release\netcoreapp2.2\Razor\Views\Parents\Delete.g.cshtml.cs
+C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Release\netcoreapp2.2\Razor\Views\Parents\Details.g.cshtml.cs
+C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Release\netcoreapp2.2\Razor\Views\Parents\Edit.g.cshtml.cs
+C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Release\netcoreapp2.2\Razor\Views\Parents\Index.g.cshtml.cs
+C:\Users\olaniran olawale\Documents\Visual Studio 2019\Projects\School\School-Management-Website\obj\Release\netcoreapp2.2\Razor\Views\Shared\_SideBar.g.cshtml.cs
