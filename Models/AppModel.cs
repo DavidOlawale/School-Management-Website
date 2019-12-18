@@ -36,6 +36,7 @@ namespace School.Models
 
         [Required]
         public string Address { get; set; }
+        public bool HasProfilePhoto { get; set; }
 
         [Display(Name ="Profile Photo")]
         public string ProfilePhotoExtension { get; set; }
