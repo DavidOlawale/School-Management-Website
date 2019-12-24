@@ -4,7 +4,7 @@
 
 <h1>@ViewData["Title"]</h1>
 <div class="d-flex justify-content-around align-items-center login-bg">
-    <div class="col-sm-4 col-6 login-content">
+    <div class="col-sm-4 col-6 login-content p-4">
         <section>
             <h1>@ViewData["Title"]</h1>
             <form id="account" method="post">
@@ -13,12 +13,12 @@
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Input.UserName"></label>
-                    <input asp-for="Input.UserName" class="form-control" />
+                    <input asp-for="Input.UserName" class="login-field" />
                     <span asp-validation-for="Input.UserName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control" />
+                    <input asp-for="Input.Password" class="login-field" />
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">

@@ -4,95 +4,93 @@
     ViewData["Title"] = "Registration";
 }
 
-<h1>Registeration page</h1>
+<h1 class="text-center">Student Registeration page</h1>
 
-<h4>New Student</h4>
-<hr />
 <div class="row">
-    <div class="offset-lg-2 offset-1 col-md-4 col-6">
+    <div class="col-md-6 offset-md-3 col-10 offset-1">
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="All" class="text-danger"></div>
 
-            <div class="form-group">
+            <div class="form-group form-inline">
                 <label asp-for="Student.FirstName" class="control-label"></label>
-                <input asp-for="Student.FirstName" class="form-control" />
+                <input asp-for="Student.FirstName" class="form-control ml-auto" />
                 <span asp-validation-for="Student.FirstName" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            <div class="form-group form-inline">
                 <label asp-for="Student.MiddleName" class="control-label"></label>
-                <input asp-for="Student.MiddleName" class="form-control" />
+                <input asp-for="Student.MiddleName" class="form-control ml-auto" />
                 <span asp-validation-for="Student.MiddleName" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            <div class="form-group form-inline">
                 <label asp-for="Student.LastName" class="control-label"></label>
-                <input asp-for="Student.LastName" class="form-control" />
+                <input asp-for="Student.LastName" class="form-control ml-auto" />
                 <span asp-validation-for="Student.LastName" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            <div class="form-group form-inline">
                 <label asp-for="Student.AdmissionDate" class="control-label"></label>
-                <input asp-for="Student.AdmissionDate" class="form-control" />
+                <input asp-for="Student.AdmissionDate" class="form-control ml-auto" />
                 <span asp-validation-for="Student.AdmissionDate" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            <div class="form-group form-inline">
                 <label asp-for="Student.DOB" class="control-label"></label>
-                <input asp-for="Student.DOB" class="form-control" />
+                <input asp-for="Student.DOB" class="form-control ml-auto" />
                 <span asp-validation-for="Student.DOB" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            <div class="form-group form-inline">
                 <label asp-for="Student.Address" class="control-label"></label>
-                <input asp-for="Student.Address" class="form-control" />
+                <input asp-for="Student.Address" class="form-control ml-auto" />
                 <span asp-validation-for="Student.Address" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            <div class="form-group form-inline">
                 <label asp-for="Student.ClassId" class="control-label"></label>
-                <select asp-for="Student.ClassId" class="form-control" asp-items="ViewBag.ClassId"></select>
+                <select asp-for="Student.ClassId" class="form-control ml-auto" asp-items="ViewBag.ClassId"></select>
             </div>
-            <div class="form-group">
+            <div class="form-group form-inline">
                 <label asp-for="Student.DepartmentId" class="control-label"></label>
-                <select asp-for="Student.DepartmentId" class="form-control" asp-items="@ViewBag.DepartmentId"></select>
+                <select asp-for="Student.DepartmentId" class="form-control ml-auto" asp-items="@ViewBag.DepartmentId"></select>
             </div>
 
-            <div class="form-group">
+            <div class="form-group form-inline">
                 <label asp-for="Student.UserName" class="control-label"></label>
-                <input asp-for="Student.UserName" class="form-control" />
+                <input asp-for="Student.UserName" class="form-control ml-auto" />
                 <span asp-validation-for="Student.UserName" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            <div class="form-group form-inline">
                 <label asp-for="Student.Email" class="control-label"></label>
-                <input asp-for="Student.Email" class="form-control" />
+                <input asp-for="Student.Email" class="form-control ml-auto" />
                 <span asp-validation-for="Student.Email" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            <div class="form-group form-inline">
                 <label asp-for="Student.PhoneNumber" class="control-label"></label>
-                <input asp-for="Student.PhoneNumber" class="form-control" />
+                <input asp-for="Student.PhoneNumber" class="form-control ml-auto" />
                 <span asp-validation-for="Student.PhoneNumber" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            <div class="form-group form-inline">
                 <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
+                <input asp-for="Password" class="form-control ml-auto" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            <div class="form-group form-inline">
                 <label asp-for="ReTypePassword" class="control-label"></label>
-                <input asp-for="ReTypePassword" class="form-control" />
+                <input asp-for="ReTypePassword" class="form-control ml-auto" />
                 <span asp-validation-for="ReTypePassword" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            <div class="form-group form-inline">
                 <img class="rounded-circle pb-3 w-75" id="img" />
-                <input type="file" name="Avatar" accept="image/*" class="btn btn-primary" onchange="loadImg(this)" />
+                <input type="file" name="Avatar" accept="image/*" class="form-control form-control-file" onchange="loadImg(this)" />
             </div>
-            <div class="form-group">
+            <div class="form-group form-inline">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
