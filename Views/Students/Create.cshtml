@@ -49,11 +49,11 @@
 
             <div class="form-group form-inline">
                 <label asp-for="Student.ClassId" class="control-label"></label>
-                <select asp-for="Student.ClassId" class="form-control ml-auto" asp-items="ViewBag.ClassId"></select>
+                <select asp-for="Student.ClassId" class="custom-select ml-auto" asp-items="ViewBag.ClassId"></select>
             </div>
             <div class="form-group form-inline">
                 <label asp-for="Student.DepartmentId" class="control-label"></label>
-                <select asp-for="Student.DepartmentId" class="form-control ml-auto" asp-items="@ViewBag.DepartmentId"></select>
+                <select asp-for="Student.DepartmentId" class="custom-select ml-auto" asp-items="@ViewBag.DepartmentId"></select>
             </div>
 
             <div class="form-group form-inline">
@@ -88,7 +88,7 @@
 
             <div class="form-group form-inline">
                 <img class="rounded-circle pb-3 w-75" id="img" />
-                <input type="file" name="Avatar" accept="image/*" class="form-control form-control-file" onchange="loadImg(this)" />
+                <input type="file" name="Avatar" accept="image/*" class="form-control" onchange="loadImg(this)" />
             </div>
             <div class="form-group form-inline">
                 <input type="submit" value="Create" class="btn btn-primary" />
