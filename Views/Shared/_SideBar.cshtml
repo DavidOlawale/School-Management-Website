@@ -1,34 +1,39 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> userManager
-@{ 
+@inject SignInManager<ApplicationUser> signInManager
+@{
     var currentUser = await userManager.GetUserAsync(User);
+    string src = currentUser.ProfilePhotoExtension == null ? "/Images/Avatars/Avatar.png" : $"/Images/Avatars/{currentUser.Id}.{currentUser.ProfilePhotoExtension}";
 }
     <div class="sidebar" id="menu">
-        <button id="close-btn">&times;</button>
-        <a asp-area="Identity" asp-page="/Account/Manage/Index">My Profile</a>
-        <div class="row text-white">
-            <div class="col-3">
-
+        <div class="d-flex align-items-end">
+            <button id="close-btn">&times;</button>
+        </div>
+        <div class="row text-white profile m-2">
+            <div class="col-6">
+                <img class="rounded-circle w-100" src="@src" />
             </div>
-            <div class="col-9">
+            <div class="col-6 p-1 mt-1">
                 <p>@currentUser.FirstName</p>
+                <a class="p-0" asp-area="Identity" asp-page="/Account/Manage/Index">My Profile</a>
             </div>
         </div>
+        <hr />
         @if (User.IsInRole(RoleNames.Admin))
         {
-        <a asp-controller="Students" asp-action="Index">Students</a>
-        <a asp-controller="Teachers" asp-action="Index">Teachers</a>
-        <a asp-controller="Parents" asp-action="Index">Parents</a>
-        <a asp-controller="Classes" asp-action="Index">Classes</a>
-        <a href="#">School Info</a>
+            <a asp-controller="Students" asp-action="Index">Students</a>
+            <a asp-controller="Teachers" asp-action="Index">Teachers</a>
+            <a asp-controller="Parents" asp-action="Index">Parents</a>
+            <a asp-controller="Classes" asp-action="Index">Classes</a>
+            <a href="#">School Info</a>
         }
         @if (User.IsInRole(RoleNames.Teacher))
         {
-        <a asp-controller="teacherclass" asp-action="details">Class</a>
-        <a asp-controller="teacherclass" asp-action="examuploadscore">Exam Upload</a>
-        <a asp-controller="teacherclass" asp-action="testuploadscore">Test Upload</a>
-        <a asp-controller="teacherclass" asp-action="examscore">Exam Score</a>
-        <a asp-controller="teacherclass" asp-action="testscore">Test Score</a>
+            <a asp-controller="teacherclass" asp-action="details">Class</a>
+            <a asp-controller="teacherclass" asp-action="examuploadscore">Exam Upload</a>
+            <a asp-controller="teacherclass" asp-action="testuploadscore">Test Upload</a>
+            <a asp-controller="teacherclass" asp-action="examscore">Exam Score</a>
+            <a asp-controller="teacherclass" asp-action="testscore">Test Score</a>
         }
         <span onclick="logOut()">Logout</span>
         <form id="logout" class="d-none" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
@@ -36,20 +41,20 @@
         </form>
 
     </div>
-    <script>
-        let sideBar = document.getElementById('menu');
-        function showMenu() {
-            sideBar.classList.add('sidebar-colapse')
-        }
-        sideBar.addEventListener('blur', () => this.classList.remove('sidebar-colapse'))
+<script>
+    let sideBar = document.getElementById('menu');
+    function showMenu() {
+        sideBar.classList.add('sidebar-colapse')
+    }
+    sideBar.addEventListener('blur', () => this.classList.remove('sidebar-colapse'))
 
-        document.getElementById('close-btn').onclick = () => {
-            sideBar.classList.remove('sidebar-colapse')
-        }
-    </script>
+    document.getElementById('close-btn').onclick = () => {
+        sideBar.classList.remove('sidebar-colapse')
+    }
+</script>
 
-    <script>
-        function logOut() {
-            document.getElementById('logout').submit()
-        }
-    </script>
+<script>
+    function logOut() {
+        document.getElementById('logout').submit()
+    }
+</script>

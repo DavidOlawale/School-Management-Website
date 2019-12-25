@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,8 +16,14 @@ namespace School.Controllers
     public class ParentsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHostingEnvironment _env;
+
         private bool ParentExists(Guid id) => _context.Parents.Any(e => e.Id == id);
-        public ParentsController(ApplicationDbContext context) => _context = context;
+        public ParentsController(ApplicationDbContext context, IHostingEnvironment env)
+        {
+            _context = context;
+            _env = env;
+        }
 
         public IActionResult Index()
         {
@@ -35,12 +44,28 @@ namespace School.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Parent parent)
+        public async Task<IActionResult> Create(Parent parent, IFormFile Avatar)
         {
             if (!ModelState.IsValid)
                 return View(parent);
             parent.Id = Guid.NewGuid();
             _context.Add(parent);
+            if (Avatar != null && Avatar.Length > 0)
+            {
+                string AvatarPath = Path.Combine(_env.WebRootPath, "Images", "Avatars");
+                if (parent.ProfilePhotoExtension != null)
+                {
+                    string file = Path.Combine(AvatarPath, parent.Id + "." + parent.ProfilePhotoExtension);
+                    System.IO.File.Delete(file);
+                }
+                string ImageExtension = Avatar.FileName.Split('.').Last();
+                parent.ProfilePhotoExtension = ImageExtension;
+                Directory.CreateDirectory(AvatarPath);
+                var stream = new FileStream(Path.Combine(AvatarPath, parent.Id + "." + ImageExtension), FileMode.CreateNew, FileAccess.ReadWrite);
+                await Avatar.CopyToAsync(stream);
+                stream.Close();
+                _context.Users.Update(parent);
+            }
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

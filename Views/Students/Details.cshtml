@@ -1,53 +1,58 @@
 ﻿@model School.Models.Student
+@using Microsoft.AspNetCore.Hosting
+@inject IHostingEnvironment env
 
 @{
     ViewData["Title"] = "Details";
+    string src = Model.ProfilePhotoExtension == null ? "/Images/Avatars/Avatar.png" : $"/Images/Avatars/{Model.Id}.{Model.ProfilePhotoExtension}";
 }
 
-<h1>Details</h1>
+<h1 class="text-center">Details</h1>
+<div class="row">
+    <div class="col-10 offset-1 col-md-6 offset-md-3">
+        <img class="img-thumbnail" src="@src" />
+        <ul class="list-group m-2">
+            <li class="list-group-item">
+                @Html.DisplayNameFor(model => model.FirstName): @Html.DisplayFor(model => model.FirstName)
+            </li>
+            <li class="list-group-item">
+                @Html.DisplayNameFor(model => model.MiddleName): @Html.DisplayFor(model => model.MiddleName)
+            </li>
+            <li class="list-group-item">
+                @Html.DisplayNameFor(model => model.LastName): @Html.DisplayFor(model => model.LastName)
+            </li>
+            <li class="list-group-item">
+                @Html.DisplayNameFor(model => model.UserName): @Html.DisplayFor(model => model.UserName)
+            </li>
+            <li class="list-group-item">
+                @Html.DisplayNameFor(model => model.AdmissionDate) : @Html.DisplayFor(model => model.AdmissionDate)
+            </li>
+            <li class="list-group-item">
+                @Html.DisplayNameFor(model => model.DOB): @Html.DisplayFor(model => model.DOB)
+            </li>
+            <li class="list-group-item">
+                @Html.DisplayNameFor(model => model.Address): @Html.DisplayFor(model => model.Address)
+            </li>
+            <li class="list-group-item">
+                Class: @Html.DisplayFor(model => model.Class.Name)
+            </li>
+            <li class="list-group-item">
+                @Html.DisplayNameFor(model => model.DOB): @Html.DisplayFor(model => model.DOB)
+            </li>
+            <li class="list-group-item">
+                @Html.DisplayNameFor(model => model.DOB): @Html.DisplayFor(model => model.DOB)
+            </li>
+            <li class="list-group-item">
+                @Html.DisplayNameFor(model => model.Email): @Html.DisplayFor(model => model.Email)
+            </li>
+            <li class="list-group-item">
+                @Html.DisplayNameFor(model => model.PhoneNumber): @Html.DisplayFor(model => model.PhoneNumber)
+            </li>
+        </ul>
+        <div>
+            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+            <a class="btn btn-primary" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+        </div>
 
-<div>
-    <h4>Student</h4>
-    <ul class="list-group m-2">
-        <li class="list-group-item">
-            @Html.DisplayNameFor(model => model.FirstName): @Html.DisplayFor(model => model.FirstName)
-        </li>
-        <li class="list-group-item">
-            @Html.DisplayNameFor(model => model.MiddleName): @Html.DisplayFor(model => model.MiddleName)
-        </li>
-        <li class="list-group-item">
-            @Html.DisplayNameFor(model => model.LastName): @Html.DisplayFor(model => model.LastName)
-        </li>
-        <li class="list-group-item">
-            @Html.DisplayNameFor(model => model.UserName): @Html.DisplayFor(model => model.UserName)
-        </li>
-        <li class="list-group-item">
-            @Html.DisplayNameFor(model => model.AdmissionDate) : @Html.DisplayFor(model => model.AdmissionDate)
-        </li>
-        <li class="list-group-item">
-            @Html.DisplayNameFor(model => model.DOB): @Html.DisplayFor(model => model.DOB)
-        </li>
-        <li class="list-group-item">
-            @Html.DisplayNameFor(model => model.Address): @Html.DisplayFor(model => model.Address)
-        </li>
-        <li class="list-group-item">
-            Class: @Html.DisplayFor(model => model.Class.Name)
-        </li>
-        <li class="list-group-item">
-            @Html.DisplayNameFor(model => model.DOB): @Html.DisplayFor(model => model.DOB)
-        </li>
-        <li class="list-group-item">
-            @Html.DisplayNameFor(model => model.DOB): @Html.DisplayFor(model => model.DOB)
-        </li>
-        <li class="list-group-item">
-            @Html.DisplayNameFor(model => model.Email): @Html.DisplayFor(model => model.Email)
-        </li>
-        <li class="list-group-item">
-            @Html.DisplayNameFor(model => model.PhoneNumber): @Html.DisplayFor(model => model.PhoneNumber)
-        </li>
-    </ul>
-</div>
-<div>
-    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Edit</a> 
-    <a class="btn btn-primary" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+    </div>
 </div>

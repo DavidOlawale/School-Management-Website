@@ -38,7 +38,7 @@ namespace School.Controllers
             return View(teachers);
         }
 
-        public IActionResult Details(string id)
+        public IActionResult Details(Guid id)
         {
             var teacher = _context.Teachers.Find(id);
             return View(teacher);
@@ -56,9 +56,7 @@ namespace School.Controllers
         public async Task<ActionResult> Create(CreateUserViewModel model, IFormFile Avatar)
         {
             if (!ModelState.IsValid)
-            {
                 return View("Create", model);
-            }
             ViewData["isToast"] = true;
             var createresult = await _userManager.CreateAsync(model.Teacher, model.Password);
             var teachers = _context.Teachers;
@@ -66,45 +64,50 @@ namespace School.Controllers
             if (!createresult.Succeeded)
             {
                 notification.Text = "Error";
-                notification.Text = "Error ecountered while registering student";
+                notification.Text = "Error ecountered while registering teacher";
                 notification.Type = "error";
                 return RedirectToAction("Index", teachers);
             }
-            //create student role if it doesn't exist
-            if (_context.Roles.SingleOrDefault(role => role.Name == RoleNames.Student) == null)
-            {
-                await _roleManager.CreateAsync(new ApplicationRole(RoleNames.Student));
-            }
-            string ImageExtension = Avatar.FileName.Split('.').Last();
-            model.Student.ProfilePhotoExtension = ImageExtension;
-            var addtoroleresult = await _userManager.AddToRoleAsync(model.Student, RoleNames.Student);
+            //create teacher role if it doesn't exist
+            if (_context.Roles.SingleOrDefault(role => role.Name == RoleNames.Teacher) == null)
+                await _roleManager.CreateAsync(new ApplicationRole(RoleNames.Teacher));
+            
+            var addtoroleresult = await _userManager.AddToRoleAsync(model.Teacher, RoleNames.Teacher);
             if (!addtoroleresult.Succeeded)
             {
                 notification.Title = "Error";
-                notification.Text = "Error ecountered while registering student";
+                notification.Text = "Error ecountered while registering teacher";
                 notification.Type = "error";
-                await _userManager.DeleteAsync(model.Student);
+                await _userManager.DeleteAsync(model.Teacher);
                 return RedirectToAction("Index", teachers);
             }
-            string AvatarPath = Path.Combine(_env.WebRootPath, "Images", "Avatars");
-            Directory.CreateDirectory(AvatarPath);
-            var stream = new FileStream(Path.Combine(AvatarPath, model.Student.Id.ToString() + '.' + ImageExtension), FileMode.CreateNew, FileAccess.ReadWrite);
-            await Avatar.CopyToAsync(stream);
-            stream.Close();
+            if (Avatar != null)
+            {
+                string ImageExtension = Avatar.FileName.Split('.').Last();
+                model.Teacher.ProfilePhotoExtension = ImageExtension;
+                string AvatarPath = Path.Combine(_env.WebRootPath, "Images", "Avatars");
+                Directory.CreateDirectory(AvatarPath);
+                var stream = new FileStream(Path.Combine(AvatarPath, model.Teacher.Id.ToString() + '.' + ImageExtension), FileMode.CreateNew, FileAccess.ReadWrite);
+                await Avatar.CopyToAsync(stream);
+                stream.Close();
+                _context.Users.Update(model.Teacher);
+                await _context.SaveChangesAsync();
+            }
+            
             notification.Title = "Registration succesful";
-            notification.Text = model.Student.FirstName + " " + model.Student.MiddleName + " successfully registered";
+            notification.Text = model.Teacher.FirstName + " " + model.Teacher.MiddleName + " successfully registered";
             notification.Type = "success";
             return RedirectToActionPermanent("Index", notification);
         }
 
-        public ActionResult Edit(string id)
+        public ActionResult Edit(Guid id)
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(Teacher teacher)
+        public async Task<ActionResult> Edit(Teacher teacher, IFormFile Avatar)
         {
             var teacherInDb = _context.Teachers.Find(teacher.Id);
             teacherInDb.FirstName = teacher.FirstName;
@@ -118,6 +121,23 @@ namespace School.Controllers
             teacherInDb.EmploymentDate = teacher.EmploymentDate;
 
             await _userManager.UpdateAsync(teacherInDb);
+            if (Avatar != null && Avatar.Length > 0)
+            {
+                string AvatarPath = Path.Combine(_env.WebRootPath, "Images", "Avatars");
+                if (teacherInDb.ProfilePhotoExtension != null)
+                {
+                    string file = Path.Combine(AvatarPath, teacher.Id + "." + teacherInDb.ProfilePhotoExtension);
+                    System.IO.File.Delete(file);
+                }
+                string ImageExtension = Avatar.FileName.Split('.').Last();
+                teacher.ProfilePhotoExtension = ImageExtension;
+                Directory.CreateDirectory(AvatarPath);
+                var stream = new FileStream(Path.Combine(AvatarPath, teacher.Id + "." + ImageExtension), FileMode.CreateNew, FileAccess.ReadWrite);
+                await Avatar.CopyToAsync(stream);
+                stream.Close();
+                _context.Users.Update(teacherInDb);
+                await _context.SaveChangesAsync();
+            }
             var notification = new Notification()
             {
                 Title = "Update successfull",
@@ -127,24 +147,16 @@ namespace School.Controllers
             return RedirectToAction("Index", notification);
         }
 
-        public ActionResult Delete(string id)
+        public ActionResult Delete(Guid id)
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(string id, IFormCollection collection)
+        public ActionResult Delete(Guid id, IFormCollection collection)
         {
-            try
-            {
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
     }
 }
