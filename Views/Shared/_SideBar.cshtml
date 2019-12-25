@@ -9,16 +9,15 @@
         <div class="d-flex align-items-end">
             <button id="close-btn">&times;</button>
         </div>
-        <div class="row text-white profile m-2">
+        <div class="row text-white profile m-2 pb-2">
             <div class="col-6">
                 <img class="rounded-circle w-100" src="@src" />
             </div>
             <div class="col-6 p-1 mt-1">
-                <p>@currentUser.FirstName</p>
+                <h6>@currentUser.FirstName.Substring(0, 1). @currentUser.MiddleName</h6>
                 <a class="p-0" asp-area="Identity" asp-page="/Account/Manage/Index">My Profile</a>
             </div>
         </div>
-        <hr />
         @if (User.IsInRole(RoleNames.Admin))
         {
             <a asp-controller="Students" asp-action="Index">Students</a>
