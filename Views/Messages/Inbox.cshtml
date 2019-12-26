@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center font-weight-bold">Inbox</h1>
+<div id="messages">
+
+</div>
+@section scripts{ 
+    <script>
+        $(function () {
+            $.get('api/messages', (messages) => {
+                for (message in messages) {
+
+                    document.getElementById('messages').appendChild()
+                }
+            })
+        })
+    </script>
+}

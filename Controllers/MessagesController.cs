@@ -21,7 +21,7 @@ namespace School.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Inbox()
         {
             return View();
         }

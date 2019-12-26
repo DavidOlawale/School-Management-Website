@@ -34,6 +34,10 @@
             <a asp-controller="teacherclass" asp-action="examscore">Exam Score</a>
             <a asp-controller="teacherclass" asp-action="testscore">Test Score</a>
         }
+        @if (User.IsInRole(RoleNames.Admin) || User.IsInRole(RoleNames.Parent))
+        {
+            <a asp-controller="messages" asp-action="inbox">Messages</a>
+        }
         <span onclick="logOut()">Logout</span>
         <form id="logout" class="d-none" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
             <button type="submit" class="outline-none" id="loggout">Logout</button>

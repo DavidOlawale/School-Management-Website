@@ -15,6 +15,7 @@ namespace School.Models
         public static string Admin => "Admin";
         public static string Student => "Student";
         public static string Teacher => "Teacher";
+        public static string Parent => "Parent";
 
     }
 
