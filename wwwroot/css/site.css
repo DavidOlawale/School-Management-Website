@@ -161,3 +161,16 @@ body {
 .form-group{
     margin-bottom: 2rem !important;
 }
+.message{
+    background-color: rgb(246, 245, 245);
+    border-radius: 5px;
+}
+.messages {
+    padding: 1rem;
+    border: 1px solid #cecece;
+    border-radius: 5px;
+}
+.border-radius-1{
+    border: 2px solid #e5e5e5;
+    border-radius: 1rem;
+}

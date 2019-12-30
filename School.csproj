@@ -53,6 +53,8 @@
     <Compile Remove="Migrations\20191215213825_Message-RecieverId-to-ReceiverId.Designer.cs" />
     <Compile Remove="Migrations\20191215214417_Message-RecieverId-to-ReceiverId.cs" />
     <Compile Remove="Migrations\20191215214417_Message-RecieverId-to-ReceiverId.Designer.cs" />
+    <Compile Remove="Migrations\20191227204947_fixed-spelling-error-exam-class.cs" />
+    <Compile Remove="Migrations\20191227204947_fixed-spelling-error-exam-class.Designer.cs" />
   </ItemGroup>
 
 

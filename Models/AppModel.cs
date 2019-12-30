@@ -223,6 +223,7 @@ namespace School.Models
     {
         public int Id { get; set; }
         public Guid SenderId { get; set; }
+        public ApplicationUser Sender { get; set; }
         public Guid ReceiverId { get; set; }
         public string Content { get; set; }
         public bool Received { get; set; }

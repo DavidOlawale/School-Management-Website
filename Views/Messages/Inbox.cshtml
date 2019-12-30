@@ -5,16 +5,59 @@
 }
 
 <h1 class="text-center font-weight-bold">Inbox</h1>
-<div id="messages">
+<div class="d-flex flex-row justify-content-end ">
+    <a asp-action="new" class="btn btn-primary">Send Message</a>
+</div>
+<div class="row border-radius-1 p-4 m-3">
+    <div class="form-group col-3 offset-9">
+        <select class="custom-select mr-4" name="filter">
+            <option value="1">All</option>
+            <option value="2">Unread</option>
+            <option value="3">Read</option>
+        </select>
+    </div>
+    <div id="messages" class="col-10 offset-1 col-sm-8 offset-sm-2 col-md-6 offset-md-3">
+
+    </div>
 
 </div>
-@section scripts{ 
-    <script>
-        $(function () {
-            $.get('api/messages', (messages) => {
-                for (message in messages) {
 
-                    document.getElementById('messages').appendChild()
+<div id="message" class="row message d-none">
+    <div class="col-3 p-3">
+        <img class="rounded-circle w-75" src="~/Images/Avatars/Avatar.png" />
+    </div>
+    <div class="col-9 p-3">
+        <h5></h5>
+        <p></p>
+    </div>
+</div>
+@section styles{
+    <link rel="stylesheet" href="~/lib/Quill/quill.snow.min.css" />
+}
+@section scripts{
+    <script src="~/lib/Quill/quill.min.js"></script>
+    <script>
+        var log = console.log
+        $(function () {
+            $.get('/api/messages/received', (messages) => {
+                for (message of messages) {
+                    let messageNode = document.getElementById('message').cloneNode(true)
+                    messageNode.classList.remove('d-none')
+                    let firstChild = Array.from(messageNode.childNodes).filter((node) => node.nodeType === Node.ELEMENT_NODE)[0]
+                    let secoundChild = Array.from(messageNode.childNodes).filter((node) => node.nodeType === Node.ELEMENT_NODE)[1]
+                    // set avatar
+                    if (message.sender.profilePhotoExtension) {
+                        firstChild.childNodes[1].src = '/Images/Avatars/' + message.sender.id + message.sender.profilePhotoExtension
+                    }
+                    else {
+                        firstChild.childNodes[1].src = '/Images/Avatars/Avatar.png'
+                    }
+                    // set message desc
+                    secoundChild.childNodes[1].innerText = `${message.sender.middleName[0]}. ${message.sender.firstName}`
+                    let quill = new Quill('#message')
+                    quill.setContents(JSON.parse(message.content))
+                    secoundChild.childNodes[3].innerText = quill.getText().substring(0, 30) + '...'
+                    document.getElementById('messages').appendChild(messageNode)
                 }
             })
         })
