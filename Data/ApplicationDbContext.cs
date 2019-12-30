@@ -72,12 +72,12 @@ namespace School.Data
                 .HasKey(nameof(DepartmentSubject.DepartmentId), nameof(DepartmentSubject.SubjectId));
 
             builder.Entity<Exam>()
-                .HasKey(nameof(Exam.DepartmentSubjectDepartmentId), nameof(Exam.DepartmentSubjectSubjecttId), nameof(Exam.StudentId), nameof(Exam.TermId));
+                .HasKey(nameof(Exam.DepartmentSubjectDepartmentId), nameof(Exam.DepartmentSubjectSubjectId), nameof(Exam.StudentId), nameof(Exam.TermId));
 
             builder.Entity<Exam>()
                 .HasOne(e => e.DepartmentSubject)
                 .WithMany()
-                .HasForeignKey(nameof(Exam.DepartmentSubjectDepartmentId), nameof(Exam.DepartmentSubjectSubjecttId));
+                .HasForeignKey(nameof(Exam.DepartmentSubjectDepartmentId), nameof(Exam.DepartmentSubjectSubjectId));
 
             builder.Entity<Test>()
                 .HasOne(e => e.DepartmentSubject)

@@ -171,7 +171,7 @@ namespace School.Models
     {
         public Guid StudentId { get; set; }
         public int DepartmentSubjectDepartmentId { get; set; }
-        public int DepartmentSubjectSubjecttId { get; set; }
+        public int DepartmentSubjectSubjectId { get; set; }
         public DepartmentSubject DepartmentSubject{ get; set; }
         public int TermId { get; set; }
         public Term Term { get; set; }

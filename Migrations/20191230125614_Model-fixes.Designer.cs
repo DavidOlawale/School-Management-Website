@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using School.Data;
 
 namespace School.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191230125614_Model-fixes")]
+    partial class Modelfixes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -293,7 +295,7 @@ namespace School.Migrations
                 {
                     b.Property<int>("DepartmentSubjectDepartmentId");
 
-                    b.Property<int>("DepartmentSubjectSubjectId");
+                    b.Property<int>("DepartmentSubjectSubjecttId");
 
                     b.Property<Guid>("StudentId");
 
@@ -301,7 +303,7 @@ namespace School.Migrations
 
                     b.Property<int>("Score");
 
-                    b.HasKey("DepartmentSubjectDepartmentId", "DepartmentSubjectSubjectId", "StudentId", "TermId");
+                    b.HasKey("DepartmentSubjectDepartmentId", "DepartmentSubjectSubjecttId", "StudentId", "TermId");
 
                     b.HasIndex("TermId");
 
@@ -527,7 +529,7 @@ namespace School.Migrations
 
                     b.HasOne("School.Models.DepartmentSubject", "DepartmentSubject")
                         .WithMany()
-                        .HasForeignKey("DepartmentSubjectDepartmentId", "DepartmentSubjectSubjectId")
+                        .HasForeignKey("DepartmentSubjectDepartmentId", "DepartmentSubjectSubjecttId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

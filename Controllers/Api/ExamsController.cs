@@ -84,7 +84,7 @@ namespace School.Controllers.Api
             {
                 var exam = new Exam();
                 exam.DepartmentSubjectDepartmentId = DepartmentId;
-                exam.DepartmentSubjectSubjecttId = examdto.DepartmentSubjectSubjecttId;
+                exam.DepartmentSubjectSubjectId = examdto.DepartmentSubjectSubjecttId;
                 exam.StudentId = examdto.StudentId;
                 exam.Score = examdto.Score;
                 exam.TermId = termId;
