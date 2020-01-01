@@ -10,7 +10,7 @@
     z-index: 3;
 }
 
-.sidebar a, span {
+.sidebar a, .sidebar span {
     color: #93939d;
     border: 0px;
     display: block;
@@ -21,7 +21,7 @@
     background-color: inherit;
 }
 
-.sidebar a:hover, span:hover {
+.sidebar a:hover, .sidebar span:hover {
     color: #fff;
     text-decoration: none;
 }

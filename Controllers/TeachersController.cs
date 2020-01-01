@@ -146,17 +146,5 @@ namespace School.Controllers
             };
             return RedirectToAction("Index", notification);
         }
-
-        public ActionResult Delete(Guid id)
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(Guid id, IFormCollection collection)
-        {
-            return View();
-        }
     }
 }

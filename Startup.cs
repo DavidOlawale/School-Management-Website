@@ -91,6 +91,10 @@ namespace School
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            app.Run(async (ctx) =>
+            {
+                ctx.Response.WriteAsync($"no page {ctx.Request.Path}");
+            });
         }
     }
 }

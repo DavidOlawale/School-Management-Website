@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,15 +15,21 @@ using School.Models;
 
 namespace School.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class ParentsController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly IHostingEnvironment _env;
 
+        public UserManager<ApplicationUser> _usermanager { get; }
+        public RoleManager<ApplicationRole> _roleManager { get; }
+
         private bool ParentExists(Guid id) => _context.Parents.Any(e => e.Id == id);
-        public ParentsController(ApplicationDbContext context, IHostingEnvironment env)
+        public ParentsController(ApplicationDbContext context, UserManager<ApplicationUser> usermanager, RoleManager<ApplicationRole> roleManager, IHostingEnvironment env)
         {
             _context = context;
+            _usermanager = usermanager;
+            _roleManager = roleManager;
             _env = env;
         }
 
@@ -44,29 +52,34 @@ namespace School.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Parent parent, IFormFile Avatar)
+        public async Task<IActionResult> Create(CreateUserViewModel model, IFormFile Avatar)
         {
             if (!ModelState.IsValid)
-                return View(parent);
-            parent.Id = Guid.NewGuid();
-            _context.Add(parent);
+                return View(model.Parent);
+            await _usermanager.CreateAsync(model.Parent, model.Password);
+            if (!(await _roleManager.RoleExistsAsync(RoleNames.Parent)))
+                await _roleManager.CreateAsync(new ApplicationRole(RoleNames.Parent));
+
+            await _usermanager.AddToRoleAsync(model.Parent, RoleNames.Parent);
             if (Avatar != null && Avatar.Length > 0)
             {
                 string AvatarPath = Path.Combine(_env.WebRootPath, "Images", "Avatars");
-                if (parent.ProfilePhotoExtension != null)
+                // if user has a profile photo before
+                if (model.Parent.ProfilePhotoExtension != null)
                 {
-                    string file = Path.Combine(AvatarPath, parent.Id + "." + parent.ProfilePhotoExtension);
+                    string file = Path.Combine(AvatarPath, model.Parent.Id + "." + model.Parent.ProfilePhotoExtension);
                     System.IO.File.Delete(file);
                 }
                 string ImageExtension = Avatar.FileName.Split('.').Last();
-                parent.ProfilePhotoExtension = ImageExtension;
                 Directory.CreateDirectory(AvatarPath);
-                var stream = new FileStream(Path.Combine(AvatarPath, parent.Id + "." + ImageExtension), FileMode.CreateNew, FileAccess.ReadWrite);
+                var stream = new FileStream(Path.Combine(AvatarPath, model.Parent.Id + "." + ImageExtension), FileMode.CreateNew, FileAccess.ReadWrite);
                 await Avatar.CopyToAsync(stream);
                 stream.Close();
-                _context.Users.Update(parent);
+                var ParentInDb = _context.Parents.Single(p => p.UserName == model.Parent.UserName);
+                ParentInDb.ProfilePhotoExtension = ImageExtension;
+                _context.Users.Update(ParentInDb);
+                await _context.SaveChangesAsync();
             }
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
@@ -104,24 +117,5 @@ namespace School.Controllers
             return View(parent);
         }
 
-        // GET: Parents/Delete/5
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            var parent = await _context.Parents
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (parent == null)
-                return NotFound();
-            return View(parent);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
-            var parent = await _context.Parents.FindAsync(id);
-            _context.Parents.Remove(parent);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
     }
 }

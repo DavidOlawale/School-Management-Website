@@ -1,4 +1,4 @@
-﻿@model School.Models.Parent
+﻿@model School.Models.CreateUserViewModel
 
 @{
     ViewData["Title"] = "Register parent";
@@ -13,45 +13,57 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group form-inline">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control ml-auto" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+                <label asp-for="Parent.FirstName" class="control-label"></label>
+                <input asp-for="Parent.FirstName" class="form-control ml-auto" />
+                <span asp-validation-for="Parent.FirstName" class="text-danger"></span>
             </div>
 
             <div class="form-group form-inline">
-                <label asp-for="MiddleName" class="control-label"></label>
-                <input asp-for="MiddleName" class="form-control ml-auto" />
-                <span asp-validation-for="MiddleName" class="text-danger"></span>
+                <label asp-for="Parent.MiddleName" class="control-label"></label>
+                <input asp-for="Parent.MiddleName" class="form-control ml-auto" />
+                <span asp-validation-for="Parent.MiddleName" class="text-danger"></span>
             </div>
 
             <div class="form-group form-inline">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control ml-auto" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
+                <label asp-for="Parent.LastName" class="control-label"></label>
+                <input asp-for="Parent.LastName" class="form-control ml-auto" />
+                <span asp-validation-for="Parent.LastName" class="text-danger"></span>
             </div>
 
             <div class="form-group form-inline">
-                <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" class="form-control ml-auto" />
-                <span asp-validation-for="Address" class="text-danger"></span>
+                <label asp-for="Parent.Address" class="control-label"></label>
+                <input asp-for="Parent.Address" class="form-control ml-auto" />
+                <span asp-validation-for="Parent.Address" class="text-danger"></span>
             </div>
 
             <div class="form-group form-inline">
-                <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control ml-auto" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
+                <label asp-for="Parent.UserName" class="control-label"></label>
+                <input asp-for="Parent.UserName" class="form-control ml-auto" />
+                <span asp-validation-for="Parent.UserName" class="text-danger"></span>
             </div>
 
             <div class="form-group form-inline">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control ml-auto" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label asp-for="Parent.Email" class="control-label"></label>
+                <input asp-for="Parent.Email" class="form-control ml-auto" />
+                <span asp-validation-for="Parent.Email" class="text-danger"></span>
             </div>
 
             <div class="form-group form-inline">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control ml-auto" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                <label asp-for="Parent.PhoneNumber" class="control-label"></label>
+                <input asp-for="Parent.PhoneNumber" class="form-control ml-auto" />
+                <span asp-validation-for="Parent.PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group form-inline">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control ml-auto" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group form-inline">
+                <label asp-for="ReTypePassword" class="control-label"></label>
+                <input asp-for="ReTypePassword" class="form-control ml-auto" />
+                <span asp-validation-for="ReTypePassword" class="text-danger"></span>
             </div>
             <div class="form-group form-inline">
                 <img class="rounded-circle pb-3 w-75" id="img" />

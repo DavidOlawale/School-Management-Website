@@ -160,28 +160,5 @@ namespace School.Controllers
             };
             return RedirectToAction("Index", notification);
         }
-        public ActionResult Delete(Guid id)
-        {
-            var student = _context.Students.Find(id);
-            return View("delete", student);
-        }
-
-        // GET: Students/Delete/5
-        public async Task<ActionResult> DeleteConfirmed(Guid id)
-        {
-            var student = await _context.Students.FindAsync(id);
-            _context.Students.Remove(student);
-            await _context.SaveChangesAsync();
-            var students = _context.Students;
-            ViewData["isToast"] = true;
-            var notification = new Notification()
-            {
-                Title = "Delete successfull",
-                Text = student.FirstName + " " + student.MiddleName + " deleted successfully",
-                Type = "success"
-            };
-            return RedirectToAction("Index", notification);
-        }
-
     }
 }

@@ -49,8 +49,38 @@
         </ul>
         <div>
             <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-            <a class="btn btn-primary" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+            <button class="btn btn-primary" onclick="deleteUser()">Delete</button>
         </div>
 
     </div>
 </div>
+@section styles{
+    <link rel="stylesheet" href="~/lib/VanillaToasts/vanillatoasts.css" />
+}
+@section scripts{
+    <script src="~/lib/VanillaToasts/vanillatoasts.js"></script>
+    <script>
+        function deleteUser() {
+            if (confirmDelete = confirm('Are you sure you want to delete @Model.FullName')) {
+                $.ajax({
+                    method: 'DELETE',
+                    url: '/api/users/deleteuser/@Model.Id'
+                }).statusCode({
+                    "200": () => {
+                            VanillaToasts.create({
+                            title: 'Successful',
+                            text: 'Deleted successfully',
+                            type: 'success',
+                            timeout: '1800'
+                            })
+                        setTimeout(() => {
+                            location.href = '/teachers'
+                        }, 2000)
+                    }
+                })
+            }
+
+
+        }
+    </script>
+}
