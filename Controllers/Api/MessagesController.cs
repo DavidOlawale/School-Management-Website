@@ -38,13 +38,24 @@ namespace School.Controllers.Api
             return _context.Messages.Where(m => m.SenderId == UserId);
         }
 
-        [HttpPost("postmessage")]
+        [HttpPost]
         public async Task<ActionResult<Message>> PostMessage(Message message)
         {
+            if (message.ToAllParents)
+            {
+                message.ReceiverId = default;
+            }
+            else
+            {
+                if (message.ReceiverId == default)
+                {
+                    return BadRequest("ReceiverId expected");
+                }
+            }
+            message.SenderId = (await _manager.GetUserAsync(User)).Id;
             _context.Messages.Add(message);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetMessage", new { id = message.Id }, message);
+            return CreatedAtAction("Sent", new { id = message.Id }, message);
         }
 
     }

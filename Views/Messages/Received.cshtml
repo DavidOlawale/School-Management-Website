@@ -1,0 +1,26 @@
+﻿@model School.Models.Message
+@{
+    ViewData["Title"] = "Received";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center font-weight-bold">Message</h1>
+<div class="row">
+    <div class="col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+        <div id="editor" style="height: auto"></div>
+    </div>
+</div>
+@section styles{ 
+    <link rel="stylesheet" href="~/lib/Quill/quill.snow.min.css" />
+}
+
+@section scripts{ 
+<script src="~/lib/Quill/quill.min.js"></script>
+<script>
+    let options = {
+        readOnly: true,
+    }
+    const quill = new Quill('#editor', options)
+    quill.setContents(@Html.Raw(Model.Content))
+</script>
+}

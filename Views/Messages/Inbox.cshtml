@@ -43,6 +43,7 @@
                 for (message of messages) {
                     let messageNode = document.getElementById('message').cloneNode(true)
                     messageNode.classList.remove('d-none')
+                    messageNode.setAttribute('id', message.id)
                     let firstChild = Array.from(messageNode.childNodes).filter((node) => node.nodeType === Node.ELEMENT_NODE)[0]
                     let secoundChild = Array.from(messageNode.childNodes).filter((node) => node.nodeType === Node.ELEMENT_NODE)[1]
                     // set avatar
@@ -52,7 +53,7 @@
                     else {
                         firstChild.childNodes[1].src = '/Images/Avatars/Avatar.png'
                     }
-                    // set message desc
+                    // set message description
                     secoundChild.childNodes[1].innerText = `${message.sender.middleName[0]}. ${message.sender.firstName}`
                     let quill = new Quill('#message')
                     quill.setContents(JSON.parse(message.content))
@@ -60,6 +61,10 @@
                     document.getElementById('messages').appendChild(messageNode)
                 }
             })
+
+            $('#messages').on('click', '.message', function () {
+                    window.location.href = `/messages/received/${this.id}`
+                })
         })
     </script>
 }

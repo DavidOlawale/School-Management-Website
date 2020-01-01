@@ -12,7 +12,7 @@ namespace School.Models
 {
     public static class RoleNames
     {
-        public static string Admin => "Admin";
+        public  static string Admin => "Admin";
         public static string Student => "Student";
         public static string Teacher => "Teacher";
         public static string Parent => "Parent";
@@ -227,6 +227,7 @@ namespace School.Models
         public Guid ReceiverId { get; set; }
         public string Content { get; set; }
         public bool Received { get; set; }
+        public bool ToAllParents { get; set; }
     }
 
 }

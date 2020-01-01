@@ -102,10 +102,8 @@ namespace School.Controllers.Api
             {
                 return NotFound();
             }
-
             _context.Tests.Remove(test);
             await _context.SaveChangesAsync();
-
             return test;
         }
 

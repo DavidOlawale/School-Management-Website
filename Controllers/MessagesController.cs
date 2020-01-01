@@ -11,7 +11,7 @@ using School.Models;
 
 namespace School.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="Admin,Parent")]
     public class MessagesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -25,6 +25,18 @@ namespace School.Controllers
         {
             return View();
         }
-        public IActionResult New() => View();
+        public IActionResult New()
+        {
+            ViewBag.Parents = new SelectList(_context.Parents, nameof(Parent.Id), nameof(Parent.FullName), "Select parent");
+            if (User.IsInRole(RoleNames.Admin))
+                return View("AdminNew");
+            else
+                return View("ParentNew");
+        }
+        public IActionResult Received(int Id)
+        {
+            var message = _context.Messages.Find(Id);
+            return View(message);
+        }
     }
 }
