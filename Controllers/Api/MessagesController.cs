@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ namespace School.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles ="Admin, Parent")]
     public class MessagesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -41,17 +43,21 @@ namespace School.Controllers.Api
         [HttpPost]
         public async Task<ActionResult<Message>> PostMessage(Message message)
         {
-            if (message.ToAllParents)
+            if (User.IsInRole(RoleNames.Admin))
             {
-                message.ReceiverId = default;
-            }
-            else
-            {
-                if (message.ReceiverId == default)
+                if (message.ToAllParents)
                 {
-                    return BadRequest("ReceiverId expected");
+                    message.ReceiverId = null;
+                }
+                else
+                {
+                    if (message.ReceiverId == null)
+                    {
+                        return BadRequest("ReceiverId expected");
+                    }
                 }
             }
+            
             message.SenderId = (await _manager.GetUserAsync(User)).Id;
             _context.Messages.Add(message);
             await _context.SaveChangesAsync();
