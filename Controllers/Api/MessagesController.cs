@@ -30,7 +30,12 @@ namespace School.Controllers.Api
         public async Task<IEnumerable<Message>> Received()
         {
             Guid UserId = (await _manager.GetUserAsync(User)).Id;
-            return _context.Messages.Where(m => m.ReceiverId == UserId).Include(m => m.Sender);
+            IQueryable<Message> messages = null;
+            if (User.IsInRole(RoleNames.Admin))
+                messages = _context.Messages.Where(m => m.ToAdmin).Include(m => m.Sender);
+            else
+                messages = _context.Messages.Where(m => m.ToAllParents || m.ReceiverId == UserId).Include(m => m.Sender);
+            return messages;
         }
 
         [HttpGet("Sent")]
@@ -56,6 +61,10 @@ namespace School.Controllers.Api
                         return BadRequest("ReceiverId expected");
                     }
                 }
+            }
+            else // User is a parent
+            {
+                message.ToAdmin = true;
             }
             
             message.SenderId = (await _manager.GetUserAsync(User)).Id;

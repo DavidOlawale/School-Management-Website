@@ -228,6 +228,7 @@ namespace School.Models
         public string Content { get; set; }
         public bool Received { get; set; }
         public bool ToAllParents { get; set; }
+        public bool ToAdmin { get; set; }
     }
 
 }
