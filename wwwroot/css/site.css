@@ -177,3 +177,9 @@ body {
 .cursor-pointer{
     cursor: pointer;
 }
+.bg-slight-dark{
+    background-color: #e5e5e5;
+}
+.h-4rem{
+    height: 4rem;
+}

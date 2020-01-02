@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/fontawesome/css/all.min.css" />
     @RenderSection("Styles", false)
+
     @if (User.Identity.IsAuthenticated)
     {
         <link rel="stylesheet" href="~/css/SideBar.css" />
@@ -29,6 +30,8 @@
 <body>
     @if (User.Identity.IsAuthenticated)
     {
+        <partial name="_LogedInNavBar" />
+        <div class="h-4rem"></div>
         <partial name="_SideBar" />
     }
     else
@@ -38,10 +41,6 @@
     <div class="container-fluid">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
-            @if (User.Identity.IsAuthenticated)
-            {
-                <button onclick="showMenu()" class="btn btn-primary m-1 z-index-1 menu-btn" style="font-size: 1em">&#9776; Menu</button>
-            }
             @RenderBody()
         </main>
     </div>

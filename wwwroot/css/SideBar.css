@@ -4,10 +4,11 @@
     height: 100%;
     width: 0;
     left: 0;
+    top: 0;
     background-color: #1f1f23;
     overflow-x: hidden;
     transition-duration: 0.5s;
-    z-index: 3;
+    z-index: 1031;
 }
 
 .sidebar a, .sidebar span {

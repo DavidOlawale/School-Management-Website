@@ -1,4 +1,4 @@
-﻿ @model IEnumerable<School.Models.Parent>
+﻿@model IEnumerable<School.Models.Parent>
 
 @{
     ViewData["Title"] = "Students";
@@ -6,9 +6,7 @@
 
 <h1 class="text-center">Parents </h1>
 
-<p>
-    <a class="btn btn-primary" asp-action="Create">Create New</a>
-</p>
+<a class="btn btn-primary float-right m-4" asp-action="Create">Create New</a>
 <table id="table" class="table table-bordered table-striped table-hover">
     <thead>
         <tr>
