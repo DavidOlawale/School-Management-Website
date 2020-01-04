@@ -40,6 +40,10 @@
         var log = console.log
         $(function () {
             $.get('/api/messages/received', (messages) => {
+                if (!messages.length) {
+                    let paragraph = $('<p class="text-center opacity-80 p-t-3em">No message in inbox</p>').get(0)
+                    document.getElementById('messages').appendChild(paragraph)
+                }
                 for (message of messages) {
                     let messageNode = document.getElementById('message').cloneNode(true)
                     messageNode.classList.remove('d-none')

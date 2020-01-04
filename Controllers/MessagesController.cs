@@ -33,9 +33,12 @@ namespace School.Controllers
             else
                 return View("ParentNew");
         }
-        public IActionResult Received(int Id)
+        public async Task<IActionResult> Received(int Id)
         {
-            var message = _context.Messages.Find(Id);
+            var message = await _context.Messages.SingleOrDefaultAsync(m => m.Id == Id);
+            if (message == null)
+                return NotFound();
+            message.Sender = await _context.Users.FindAsync(message.SenderId);
             return View(message);
         }
     }
