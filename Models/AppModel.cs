@@ -229,6 +229,8 @@ namespace School.Models
         public bool Received { get; set; }
         public bool ToAllParents { get; set; }
         public bool ToAdmin { get; set; }
+        public DateTime SentDate { get; set; }
+        public DateTime? ReceivedDate { get; set; }
     }
 
 }
