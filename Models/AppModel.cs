@@ -12,10 +12,10 @@ namespace School.Models
 {
     public static class RoleNames
     {
-        public  static string Admin => "Admin";
-        public static string Student => "Student";
-        public static string Teacher => "Teacher";
-        public static string Parent => "Parent";
+        public  const string Admin = "Admin";
+        public const string Student = "Student";
+        public const string Teacher = "Teacher";
+        public const string Parent = "Parent";
 
     }
 
