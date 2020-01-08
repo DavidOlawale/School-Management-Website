@@ -1,4 +1,4 @@
-﻿@model School.Models.Dtos.AllDepartmentsExams
+﻿@model School.Models.Dtos.AllDepartmentsTests
 @{
     ViewData["Title"] = "ExamScore";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -19,10 +19,9 @@
 <!-- Tab panes -->
 <div class="tab-content">
     <div id="science" class="container tab-pane active">
-        <h1 class="text-center">Exam Scores</h1>
-        @if (Model.ScienceExams[0].Exams.Count == 0)
+        @if (Model.ScienceTests[0].Tests.Count == 0)
         {
-            <h2 class="text-center opacity-50 p-t-3em">Exam score not yet uploaded</h2>
+            <h2 class="text-center opacity-50 p-t-3em">Test score not yet uploaded</h2>
         }
         else
         {
@@ -31,20 +30,20 @@
                 <thead>
                     <tr>
                         <td>Name</td>
-                        @foreach (var exam in Model.ScienceExams[0].Exams)
+                        @foreach (var test in Model.ScienceTests[0].Tests)
                         {
-                            <td>@exam.DepartmentSubject.Subject.Name</td>
+                            <td>@test.DepartmentSubject.Subject.Name</td>
                         }
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var StudentExam in Model.ScienceExams)
+                    @foreach (var StudentTest in Model.ScienceTests)
                     {
                         <tr>
-                            <td>@StudentExam.StudentName</td>
-                            @foreach (var exam in StudentExam.Exams)
+                            <td>@StudentTest.StudentName</td>
+                            @foreach (var test in StudentTest.Tests)
                             {
-                                <td>@exam.Score</td>
+                                <td>@test.Score</td>
                             }
                         </tr>
                     }
@@ -54,9 +53,9 @@
 
     </div>
     <div id="commercial" class="container tab-pane fade">
-        @if (Model.CommercialExams[0].Exams.Count == 0)
+        @if (Model.CommercialTests[0].Tests.Count == 0)
         {
-            <h2 class="text-center opacity-50 p-t-3em">Exam score not yet uploaded</h2>
+            <h2 class="text-center opacity-50 p-t-3em">Test score not yet uploaded</h2>
         }
         else
         {
@@ -65,20 +64,20 @@
                 <thead>
                     <tr>
                         <td>Name</td>
-                        @foreach (var exam in Model.CommercialExams[0].Exams)
+                        @foreach (var test in Model.CommercialTests[0].Tests)
                         {
-                            <td>@exam.DepartmentSubject.Subject.Name</td>
+                            <td>@test.DepartmentSubject.Subject.Name</td>
                         }
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var CommercialExam in Model.CommercialExams)
+                    @foreach (var CommercialTest in Model.CommercialTests)
                     {
                         <tr>
-                            <td>@CommercialExam.StudentName</td>
-                            @foreach (var exam in CommercialExam.Exams)
+                            <td>@CommercialTest.StudentName</td>
+                            @foreach (var test in CommercialTest.Tests)
                             {
-                                <td>@exam.Score</td>
+                                <td>@test.Score</td>
                             }
                         </tr>
                     }
@@ -88,9 +87,9 @@
 
     </div>
     <div id="art" class="container tab-pane fade">
-        @if (Model.ArtExams[0].Exams.Count == 0)
+        @if (Model.ArtTests[0].Tests.Count == 0)
         {
-            <h2 class="text-center opacity-50 p-t-3em">Exam score not yet uploaded</h2>
+            <h2 class="text-center opacity-50 p-t-3em">Test score not yet uploaded</h2>
         }
         else
         {
@@ -99,20 +98,20 @@
                 <thead>
                     <tr>
                         <td>Name</td>
-                        @foreach (var exam in Model.ArtExams[0].Exams)
+                        @foreach (var test in Model.ArtTests[0].Tests)
                         {
-                            <td>@exam.DepartmentSubject.Subject.Name</td>
+                            <td>@test.DepartmentSubject.Subject.Name</td>
                         }
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var ArtExam in Model.ArtExams)
+                    @foreach (var ArtTest in Model.ArtTests)
                     {
                         <tr>
-                            <td>@ArtExam.StudentName</td>
-                            @foreach (var exam in ArtExam.Exams)
+                            <td>@ArtTest.StudentName</td>
+                            @foreach (var test in ArtTest.Tests)
                             {
-                                <td>@exam.Score</td>
+                                <td>@test.Score</td>
                             }
                         </tr>
                     }

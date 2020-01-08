@@ -48,7 +48,7 @@ namespace School.Models.ViewModels
 
         public bool ScienceSubjectsScoreIsUploaded { get
             {
-                var currentTerm = _context.Terms.Single(t => t.StartDate < DateTime.Now && t.EndDate > DateTime.Now);
+                var currentTerm = _context.CurrentTerm;
                 int scienceId = _context.Departments.Single(d => d.Name == "Science").Id;
                 return _context.Exams.Where(e => e.DepartmentSubjectDepartmentId == scienceId && e.TermId == currentTerm.Id).Any();
             } }
@@ -56,7 +56,7 @@ namespace School.Models.ViewModels
         {
             get
             {
-                var currentTerm = _context.Terms.Single(t => t.StartDate < DateTime.Now && t.EndDate > DateTime.Now);
+                var currentTerm = _context.CurrentTerm;
                 int commercialId = _context.Departments.Single(d => d.Name == "Commercial").Id;
                 return _context.Exams.Where(e => e.DepartmentSubjectDepartmentId == commercialId && e.TermId == currentTerm.Id).Any();
             }

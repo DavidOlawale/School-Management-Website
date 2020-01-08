@@ -66,7 +66,7 @@ namespace School.Controllers.Api
             {
                 message.ToAdmin = true;
             }
-            
+            message.SentDate = DateTime.Now;
             message.SenderId = (await _manager.GetUserAsync(User)).Id;
             _context.Messages.Add(message);
             await _context.SaveChangesAsync();

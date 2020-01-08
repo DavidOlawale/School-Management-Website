@@ -24,6 +24,13 @@
             <a asp-controller="Teachers" asp-action="Index">Teachers</a>
             <a asp-controller="Parents" asp-action="Index">Parents</a>
             <a asp-controller="Classes" asp-action="Index">Classes</a>
+            <a href="#" onclick="$('.hidden-items').toggleClass('hidden-items-show');" >Academic Results</a>
+            <div class="hidden-items">
+                <a href="#">aaa</a>
+                <a href="#">bbb</a>
+                <a href="#">ccc</a>
+                <a href="#">ddd</a>
+            </div>
             <a href="#">School Info</a>
         }
         @if (User.IsInRole(RoleNames.Teacher))

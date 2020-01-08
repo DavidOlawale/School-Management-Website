@@ -77,7 +77,7 @@ namespace School.Controllers.Api
         public async Task<ActionResult<Test>> PostTest(TestRecordModel model)
         {
             int DepartmentId = _context.Departments.Single(d => d.Name == model.DepartmentName).Id;
-            int termId = _context.Terms.Single(t => t.StartDate < DateTime.Now && t.EndDate > DateTime.Now).Id;
+            int termId = _context.CurrentTerm.Id;
             foreach (var testdto in model.Tests)
             {
                 var Test = new Test();

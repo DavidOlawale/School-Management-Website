@@ -23,12 +23,15 @@
 </div>
 
 <div id="message" class="row message d-none">
-    <div class="col-3 p-3">
+    <div class="col-2 p-3">
         <img class="rounded-circle w-75" src="~/Images/Avatars/Avatar.png" />
     </div>
-    <div class="col-9 p-3">
-        <h5></h5>
+    <div class="col-8 p-3 d-flex flex-column">
+        <h5 class="d-inline"></h5>
         <p></p>
+    </div>
+    <div class="col-2">
+        <span class="align-self-end"></span>
     </div>
 </div>
 @section styles{
@@ -50,9 +53,11 @@
                     messageNode.setAttribute('id', message.id)
                     let firstChild = Array.from(messageNode.childNodes).filter((node) => node.nodeType === Node.ELEMENT_NODE)[0]
                     let secoundChild = Array.from(messageNode.childNodes).filter((node) => node.nodeType === Node.ELEMENT_NODE)[1]
+                    let thirdChild = Array.from(messageNode.childNodes).filter((node) => node.nodeType === Node.ELEMENT_NODE)[2]
+
                     // set avatar
                     if (message.sender.profilePhotoExtension) {
-                        firstChild.childNodes[1].src = '/Images/Avatars/' + message.sender.id + message.sender.profilePhotoExtension
+                        firstChild.childNodes[1].src = '/Images/Avatars/' + message.sender.id + '.'  + message.sender.profilePhotoExtension
                     }
                     else {
                         firstChild.childNodes[1].src = '/Images/Avatars/Avatar.png'
@@ -62,13 +67,15 @@
                     let quill = new Quill('#message')
                     quill.setContents(JSON.parse(message.content))
                     secoundChild.childNodes[3].innerText = quill.getText().substring(0, 30) + '...'
+                    // set date
+                    thirdChild.childNodes[1].innerText = message.sentDate
                     document.getElementById('messages').appendChild(messageNode)
                 }
             })
 
             $('#messages').on('click', '.message', function () {
                     window.location.href = `/messages/received/${this.id}`
-                })
+            })
         })
     </script>
 }

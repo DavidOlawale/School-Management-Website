@@ -79,7 +79,7 @@ namespace School.Controllers.Api
         public async Task<ActionResult<Exam>> PostExam([FromBody] ExamRecordModel model)
         {
             int DepartmentId = _context.Departments.Single(d => d.Name == model.DepartmentName).Id;
-            int termId = _context.Terms.Single(t => t.StartDate < DateTime.Now && t.EndDate > DateTime.Now).Id;
+            int termId = _context.CurrentTerm.Id;
             foreach (var examdto in model.Exams)
             {
                 var exam = new Exam();

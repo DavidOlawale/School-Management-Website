@@ -19,7 +19,6 @@
 <!-- Tab panes -->
 <div class="tab-content">
     <div id="science" class="container tab-pane active">
-        <h1 class="text-center">Exam Scores</h1>
         @if (Model.ScienceExams[0].Exams.Count == 0)
         {
             <h2 class="text-center opacity-50 p-t-3em">Exam score not yet uploaded</h2>
@@ -31,9 +30,9 @@
                 <thead>
                     <tr>
                         <td>Name</td>
-                        @foreach (var exam in Model.ScienceExams[0].Exams)
+                        @foreach (var Exam in Model.ScienceExams[0].Exams)
                         {
-                            <td>@exam.DepartmentSubject.Subject.Name</td>
+                            <td>@Exam.DepartmentSubject.Subject.Name</td>
                         }
                     </tr>
                 </thead>
@@ -42,9 +41,9 @@
                     {
                         <tr>
                             <td>@StudentExam.StudentName</td>
-                            @foreach (var exam in StudentExam.Exams)
+                            @foreach (var Exam in StudentExam.Exams)
                             {
-                                <td>@exam.Score</td>
+                                <td>@Exam.Score</td>
                             }
                         </tr>
                     }
@@ -65,9 +64,9 @@
                 <thead>
                     <tr>
                         <td>Name</td>
-                        @foreach (var exam in Model.CommercialExams[0].Exams)
+                        @foreach (var Exam in Model.CommercialExams[0].Exams)
                         {
-                            <td>@exam.DepartmentSubject.Subject.Name</td>
+                            <td>@Exam.DepartmentSubject.Subject.Name</td>
                         }
                     </tr>
                 </thead>
@@ -76,9 +75,9 @@
                     {
                         <tr>
                             <td>@CommercialExam.StudentName</td>
-                            @foreach (var exam in CommercialExam.Exams)
+                            @foreach (var Exam in CommercialExam.Exams)
                             {
-                                <td>@exam.Score</td>
+                                <td>@Exam.Score</td>
                             }
                         </tr>
                     }
@@ -99,9 +98,9 @@
                 <thead>
                     <tr>
                         <td>Name</td>
-                        @foreach (var exam in Model.ArtExams[0].Exams)
+                        @foreach (var Exam in Model.ArtExams[0].Exams)
                         {
-                            <td>@exam.DepartmentSubject.Subject.Name</td>
+                            <td>@Exam.DepartmentSubject.Subject.Name</td>
                         }
                     </tr>
                 </thead>
@@ -110,9 +109,9 @@
                     {
                         <tr>
                             <td>@ArtExam.StudentName</td>
-                            @foreach (var exam in ArtExam.Exams)
+                            @foreach (var Exam in ArtExam.Exams)
                             {
-                                <td>@exam.Score</td>
+                                <td>@Exam.Score</td>
                             }
                         </tr>
                     }

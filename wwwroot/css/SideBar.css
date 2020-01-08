@@ -50,3 +50,13 @@
 .profile{
     border-bottom: 2px solid #404045;
 }
+.hidden-items{
+    background-color: rgba(255, 255, 255, 0.9);
+    height: 0px;
+    overflow: hidden;
+    transition: height 3s;
+    transition-timing-function: ease-in;
+}
+.hidden-items-show{
+    height: auto;
+}

@@ -66,7 +66,7 @@ namespace School.Controllers
             int ScienceId = _context.Departments.Single(d => d.Name == "Science").Id;
             int CommercialId = _context.Departments.Single(d => d.Name == "Commercial").Id;
             int ArtId = _context.Departments.Single(d => d.Name == "Art").Id;
-            int CurrentTermId = _context.Terms.Single(t => t.StartDate < DateTime.Now && t.EndDate > DateTime.Now).Id;
+            int CurrentTermId = _context.CurrentTerm.Id;
             var ScienceStudents = _context.Students.Where(s => s.DepartmentId == ScienceId && s.ClassId == Class.Id);
             var CommercialStudents = _context.Students.Where(s => s.DepartmentId == CommercialId && s.ClassId == Class.Id);
             var ArtStudents = _context.Students.Where(s => s.DepartmentId == ArtId && s.ClassId == Class.Id);
@@ -108,7 +108,7 @@ namespace School.Controllers
             int ScienceId = _context.Departments.Single(d => d.Name == "Science").Id;
             int CommercialId = _context.Departments.Single(d => d.Name == "Commercial").Id;
             int ArtId = _context.Departments.Single(d => d.Name == "Art").Id;
-            int CurrentTermId = _context.Terms.Single(t => t.StartDate < DateTime.Now && t.EndDate > DateTime.Now).Id;
+            int CurrentTermId = _context.CurrentTerm.Id;
             var ScienceStudents = _context.Students.Where(s => s.DepartmentId == ScienceId && s.ClassId == Class.Id);
             var CommercialStudents = _context.Students.Where(s => s.DepartmentId == CommercialId && s.ClassId == Class.Id);
             var ArtStudents = _context.Students.Where(s => s.DepartmentId == ArtId && s.ClassId == Class.Id);
