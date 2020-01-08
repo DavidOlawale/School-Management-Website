@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -30,6 +31,8 @@ namespace School.Data
         public DbSet<AcademicSection> AcademicSections { get; set; }
 
         public DbSet<DepartmentSubject> departmentSubjects { get; set; }
+
+        public Term CurrentTerm { get => Terms.SingleOrDefault(t => t.StartDate < DateTime.Now && t.EndDate > DateTime.Now); }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
