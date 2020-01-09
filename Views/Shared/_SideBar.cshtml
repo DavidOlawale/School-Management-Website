@@ -15,37 +15,38 @@
             </div>
             <div class="col-6 p-1 mt-1">
                 <h6>@currentUser.FirstName.Substring(0, 1). @currentUser.MiddleName</h6>
-                <a class="p-0" asp-area="Identity" asp-page="/Account/Manage/Index">My Profile</a>
+                <a class="sidebar-item p-0" asp-area="Identity" asp-page="/Account/Manage/Index">My Profile</a>
             </div>
         </div>
         @if (User.IsInRole(RoleNames.Admin))
         {
-            <a asp-controller="Students" asp-action="Index">Students</a>
-            <a asp-controller="Teachers" asp-action="Index">Teachers</a>
-            <a asp-controller="Parents" asp-action="Index">Parents</a>
-            <a asp-controller="Classes" asp-action="Index">Classes</a>
-            <a href="#" onclick="$('.hidden-items').toggleClass('hidden-items-show');" >Academic Results</a>
-            <div class="hidden-items">
-                <a href="#">aaa</a>
-                <a href="#">bbb</a>
-                <a href="#">ccc</a>
-                <a href="#">ddd</a>
+            <a class="sidebar-item" asp-controller="Students" asp-action="Index">Students</a>
+            <a class="sidebar-item" asp-controller="Teachers" asp-action="Index">Teachers</a>
+            <a class="sidebar-item" asp-controller="Parents" asp-action="Index">Parents</a>
+            <a class="sidebar-item" asp-controller="Classes" asp-action="Index">Classes</a>
+            <div onclick="$('.hidden-items').toggleClass('hidden-items-show')" class="sidebar-item d-flex justify-content-between">
+                <span>Academic Results</span>
+                @*<span class="font-weight-bolder ml-3" >&lt;</span>*@
             </div>
-            <a href="#">School Info</a>
+            <div class="hidden-items">
+                <a class="sidebar-item" asp-controller="AdminAcademicResults" asp-action="exams" >Exams</a>
+                <a class="sidebar-item" asp-action="tests" >Tests</a>
+            </div>
+            <a class="sidebar-item" href="#">School Info</a>
         }
         @if (User.IsInRole(RoleNames.Teacher))
         {
-            <a asp-controller="teacherclass" asp-action="details">Class</a>
-            <a asp-controller="teacherclass" asp-action="examuploadscore">Exam Upload</a>
-            <a asp-controller="teacherclass" asp-action="testuploadscore">Test Upload</a>
-            <a asp-controller="teacherclass" asp-action="examscore">Exam Score</a>
-            <a asp-controller="teacherclass" asp-action="testscore">Test Score</a>
+            <a class="sidebar-item" asp-controller="teacherclass" asp-action="details">Class</a>
+            <a class="sidebar-item" asp-controller="teacherclass" asp-action="examuploadscore">Exam Upload</a>
+            <a class="sidebar-item" asp-controller="teacherclass" asp-action="testuploadscore">Test Upload</a>
+            <a class="sidebar-item" asp-controller="teacherclass" asp-action="examscore">Exam Score</a>
+            <a class="sidebar-item" asp-controller="teacherclass" asp-action="testscore">Test Score</a>
         }
         @if (User.IsInRole(RoleNames.Admin) || User.IsInRole(RoleNames.Parent))
         {
-            <a asp-controller="messages" asp-action="inbox">Messages</a>
+            <a class="sidebar-item" asp-controller="messages" asp-action="inbox">Messages</a>
         }
-        <span onclick="logOut()" class="cursor-pointer">Logout</span>
+        <span onclick="logOut()" class="sidebar-item">Logout</span>
         <form id="logout" class="d-none" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
             <button type="submit" class="outline-none" id="loggout">Logout</button>
         </form>
