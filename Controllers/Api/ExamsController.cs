@@ -76,6 +76,7 @@ namespace School.Controllers.Api
         }
 
         [HttpPost("postexam")]
+        [Authorize(Roles = RoleNames.Parent)]
         public async Task<ActionResult<Exam>> PostExam([FromBody] ExamRecordModel model)
         {
             int DepartmentId = _context.Departments.Single(d => d.Name == model.DepartmentName).Id;

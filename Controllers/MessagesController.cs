@@ -11,7 +11,7 @@ using School.Models;
 
 namespace School.Controllers
 {
-    [Authorize(Roles ="Admin,Parent")]
+    [Authorize(Roles =RoleNames.Admin + "," + RoleNames.Parent)]
     public class MessagesController : Controller
     {
         private readonly ApplicationDbContext _context;

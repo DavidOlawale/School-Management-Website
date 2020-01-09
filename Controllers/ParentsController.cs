@@ -15,7 +15,7 @@ using School.Models;
 
 namespace School.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles =RoleNames.Admin)]
     public class ParentsController : Controller
     {
         private readonly ApplicationDbContext _context;

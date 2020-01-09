@@ -23,7 +23,7 @@ namespace School.Controllers.Api
             _context = context;
         }
 
-        [Authorize(Roles = "Admin,Teacher")]
+        [Authorize(Roles = RoleNames.Admin + "," + RoleNames.Parent)]
         [HttpGet("GetAttendances/{studentId}")]
         public async Task<ActionResult<IEnumerable<Attendance>>> GetAttendances(Guid studentId)
         {
@@ -32,7 +32,7 @@ namespace School.Controllers.Api
             return await _context.Attendances.Where(a => a.StudentId == studentId).ToListAsync();
         }
 
-        [Authorize(Roles = "Admin,Teacher")]
+        [Authorize(Roles = RoleNames.Admin + "," + RoleNames.Parent)]
         [HttpGet("GetAttendanceToday/{studentId}")]
         public async Task<ActionResult<Attendance>> GetAttendanceToday(Guid studentId)
         {
@@ -42,8 +42,8 @@ namespace School.Controllers.Api
             return attendance;
         }
 
-        [Authorize(Roles ="Teacher")]
         [HttpPost("postattendance")]
+        [Authorize(Roles = RoleNames.Teacher)]
         public async Task<ActionResult<Attendance>> PostAttendance([FromBody]Attendance attendance)
         {
             if (!_context.Students.Any(s => s.Id == attendance.StudentId)) return BadRequest("Student doesn't exist");

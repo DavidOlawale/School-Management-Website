@@ -13,7 +13,7 @@ using School.Models.ViewModels;
 
 namespace School.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles =RoleNames.Admin)]
     public class ClassesController : Controller
     {
         private readonly ApplicationDbContext _context;

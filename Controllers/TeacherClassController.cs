@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,6 +14,7 @@ using School.Models.ViewModels;
 
 namespace School.Controllers
 {
+    [Authorize(Roles =RoleNames.Teacher)]
     public class TeacherClassController : Controller
     {
         private readonly ApplicationDbContext _context;

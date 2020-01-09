@@ -16,7 +16,7 @@ using School.Models;
 namespace School.Controllers
 {
 
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = RoleNames.Admin)]
     public class TeachersController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
