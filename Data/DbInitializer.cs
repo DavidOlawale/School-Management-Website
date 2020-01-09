@@ -25,9 +25,7 @@ namespace School.Data
                 var Science = new Department("Science");
                 var Commercial = new Department("Commercial");
                 var Art = new Department("Art");
-                _db.Departments.Add(Science);
-                _db.Departments.Add(Commercial);
-                _db.Departments.Add(Art);
+                _db.Departments.AddRange(Science, Commercial, Art);
                 _db.SaveChanges();
             }
 
@@ -52,10 +50,7 @@ namespace School.Data
                     new Class("SSS 2"),
                     new Class("SSS 3")
                 };
-                foreach (var Class in classes)
-                {
-                    _db.Classes.Add(Class);
-                }
+                _db.Classes.AddRange(classes);
                 _db.SaveChanges();
             }
 
@@ -134,10 +129,7 @@ namespace School.Data
                 Mathematics, English, Chemistry, FutherMaths, Physics, Biology, Economics, Account, Commerce, Literature, Computer, Geography, BookKeeping, Government
                 };
 
-                foreach (var subject in subjects)
-                {
-                    _db.Subjects.Add(subject);
-                }
+                _db.Subjects.AddRange(subjects);
                 _db.SaveChanges();
 
                 int ScienceId = _db.Departments.Single(d => d.Name == "Science").Id;
@@ -172,10 +164,8 @@ namespace School.Data
                 new DepartmentSubject(CommercialId, Government.Id),
                 new DepartmentSubject(ArtId, Government.Id)
                 };
-                foreach (var deptSubj in departmentSubjects)
-                {
-                    _db.departmentSubjects.Add(deptSubj);
-                }
+
+                _db.departmentSubjects.AddRange(departmentSubjects);
                 _db.SaveChanges();
             }
             
