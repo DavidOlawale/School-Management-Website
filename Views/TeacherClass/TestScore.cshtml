@@ -19,104 +19,126 @@
 <!-- Tab panes -->
 <div class="tab-content">
     <div id="science" class="container tab-pane active">
-        @if (Model.ScienceTests[0].Tests.Count == 0)
+        @if (Model.ScienceTests.Count == 0)
         {
-            <h2 class="text-center opacity-50 p-t-3em">Test score not yet uploaded</h2>
+            <h2 class="text-center opacity-50 p-t-3em">No science student</h2>
         }
         else
         {
-            <h1 class="text-center p-t-3em">Exam Scores</h1>
-            <table class="table table-responsive">
-                <thead>
-                    <tr>
-                        <td>Name</td>
-                        @foreach (var test in Model.ScienceTests[0].Tests)
-                        {
-                            <td>@test.DepartmentSubject.Subject.Name</td>
-                        }
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var StudentTest in Model.ScienceTests)
-                    {
+            @if (Model.ScienceTests[0].Tests.Count == 0)
+            {
+                <h2 class="text-center opacity-50 p-t-3em">Test score not yet uploaded</h2>
+            }
+            else
+            {
+                <h1 class="text-center p-t-3em">Exam Scores</h1>
+                <table class="table table-responsive">
+                    <thead>
                         <tr>
-                            <td>@StudentTest.StudentName</td>
-                            @foreach (var test in StudentTest.Tests)
+                            <td>Name</td>
+                            @foreach (var test in Model.ScienceTests[0].Tests)
                             {
-                                <td>@test.Score</td>
+                                <td>@test.DepartmentSubject.Subject.Name</td>
                             }
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var StudentTest in Model.ScienceTests)
+                        {
+                            <tr>
+                                <td>@StudentTest.StudentName</td>
+                                @foreach (var test in StudentTest.Tests)
+                                {
+                                    <td>@test.Score</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
         }
 
     </div>
+
     <div id="commercial" class="container tab-pane fade">
-        @if (Model.CommercialTests[0].Tests.Count == 0)
+        @if (Model.CommercialTests.Count == 0)
         {
-            <h2 class="text-center opacity-50 p-t-3em">Test score not yet uploaded</h2>
+            <h2 class="text-center opacity-50 p-t-3em">No commercial student</h2>
         }
         else
         {
-            <h2 class="text-center p-t-3em">Exam Scores</h2>
-            <table class="table table-responsive">
-                <thead>
-                    <tr>
-                        <td>Name</td>
-                        @foreach (var test in Model.CommercialTests[0].Tests)
-                        {
-                            <td>@test.DepartmentSubject.Subject.Name</td>
-                        }
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var CommercialTest in Model.CommercialTests)
-                    {
+            @if (Model.CommercialTests[0].Tests.Count == 0)
+            {
+                <h2 class="text-center opacity-50 p-t-3em">Test score not yet uploaded</h2>
+            }
+            else
+            {
+                <h2 class="text-center p-t-3em">Exam Scores</h2>
+                <table class="table table-responsive">
+                    <thead>
                         <tr>
-                            <td>@CommercialTest.StudentName</td>
-                            @foreach (var test in CommercialTest.Tests)
+                            <td>Name</td>
+                            @foreach (var test in Model.CommercialTests[0].Tests)
                             {
-                                <td>@test.Score</td>
+                                <td>@test.DepartmentSubject.Subject.Name</td>
                             }
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var CommercialTest in Model.CommercialTests)
+                        {
+                            <tr>
+                                <td>@CommercialTest.StudentName</td>
+                                @foreach (var test in CommercialTest.Tests)
+                                {
+                                    <td>@test.Score</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
         }
 
     </div>
     <div id="art" class="container tab-pane fade">
-        @if (Model.ArtTests[0].Tests.Count == 0)
+        @if (Model.ArtTests.Count == 0)
         {
-            <h2 class="text-center opacity-50 p-t-3em">Test score not yet uploaded</h2>
+            <h2 class="text-center opacity-50 p-t-3em">No art student</h2>
         }
         else
         {
-            <h1 class="text-center">Exam Scores</h1>
-            <table class="table table-responsive">
-                <thead>
-                    <tr>
-                        <td>Name</td>
-                        @foreach (var test in Model.ArtTests[0].Tests)
-                        {
-                            <td>@test.DepartmentSubject.Subject.Name</td>
-                        }
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var ArtTest in Model.ArtTests)
-                    {
+            @if (Model.ArtTests[0].Tests.Count == 0)
+            {
+                <h2 class="text-center opacity-50 p-t-3em">Test score not yet uploaded</h2>
+            }
+            else
+            {
+                <h1 class="text-center">Exam Scores</h1>
+                <table class="table table-responsive">
+                    <thead>
                         <tr>
-                            <td>@ArtTest.StudentName</td>
-                            @foreach (var test in ArtTest.Tests)
+                            <td>Name</td>
+                            @foreach (var test in Model.ArtTests[0].Tests)
                             {
-                                <td>@test.Score</td>
+                                <td>@test.DepartmentSubject.Subject.Name</td>
                             }
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var ArtTest in Model.ArtTests)
+                        {
+                            <tr>
+                                <td>@ArtTest.StudentName</td>
+                                @foreach (var test in ArtTest.Tests)
+                                {
+                                    <td>@test.Score</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
         }
 
     </div>
