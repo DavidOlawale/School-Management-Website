@@ -1,0 +1,17 @@
+﻿@model DataCore.Models.Student
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete @Model.FirstName @Model.MiddleName @Model.LastName ?</h3>
+<div>
+    <h4>Student</h4>
+    
+    <form asp-action="DeleteConfirmed">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+    </form>
+</div>

@@ -1,0 +1,26 @@
+﻿@model DataCore.Models.Message
+@{
+    ViewData["Title"] = "Received";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center font-weight-bold pb-5">Message</h1>
+<div class="row">
+    <div class="col-md-8 offset-md-2 col-sm-10 offset-sm-1 border-radius-1 p-3 message-read">
+        <div id="editor" style="height: auto"></div>
+        <p class="pt-4">From @Model.Sender.FullName</p>
+    </div>
+</div>
+@section styles{ 
+    <link rel="stylesheet" href="~/lib/Quill/quill.snow.min.css" />
+}
+@section scripts{ 
+<script src="~/lib/Quill/quill.min.js"></script>
+<script>
+    let options = {
+        readOnly: true,
+    }
+    const quill = new Quill('#editor', options)
+    quill.setContents(@Html.Raw(Model.Content))
+</script>
+}

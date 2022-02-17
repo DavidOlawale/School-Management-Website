@@ -1,0 +1,146 @@
+﻿@model DataCore.Models.Dtos.AllDepartmentsExams
+@{
+    ViewData["Title"] = "ExamScore";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#science">Science</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#commercial">Commercial</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#art">Art</a>
+    </li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div id="science" class="container tab-pane active">
+        <h1 class="text-center">Exam Scores</h1>
+        @if (Model.ScienceExams.Count == 0)
+        {
+            <h2 class="text-center opacity-50 p-t-3em">No science student</h2>
+        }
+        else
+        {
+            @if (Model.ScienceExams[0].Exams.Count == 0)
+            {
+                <h2 class="text-center opacity-50 p-t-3em">Exam score not yet uploaded</h2>
+            }
+            else
+            {
+                <h1 class="text-center p-t-3em">Exam Scores</h1>
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <td>Name</td>
+                            @foreach (var exam in Model.ScienceExams[0].Exams)
+                            {
+                                <td>@exam.DepartmentSubject.Subject.Name</td>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var StudentExam in Model.ScienceExams)
+                        {
+                            <tr>
+                                <td>@StudentExam.StudentName</td>
+                                @foreach (var exam in StudentExam.Exams)
+                                {
+                                    <td>@exam.Score</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        }
+
+    </div>
+    <div id="commercial" class="container tab-pane fade">
+        @if (Model.CommercialExams.Count == 0)
+        {
+            <h2 class="text-center opacity-50 p-t-3em">No commercial student</h2>
+        }
+        else
+        {
+            @if (Model.CommercialExams[0].Exams.Count == 0)
+            {
+                <h2 class="text-center opacity-50 p-t-3em">Exam score not yet uploaded</h2>
+            }
+            else
+            {
+                <h2 class="text-center p-t-3em">Exam Scores</h2>
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <td>Name</td>
+                            @foreach (var exam in Model.CommercialExams[0].Exams)
+                            {
+                                <td>@exam.DepartmentSubject.Subject.Name</td>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var CommercialExam in Model.CommercialExams)
+                        {
+                            <tr>
+                                <td>@CommercialExam.StudentName</td>
+                                @foreach (var exam in CommercialExam.Exams)
+                                {
+                                    <td>@exam.Score</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        }
+
+    </div>
+    <div id="art" class="container tab-pane fade">
+        @if (Model.ArtExams.Count == 0)
+        {
+            <h2 class="text-center opacity-50 p-t-3em">No art student</h2>
+        }
+        else
+        {
+            @if (Model.ArtExams[0].Exams.Count == 0)
+            {
+                <h2 class="text-center opacity-50 p-t-3em">Exam score not yet uploaded</h2>
+            }
+            else
+            {
+                <h1 class="text-center">Exam Scores</h1>
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <td>Name</td>
+                            @foreach (var exam in Model.ArtExams[0].Exams)
+                            {
+                                <td>@exam.DepartmentSubject.Subject.Name</td>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var ArtExam in Model.ArtExams)
+                        {
+                            <tr>
+                                <td>@ArtExam.StudentName</td>
+                                @foreach (var exam in ArtExam.Exams)
+                                {
+                                    <td>@exam.Score</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        }
+
+
+    </div>
+</div>

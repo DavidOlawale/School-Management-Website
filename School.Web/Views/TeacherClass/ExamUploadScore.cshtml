@@ -1,0 +1,183 @@
+﻿@model DataCore.Models.ViewModels.ScoreRecordViewModel
+@{
+    ViewData["Title"] = "Exam";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Exam Score</h1>
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#science">Science</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#commercial">Commercial</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#art">Art</a>
+    </li>
+</ul>
+
+<div class="tab-content">
+    <div id="science" class="tab-pane active">
+        <h3>Science</h3>
+        @if (Model.ScienceSubjectsScoreIsUploaded)
+        {
+            <h2 class="text-center opacity-50 p-t-3em">Score uploaded</h2>
+        }
+        else
+        {
+            <table class="table table-responsive" id="Science">
+                <thead>
+                    <tr>
+                        <th>Names</th>
+                        @foreach (var subject in Model.ScienceSubjects)
+                        {
+                            <th>@subject.Name</th>
+                        }
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var student in Model.ScienceStudents)
+                    {
+                        <tr id="@student.Id">
+                            <td>@student.FullName</td>
+                            @foreach (var subject in Model.ScienceSubjects)
+                            {
+                                <td subjectId="@subject.Id"><input type="number" size="3" max="60" min="0" /></td>
+                            }
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-primary" onclick="record('Science')">Submit</button>
+            </div>
+        }
+
+    </div>
+    <div id="commercial" class="tab-pane fade">
+        <h3>Commercial</h3>
+        @if (Model.CommercialSubjectsScoreIsUploaded)
+        {
+            <h2 class="text-center opacity-50 p-t-3em">Score uploaded</h2>
+        }
+        else
+        {
+            <table class="table table-responsive" id="Commercial">
+                <thead>
+                    <tr>
+                        <th>Names</th>
+                        @foreach (var subject in Model.CommercialSubjects)
+                        {
+                            <th>@subject.Name</th>
+                        }
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var student in Model.CommercialStudents)
+                    {
+                        <tr id="@student.Id">
+                            <td>@student.FullName</td>
+                            @foreach (var subject in Model.CommercialSubjects)
+                            {
+                                <td subjectId="@subject.Id"><input type="number" size="3" max="60" min="0" /></td>
+                            }
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-primary" onclick="record('Commercial')">Submit</button>
+            </div>
+        }
+
+    </div>
+    <div id="art" class="tab-pane fade">
+        <h3>Art</h3>
+        @if (Model.ArtSubjectsScoreIsUploaded)
+        {
+            <h2 class="text-center opacity-50 p-t-3em">Score uploaded</h2>
+        }
+        else
+        {
+            <table class="table table-responsive" id="Art">
+                <thead>
+                    <tr>
+                        <td>Names</td>
+                        @foreach (var subject in Model.ArtSubjects)
+                        {
+                            <td>@subject.Name</td>
+                        }
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var student in Model.ArtStudents)
+                    {
+                        <tr id="@student.Id">
+                            <td>@student.FullName</td>
+                            @foreach (var subject in Model.ArtSubjects)
+                            {
+                                <td subjectId="@subject.Id"><input type="number" size="3" max="60" min="0" /></td>
+                            }
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-primary" onclick="record('Art')">Submit</button>
+            </div>
+        }
+
+    </div>
+</div>
+@section styles{ 
+    <link rel="stylesheet" href="~/lib/VanillaToasts/vanillatoasts.css" />
+}
+@section scripts{ 
+    <script src="~/lib/VanillaToasts/vanillatoasts.js"></script>
+    <script>
+        function record(deptName) {
+            let table = document.getElementById(deptName)
+            let rows = table.children[1].children //tbody > tr
+            let exams = []
+            Array.from(rows).forEach(row => {
+                studentId = row.id
+                tableDatas = Array.from(row.children).filter(td => td != row.children[0])
+                tableDatas.forEach(td => {
+                    let exam = {
+                        studentId,
+                        departmentSubjectSubjecttId: td.getAttribute('subjectId'),
+                        score: td.children[0].value
+                    }
+                    exams.push(exam)
+                })
+            })
+            let data = {
+                exams,
+                departmentName: deptName
+            }
+            $.post({
+                url: `${location.origin}/api/exams/postexam`,
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                statusCode: {
+                    '201': function (data, textStatus, XHR) {
+                        VanillaToasts.create({
+                            title: 'Scores Saved',
+                            text: `Scores for @Model.Class.Name ${deptName} uploaded`,
+                        type: 'success',
+                        timeout: '5000',
+                        });
+                        setTimeout(location.reload(), 3000)
+                    }
+                }
+            })
+        }
+    </script>
+}

@@ -1,0 +1,33 @@
+﻿@model IEnumerable<DataCore.Models.ViewModels.ClassDetailsViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <p><h1>Classes</h1></p>
+<div class="row justify-content-around">
+    @foreach (var ClassDetail in Model)
+    {
+        string TeacherFullName;
+        if (ClassDetail.Teacher == null)
+        {
+            TeacherFullName = "No Teacher";
+        }
+        else
+        {
+            TeacherFullName = ClassDetail.Teacher.FullName;
+        }
+    <div class="col">
+        <div class="col-md-4 m-2">
+            <div class="card text-right jumbotron2 w-18-em" >
+                <div class="card-body">
+                    <h3>@ClassDetail.Class.Name</h3>
+                    <p class="card-text">Teacher: @TeacherFullName</p>
+                    <a asp-controller="Classes" asp-action="Details" asp-route-Id="@ClassDetail.Class.Id" class="btn btn-primary">Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>
