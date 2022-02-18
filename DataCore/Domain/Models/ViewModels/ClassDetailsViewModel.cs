@@ -8,13 +8,13 @@ namespace DataCore.Models.ViewModels
 {
     public class ClassDetailsViewModel
     {
-        public ClassDetailsViewModel(Class Class, Teacher teacher)
+        public ClassDetailsViewModel(AcademicClass Class, Teacher teacher)
         {
             this.Class = Class;
             this.Teacher = teacher;
         }
         public Teacher Teacher { get; set; }
-        public Class Class;
+        public AcademicClass Class;
         public int NumberOfStudents { get { return Students.Count(); } }
         public IEnumerable<Student> Students;
 

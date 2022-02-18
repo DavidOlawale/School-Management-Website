@@ -41,14 +41,14 @@ namespace DataCore.Data
             //seed classes
             if (!_db.Classes.Any())
             {
-                var classes = new Class[6]
+                var classes = new AcademicClass[6]
                 {
-                    new Class("JSS 1"),
-                    new Class("JSS 2"),
-                    new Class("JSS 3"),
-                    new Class("SSS 1"),
-                    new Class("SSS 2"),
-                    new Class("SSS 3")
+                    new AcademicClass("JSS 1"),
+                    new AcademicClass("JSS 2"),
+                    new AcademicClass("JSS 3"),
+                    new AcademicClass("SSS 1"),
+                    new AcademicClass("SSS 2"),
+                    new AcademicClass("SSS 3")
                 };
                 _db.Classes.AddRange(classes);
                 _db.SaveChanges();
@@ -71,7 +71,7 @@ namespace DataCore.Data
                     ClassId = _db.Classes.Single(c => c.Name == "SSS 2").Id,
                     DepartmentId = _db.Departments.Single(d => d.Name == "Science").Id
                 };
-                var admin = new Admin()
+                var admin = new ApplicationUser()
                 {
                     FirstName = "Olaniran",
                     MiddleName = "Olawale",

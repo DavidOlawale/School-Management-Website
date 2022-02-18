@@ -13,14 +13,12 @@ namespace DataCore.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
-        {
-            
+        {            
         }
-        public DbSet<Admin> Admins { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Parent> Parents { get; set; }
         public DbSet<Student> Students { get; set; }
-        public DbSet<Class> Classes { get; set; }
+        public DbSet<AcademicClass> Classes { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Subject> Subjects { get; set; }

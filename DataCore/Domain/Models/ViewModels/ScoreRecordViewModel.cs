@@ -13,7 +13,7 @@ namespace DataCore.Models.ViewModels
         {
             _context = db;
         }
-        public Class Class;
+        public AcademicClass Class;
         public IEnumerable<Subject> ScienceSubjects { get
             {
                 List<Subject> subjects = new List<Subject>();

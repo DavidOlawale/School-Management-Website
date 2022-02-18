@@ -65,7 +65,7 @@ namespace DataCore.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Class Class)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] AcademicClass Class)
         {
             if (id != Class.Id)
                 return NotFound();
